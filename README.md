@@ -17,24 +17,37 @@ ______
 ##Understanding project layout
 
 The QMVC project is structured as follows:
-
+```
 *application --- Folder where all source code should be placed
-   *controllers --- Location of controllers for views
-   *models --- Location of models used by controllers
-   *views --- Template files for your web views
-*config --- Location of project configuration data
-   *database.php 
-   *environment.php
-   *states.php
-*library --- Helper methods and core methods used by the project
-*public --- All incoming requests are routed here
-   *.htaccess --- Controls request rerouting
-   *index.php --- instantiates an instance of the project upon request
-*README.md
-*Vagrantfile
 
-The project layout *can be modified* by the user but it will require the modification of core files
-router.php, index.php. *This is NOT recommended.*
+   *controllers --- Location of controllers for views
+   
+   *models --- Location of models used by controllers
+   
+   *views --- Template files for your web views
+   
+*config --- Location of project configuration data
+
+   *database.php 
+   
+   *environment.php
+   
+   *states.php
+   
+*library --- Helper methods and core methods used by the project
+
+*public --- All incoming requests are routed here
+
+   *.htaccess --- Controls request rerouting
+   
+   *index.php --- instantiates an instance of the project upon request
+   
+*README.md
+
+*Vagrantfile
+```
+
+The project layout *can be modified* by the user but it will require the modification of core files router.php, index.php. *This is NOT recommended.*
 
 ______
 
@@ -48,12 +61,12 @@ A state is composed of:
 ###View
 
 Views ,synonymous with template for this project, are the display elements of your application. 
---
 
-###Controllers
+
+###Controllers</br></br>
 
 Controllers provide a layer of abstraction between templates, the user interface, and the model, the back end of your application.
-Templates must *NEVER* directly interact with models by principle.
+Templates must *NEVER* directly interact with models by principle.</br>
 
 All controllers in the project are extensions of the abstract Controller core class of the project located in /library
 
