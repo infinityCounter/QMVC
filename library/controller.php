@@ -5,7 +5,7 @@
 **/
 abstract class Controller {
 
-    protected $template;
+    protected $template; //Will be inherited by child classes
     protected $subView;
 
     /**
