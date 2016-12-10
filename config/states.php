@@ -2,11 +2,12 @@
 
 /*Config file containing details of project routing*/
 
- $routes = array(
+ $states = array(
      
      'home' => array(
          'uri' => '/home',
-         'controller' => 'controllers/home.php',
+         'controllerPath' => 'controllers/home.php',
+         'controllerName' => 'Home',
          'template' => 'views/home.php',
          'subView' => false
      ) 
