@@ -42,9 +42,6 @@ The QMVC project is structured as follows:
    
    *index.php --- instantiates an instance of the project upon request
    
-*README.md
-
-*Vagrantfile
 ```
 
 The project layout *can be modified* by the user but it will require the modification of core files router.php, index.php. *This is NOT recommended.*
