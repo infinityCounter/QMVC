@@ -1,4 +1,5 @@
 <?php
+
 /**
 * Abstract class to define controllers.
 * CANNOT BE INSTANTIATED, MUST BE EXTENDED
@@ -12,7 +13,7 @@ abstract class Controller {
     * Class constructor. Constructor accepts parameter to allow state overloading
     * Multiple different states can have the same controller. 
     **/
-    function __construct($template, $subView){
+    function __construct($template, $subView = false){
         $this->template = $template;
         $this->subView = $subView;
     }

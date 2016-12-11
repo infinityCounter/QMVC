@@ -12,6 +12,8 @@
 *   'template' => [Path to template for view with relation from application folder],
 *   'subView' => [Boolean to enable or disable subviews for this view]
 * )
+* 
+* othwise is to be set to the fallback/default state at all times.
 **/
  $states = array(
      
@@ -21,7 +23,12 @@
          'controllerName' => 'Home',
          'template' => 'views/home.php',
          'subView' => false
-     ) 
+     ),
 
+    'otherwise' => array(
+         'uri' => '/error404',
+         'template' => 'views/error.php',
+         'subView' => false
+     ),
 );
 ?>

@@ -6,8 +6,11 @@
 **/
 
 //Sets the ROOT_PATJ constant to the root of the project
-define('ROOT_PATH', dirname(dirname(__FILE__)).'/' );
+define('ROOT_PATH', dirname(__DIR__).'/' );
 define('APP_PATH', ROOT_PATH . "application/");
+
+//Used for internal domain redirection
+define('DOMAIN_PROJECT_DIR', (dirname(dirname($_SERVER['PHP_SELF']))) );
 
 /**
 * Configuration files for project, 
