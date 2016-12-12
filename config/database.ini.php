@@ -4,6 +4,7 @@
 ?>
 [SQL]
 host = localhost
+port = 
+dbname = testdb
 user = root
 password = 
-dbname = testdb

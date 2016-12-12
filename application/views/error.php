@@ -1,6 +1,8 @@
 <html>
    <head>
-     <link rel="stylesheet" href="<?php echo('application/styles/style.css')?>" >
+     <style>
+      <?php require_once(ROOT_PATH . 'application/styles/style.css')?>
+     </style>
    </head>
    <body>
         <div class="mainSheet">

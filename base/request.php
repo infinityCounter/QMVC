@@ -66,8 +66,7 @@ class Request{
         }else if(self::$requestType === 'POST'){
             self::$requestBody = $_POST;
         }
-		var_dump(self::$requestType);
-        self::$requestURLArgs = $_REQUEST; 
+		self::$requestURLArgs = $_REQUEST; 
         unset(self::$requestURLArgs['requestType'], self::$requestURLArgs['url']);
     }
 }

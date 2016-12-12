@@ -86,8 +86,7 @@ defined by abstract Controller class:
 
 
 #######function render();
-    Must be defined in extending controller. Renders the view.
-    Left undefined as there are custom procedures that can be performed on the view before rendering.
+    May be ovewridden in extending controller. Default Renders the view template provided to the constructor.
 
 ####attributes:
 

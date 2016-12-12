@@ -18,9 +18,9 @@ class Router {
 		
 		Request::parseRequest();
 		$stateConfig = self::getRouteData();
-		
-		if(empty($stateConfig))
-			header('Location: ' . URL . '/otherwise');
+        if(empty($stateConfig))
+            echo 'otherwise';
+			//header('Location: ' . URL . '/otherwise');
 
 		else if(isset($stateConfig['controller'])){
 			
@@ -46,25 +46,13 @@ class Router {
 	
 	public static function getRouteData(){
 
-        //var_dump(Request::getRequestType());
-		if(isset(self::$stateTable[Request::getRequestUrl()])){
-			
-			return current(array_filter(self::$stateTable, function($stateData, $routeURI){
-				if($routeURI === Request::getRequestUrl()){
-					
-                    if(isset($stateData['actions']) && 
-					    array_key_exists(Request::getRequestType(), $stateData['actions'])){
-						Request::spliceRestArgs($routeURI);
-						return $stateData;
-					}
-					else if(!isset($stateData['actions'])){
-						Request::spliceRestArgs($routeURI);
-						return $stateData;
-					}
-				}
-				
-			}
-			, ARRAY_FILTER_USE_BOTH));
+        if(isset(self::$stateTable[Request::getRequestUrl()])){
+
+            $stateData = self::$stateTable[Request::getRequestUrl()];
+            if(!isset($stateData['actions']) || (isset($stateData['actions']) && array_key_exists(Request::getRequestType(), $stateData['actions']) ) ){
+                Request::spliceRestArgs(Request::getRequestUrl());
+				return $stateData;
+            }
 		}
 		else {
 
