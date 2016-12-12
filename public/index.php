@@ -5,48 +5,38 @@
 * @link https://github.com/infinityCounter/QMVC
 **/
 
-//Sets the ROOT_PATJ constant to the root of the project
-define('ROOT_PATH', dirname(__DIR__).'/' );
+//Sets the ROOT_PATH constant to the root of the project
+define('ROOT_PATH', dirname(__DIR__) . '/' );
 define('APP_PATH', ROOT_PATH . "application/");
-
-//Used for internal domain redirection
-define('DOMAIN_PROJECT_DIR', (dirname(dirname($_SERVER['PHP_SELF']))) );
-
-/**
-* Configuration files for project, 
-* database.php and environment.php can be exempted, 
-* but route.php is manditory
-**/
-require_once(ROOT_PATH . "config/database.php"); 
-require_once(ROOT_PATH . "config/environment.php"); 
-require_once(ROOT_PATH . "config/states.php");
 
 //Load composer dependencies
 if (file_exists(ROOT_PATH . 'vendor/autoload.php')) {
     require ROOT_PATH . 'vendor/autoload.php';
 }
 
+
+
 /**
-* Load required classes, uses spl_autoload_register 
-* as __autoload is to be depricated
+* Configuration files for project, 
+* environment.php can be exempted, 
+* but route.php is manditory
 **/
-spl_autoload_register( function ($className) {
-    if (file_exists(ROOT_PATH . 'library/' . strtolower($className) . '.php')) {
-        require_once(ROOT_PATH . 'library/' . strtolower($className) . '.php');
+require_once(ROOT_PATH . 'config/definitions.php');
+require_once(ROOT_PATH . 'config/environment.php'); 
+require_once(ROOT_PATH . 'config/states.php');
 
-    } else if (file_exists(APP_PATH . 'controllers/' . strtolower($className) . '.php')) {
-        require_once(APP_PATH . 'controllers/' . strtolower($className) . '.php');
+//Core includes
+require_once(ROOT_PATH . 'base/sqlDatabase.php');
+require_once(ROOT_PATH . 'base/controller.php');
+require_once(ROOT_PATH . 'base/model.php');
+require_once(ROOT_PATH . 'base/router.php');
 
-    } else if (file_exists(APP_PATH . 'models/' . strtolower($className) . '.php')) {
-        require_once(APP_PATH . 'models/' . strtolower($className) . '.php');
 
-    } else if (file_exists(APP_PATH . strtolower($className))) {
-        require_once(APP_PATH . strtolower($className));
+//Model includes
+require_once(APP_PATH . 'models/school.php');
 
-    } else {
-        /* Error Generation Code Here */
-    } 
-});
+//Controller includes
+require_once(APP_PATH . 'controllers/school.php');
 
-$router = new Router($states);
+Router::loadState($states);
 ?>

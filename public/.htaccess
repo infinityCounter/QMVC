@@ -1,8 +1,8 @@
 <IfModule mod_rewrite.c>
 RewriteEngine on
 RewriteCond %{REQUEST_URI} !^/js/
-RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !\.css
-RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
- 
+RewriteCond %{REQUEST_FILENAME} !\.png
+RewriteCond %{REQUEST_FILENAME} !\.jpg
+RewriteRule ^(.*)$ index.php?requestType=%{REQUEST_METHOD}&url=$1 [QSA,L]
 </IfModule>
