@@ -1,9 +1,11 @@
 <?php
 
-/*Config file containing details of project environment configuration*/
+/**
+* environment.php configures environment error reporting
+* 
+* Sets state of error reporting based on the DEVELOPMENT_ENVIRONMENT boolean variable
+*/
 
-//Default to a debug invronment
-define('DEVELOPMENT_ENVIRONMENT', true);
 
 if(DEVELOPMENT_ENVIRONMENT){
     error_reporting(E_ALL);

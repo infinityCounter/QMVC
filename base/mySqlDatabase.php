@@ -1,33 +1,41 @@
 <?php
 
 require_once(ROOT_PATH . 'base/dbInterface.php');
-
-class SqlDatabase implements DBInterface
+/*
+* Class MySqlDatabase
+*
+* SQL database handler class; implements the methods defined by DBInterface
+* Connects to both MySQL databases
+*/
+class MySqlDatabase implements DBInterface
 {
     private $database;    //PDO object for database connection
     private $isConnected; //Boolean if successfully connected
 
     /**
-    * __construct()
-    * Construct of SqlDatabase class instance 
-    * Connect to sql database using PDO
-    * @param string $host
-    * @param int    $port
-    * @param string $dbname
-    * @param string $username
-    * @param string $password
+    * Class constructor
+    * Intializes an MySQL database connection with arguments given.
+    *
+    * @param string The hostname where the database is
+    * @param int    Port on host to connect to
+    * @param string Name of the database being connected to
+    * @param string Username to connect to the database
+    * @param string Password to connect to the database
     **/
 
     function __construct($host, $port, $dbname, $username, $password)
     {
         try{
+            //Use the PDO_MYSQL driver: http://php.net/manual/en/ref.pdo-mysql.php
             $host = "mysql:host=${host}";
             if ( isset($port) && $port !== '' ){
 
                 $host_port = $host . ":${port}";
             }    
             $connectionString = $host . ";dbname=${dbname}" ;
+            //Connect to database
             $this->database = new PDO ($connectionString, $username, $password);
+            //Throw PDO exceptions when error ooccur
             $this->database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->isConnected = true;
 
@@ -38,8 +46,11 @@ class SqlDatabase implements DBInterface
     }
 
     /**
-    * void closeConnection()
+    * public function closeConnection
+    *
     * Closes PDO database connection by setting PDO object to null
+    *
+    * @return void
     **/
     public function closeConnection()
     {
@@ -49,22 +60,14 @@ class SqlDatabase implements DBInterface
 
 
     /**
-    * execQuery($query, $params, $fetchmode)
+    * pubilc function execQuery
     *
-    * @param string $query
-    * @param array  $params
-    * @param string $fetchmode
+    * Prepares and executes $query, using $params as arguments, and returns results of query.
+    * @param string The string query to be executed using :identifier to identify locations to place arguments
+    * @param array  Arguments to be added to query
+    * @param string The mode to return query result object as either associated array or obejct
     * 
-    * @return array
-    * @return int
-    * @return null
-    *
-    * Method prepares $query for execution, 
-    * then bootstraps it with paramaters from $params argument,
-    * and executes the query. 
-    * Returns the query results if query is either select or show statement.
-    * Returns number of rows affected if query is insert, update, or delete.
-    * Returns null otherwise
+    * @return array | int | null Returns array of row results if SELECT or SHOW statment, and number of rows modified if UPDATE or DELETE 
     **/
     public function execQuery($query, $params = null, $fetchmode = PDO::FETCH_ASSOC)
     {
@@ -105,12 +108,10 @@ class SqlDatabase implements DBInterface
     }
 
     /**
-    * public function isConnected()
+    * public function isConnected
     * 
-    * @return boolean $isConnected
-    *
-    * Returns the wether or not the database is connected.
-    **/
+    * @return boolean Boolean indicating if there is a current active database connection
+    */
     public function isConnected()
     {   
         return $this->isConnected;
@@ -118,7 +119,7 @@ class SqlDatabase implements DBInterface
 
 
     /**
-    * __destruct()
+    * Class destructor 
     *
     * Closes database connection before destroying object.
     **/

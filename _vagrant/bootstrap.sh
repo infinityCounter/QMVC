@@ -22,12 +22,11 @@ sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/mysql/app-pass password $
 sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2"
 sudo apt-get -y install phpmyadmin
 
-# Create project folder, written in 3 single mkdir-statements to make sure this runs everywhere without problems
 sudo mkdir "/var/www"
 sudo mkdir "/var/www/html"
 sudo mkdir "/var/www/html/${PROJECTFOLDER}"
 
-# setup hosts file
+#Change apache2 document root and enable mod .htaccess 
 VHOST=$(cat <<EOF
 <VirtualHost *:80>
     DocumentRoot "/var/www/html"
@@ -40,21 +39,16 @@ EOF
 )
 echo "${VHOST}" > /etc/apache2/sites-available/000-default.conf
 
-# enable mod_rewrite
 sudo a2enmod rewrite
 
-# restart apache
 service apache2 restart
 
-# remove default apache index.html
 sudo rm "/var/www/html/index.html"
 
 sudo apt-get -y install libapache2-mod-php7.0
 
-# install git
 sudo apt-get -y install git
 
-# git clone MINI
 sudo git clone https://github.com/infinityCounter/QMVC "/var/www/html/${PROJECTFOLDER}"
 cd "/var/www/html/${PROJECTFOLDER}"
 sudo git checkout dev

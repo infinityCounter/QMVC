@@ -5,8 +5,10 @@ PROJECTFOLDER='QMVC'
 
 
 # git pull QMVC
-if [ is_dir  "/var/www/html/${PROJECTFOLDER}"]; then
-    ("./bootstrap.sh")
-fi
+if [ -d "/var/www/html/${PROJECTFOLDER}" ] 
+then
+    (exec "./bootstrap.sh") 
+else
     cd "/var/www/html/${PROJECTFOLDER}"
     sudo git pull
+fi
