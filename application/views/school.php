@@ -1,8 +1,7 @@
 <html>
-
     <head>
-        <link rel="stylesheet" href="<?php echo('application/lib/bootstrap/css/bootstrap.min.css')?>">
-        <link rel="stylesheet" href="<?php echo('application/styles/style.css')?>">
+        <link rel="stylesheet" href="<?php echo(URL . '/application/lib/bootstrap/css/bootstrap.min.css')?>">
+        <link rel="stylesheet" href="<?php echo(URL . '/application/styles/style.css')?>">
         <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Roboto|Roboto+Slab" rel="stylesheet">
     </head>
 
@@ -12,7 +11,7 @@
             <!--SIDE BAR FOR PAGE-->
             <div  id="pageWrapper" class="row">
                 <div id="webHeader" class="col-sm-4 col-md-4">
-                    <img src="<?php echo('application/img/banner.jpg')?>">
+                    <img src="<?php echo(URL . '/application/img/banner.jpg')?>">
                     <div class="row menuRow">
                         <div class="col-md-12 col-sm-12 menuHeader">
                             NATIONAL SCHOOL REGISTRAR
@@ -86,8 +85,8 @@
 
         </div>
 
-        <script src="<?php echo('application/lib/jquery/jquery-3.1.1.min.js')?>"></script>
-        <script src="<?php echo('application/lib/bootstrap/js/bootstrap.min.js')?>"></script>
-        <script src="<?php echo('application/js/school.js')?>"></script>
+        <script src="<?php echo(URL . '/application/lib/jquery/jquery-3.1.1.min.js')?>"></script>
+        <script src="<?php echo(URL . '/application/lib/bootstrap/js/bootstrap.min.js')?>"></script>
+        <script src="<?php echo(URL . '/application/js/school.js')?>"></script>
     </body>
 </html>
