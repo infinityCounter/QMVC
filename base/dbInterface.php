@@ -11,7 +11,7 @@ interface DBInterface
 
     public function closeConnection();
 
-    public function execQuery($query, $params = NULL, $fetchmode = PDO::FETCH_ASSOC);
+    public function execQuery($query, $params = null, $fetchmode = PDO::FETCH_ASSOC);
 
     public function isConnected();
 

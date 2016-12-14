@@ -6,16 +6,19 @@
 **/
 class SchoolCtrl extends Controller
 {
-
+    /**
+    * @var arr $schools stores returnes associative array from table
+    **/ 
     public $schools;
 
+    
     /**
-    * Does not defined controller, instead inherits parant controller
+    * getSchool()
+    * @param  int $schoolId, the primary key of the schools table
+    * @return arr returns an array with the contents of the fields for the target school
     **/
-
-    function getSchool($schoolId = NULL)
+    function getSchool($schoolId)
     {
-
         $this->schools = $this->model->getSchool($schoolId);
         return $this->schools;
     }
@@ -27,32 +30,31 @@ class SchoolCtrl extends Controller
     **/
     public function getSchools()
     {
-
         $this->schools = $this->model->getAllSchools();
         return $this->schools;
     }
 
-    public function deleteSchool($schoolId = NULL)
+    public function deleteSchool($schoolId)
     {
         $this->deleteResult = $this->model->deleteSchool($schoolId);
         return $this->deleteResult;
     }
 
-    public function insertSchool($name = NULL, $address, $telephone, $principal = NULL)
+    public function insertSchool($name, $address, $telephone)
     {
-        $this->insertResult = $this->model->insertSchool($name, $address, $telephone, $principal);
+        $this->insertResult = $this->model->insertSchool($name, $address, $telephone);
         return $this->insertResult;
     }
 
-    public function updateSchool($schoolId = NULL, $name = NULL, $address, $telephone, $principal = NULL)
+    public function updateSchool($schoolId, $name, $address, $telephone)
     {
-        $this->updateResult = $this->model->updateSchool($schoolId, $name, $address, $telephone, $principal);
+        $this->updateResult = $this->model->updateSchool($schoolId, $name, $address, $telephone);
         return $this->updateResult;
     }
 
     public function render()
     {    
-        if($this->schools === NULL){
+        if ($this->schools === null){
             $this->getSchools();
         }
         require_once(ROOT_PATH . $this->template);

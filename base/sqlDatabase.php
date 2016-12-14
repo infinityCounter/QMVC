@@ -39,12 +39,12 @@ class SqlDatabase implements DBInterface
 
     /**
     * void closeConnection()
-    * Closes PDO database connection by setting PDO object to NULL
+    * Closes PDO database connection by setting PDO object to null
     **/
     public function closeConnection()
     {
-        $this->database = NULL;
-        $this->isConnected = NULL;
+        $this->database = null;
+        $this->isConnected = null;
     }
 
 
@@ -57,16 +57,16 @@ class SqlDatabase implements DBInterface
     * 
     * @return array
     * @return int
-    * @return NULL
+    * @return null
     *
     * Method prepares $query for execution, 
     * then bootstraps it with paramaters from $params argument,
     * and executes the query. 
     * Returns the query results if query is either select or show statement.
     * Returns number of rows affected if query is insert, update, or delete.
-    * Returns NULL otherwise
+    * Returns null otherwise
     **/
-    public function execQuery($query, $params = NULL, $fetchmode = PDO::FETCH_ASSOC)
+    public function execQuery($query, $params = null, $fetchmode = PDO::FETCH_ASSOC)
     {
         //Replace return carriage with blank space
         $query = trim(str_replace("\r", " ", $query));
@@ -78,7 +78,7 @@ class SqlDatabase implements DBInterface
         $preparedQuery = $this->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         try{
             //If an argument array of parameters for the query is provided
-            if ($params !== NULL && is_array($params)){
+            if ($params !== null && is_array($params)){
                 //Execute query with argument array
                 $preparedQuery->execute($params);
             } else {
@@ -99,7 +99,7 @@ class SqlDatabase implements DBInterface
             return $preparedQuery->rowCount();
         } else {
             
-            return NULL;
+            return null;
         }
 
     }

@@ -2,8 +2,7 @@
 function deleteSchool(id){
 
     var xmlHttp = new XMLHttpRequest();
-    console.log('http://localhost/QMVC/school/'+id);
-    xmlHttp.open( "DELETE", 'http://localhost/QMVC/school/'+id, false ); // false for synchronous request
+    xmlHttp.open( "DELETE", window.location.href + '/' + id, false ); // false for synchronous request
     xmlHttp.send( null );
     location.reload();
 }
@@ -15,7 +14,7 @@ function createSchool(){
     var telephone = document.getElementById('newTelephone').value;
     var requestBody = JSON.stringify({"Name": name, "Address": address, "Telephone": telephone});
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "POST", 'http://localhost/QMVC/school', false ); // false for synchronous request
+    xmlHttp.open( "POST", Window.location.href, false ); // false for synchronous request
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(requestBody);
     location.reload();
@@ -29,7 +28,7 @@ function updateSchool(id){
     var requestBody = JSON.stringify({"Name": name, "Address": address, "Telephone": telephone});
     console.log(requestBody);
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "PUT", 'http://localhost/QMVC/school/'+id, false ); // false for synchronous request
+    xmlHttp.open( "PUT", window.location.href + '/' + id, false ); // false for synchronous request
     xmlHttp.setRequestHeader("Content-Type", "application/json");
     xmlHttp.send(requestBody);
     location.reload();

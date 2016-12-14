@@ -49,7 +49,7 @@ class SchoolModel extends Model
 	
 	public function deleteSchool($schoolId = '')
 	{	
-		if (isset($schoolId) && $schoolId !== NULL){
+		if (isset($schoolId) && $schoolId !== null){
 			
 			$query = 'DELETE FROM schools WHERE Id=:id;';
 			$args = array(':id' => $schoolId);
@@ -61,10 +61,10 @@ class SchoolModel extends Model
 		}
 	}
 	
-	public function insertSchool($name, $address, $telephone, $principal = NULL)
+	public function insertSchool($name, $address, $telephone, $principal = null)
 	{	
 		$query = 'INSERT INTO schools (Id, Name, Address, Telephone) 
-                    VALUES (NULL, :name, :address, :telephone);';	
+                    VALUES (null, :name, :address, :telephone);';	
 		$args = array(
 		                ':name' => $name,
 		                ':address' => $address,
@@ -74,7 +74,7 @@ class SchoolModel extends Model
 		return $numOfRowsAffected;
 	}
 	
-	public function updateSchool($schoolId, $name, $address, $telephone, $principal = NULL)
+	public function updateSchool($schoolId, $name, $address, $telephone, $principal = null)
 	{	
 		$query = "UPDATE schools SET Name=:name, Address=:address, Telephone=:telephone WHERE Id=:Id;";	
 		$args = array(

@@ -6,14 +6,14 @@
 **/
 abstract class Controller 
 {
-    protected $template = NULL; //Will be inherited by child classes
-    protected $model = NULL;
+    protected $template = null; //Will be inherited by child classes
+    protected $model = null;
 
     /**
     * Class constructor. Constructor accepts parameter to allow state overloading
     * Multiple different states can have the same controller. 
     **/
-    function __construct($model = NULL, $template)
+    function __construct($model = null, $template)
     {
         $this->template = $template;
         $this->model= $model;

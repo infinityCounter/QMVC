@@ -7,4 +7,4 @@ host = localhost
 port = 
 dbname = national_school_registrar
 user = root
-password = 
+password = root

@@ -1,7 +1,7 @@
 <html>
 
     <head>
-        <link rel="stylesheet" href="<?php echo('lib/bootstrap/css/bootstrap.min.css')?>">
+        <link rel="stylesheet" href="<?php echo('application/lib/bootstrap/css/bootstrap.min.css')?>">
         <link rel="stylesheet" href="<?php echo('application/styles/style.css')?>">
         <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Roboto|Roboto+Slab" rel="stylesheet">
     </head>
@@ -86,8 +86,8 @@
 
         </div>
 
-        <script src="<?php echo('lib/jquery/jquery-3.1.1.min.js')?>"></script>
-        <script src="<?php echo('lib/bootstrap/js/bootstrap.min.js')?>"></script>
+        <script src="<?php echo('application/lib/jquery/jquery-3.1.1.min.js')?>"></script>
+        <script src="<?php echo('application/lib/bootstrap/js/bootstrap.min.js')?>"></script>
         <script src="<?php echo('application/js/school.js')?>"></script>
     </body>
 </html>

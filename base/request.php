@@ -8,11 +8,11 @@
 class Request
 {	
 	
-	private $requestType = NULL;
-	private $requestURL = NULL;
-	private $requestBody = NULL;
-	private $requestURLArgs = NULL;
-	private $requestRESTArgs = NULL;
+	private $requestType = null;
+	private $requestURL = null;
+	private $requestBody = null;
+	private $requestURLArgs = null;
+	private $requestRESTArgs = null;
 	
 	
 	public function getRequestType()
@@ -57,10 +57,13 @@ class Request
 		$this->requestURL = "/".trim($requestURL, '/');
 		
 		if ($this->requestType === 'PUT' && $_SERVER["CONTENT_TYPE"] !== 'application/json'){
+			
 			parse_str(file_get_contents("php://input"), $this->requestBody); 
-		}else if (($this->requestType === 'PUT' || $this->requestType === 'POST')&& $_SERVER["CONTENT_TYPE"] === 'application/json'){
+		} else if (($this->requestType === 'PUT' || $this->requestType === 'POST')&& $_SERVER["CONTENT_TYPE"] === 'application/json'){
+			
 			$this->requestBody = json_decode(file_get_contents("php://input"), true);
-		}else if ($this->requestType === 'POST' && $_SERVER["CONTENT_TYPE"] !== 'application/json'){
+		} else if ($this->requestType === 'POST' && $_SERVER["CONTENT_TYPE"] !== 'application/json'){
+			
 			$this->requestBody = $_POST;
 		}
 		$this->requestURLArgs = $_REQUEST;

@@ -3,20 +3,20 @@
 /**
 * Router class
 * Manages routing of application and communication between controllers and requests 
-**/
+*/
 
 require_once(ROOT_PATH . 'base/request.php');
 
 class Router 
 {	
-	private $stateTable = NULL;
-	private $Request = NULL;
+	private $stateTable = null;
+	private $Request = null;
 	private $fallback;
 
 	/**
-	* Instantiate class with the state table defined in states.php
-	* Instantiate new Request object
-	**/
+	* Constructor of Router class.
+	* Inititalizes the value of local memebers from input
+	*/
 	function __construct($stateTable, $fallback = '/otherwise')
 	{	
 		$this->stateTable = $stateTable;
@@ -25,9 +25,14 @@ class Router
 	}
 
 	/**
-	* @method loadRequestState()
+	* loadRequested() state loads the state matching the requesting URI
 	*
-	**/
+	* Calls helper methods from Request class to help manipulate URL
+	* and Request objects. Makes secondary call to retreive state data
+	* Instantiate state associated with the original requested URI
+	*
+	* @return void 
+	*/
 	public function loadRequestedState()
 	{
 
@@ -36,6 +41,7 @@ class Router
 			throw new Exception("NO STATE TABLE PROVIDED TO ROUTER");
 		}
 		
+		/*Calls method on Request object to parse the Request*/
         $this->Request->parseRequest();
 		$stateConfig = $this->getRouteData();
         if (empty($stateConfig)){
@@ -45,7 +51,7 @@ class Router
 
 		else if (isset($stateConfig['controller'])){
 			
-			$model = ($stateConfig['model']) ? new $stateConfig['model']() : NULL;
+			$model = ($stateConfig['model']) ? new $stateConfig['model']() : null;
 			$controller = new $stateConfig['controller']($model, $stateConfig['template']);
 			$actionExists = isset($stateConfig['actions'][$this->Request->getRequestType()]);
 			if ($actionExists){
@@ -101,7 +107,7 @@ class Router
 			}
 		}
 		
-		return NULL;
+		return null;
 	}
 	
 }
