@@ -30,8 +30,8 @@ sudo mkdir "/var/www/html/${PROJECTFOLDER}"
 # setup hosts file
 VHOST=$(cat <<EOF
 <VirtualHost *:80>
-    DocumentRoot "/var/www/html/${PROJECTFOLDER}/public"
-    <Directory "/var/www/html/${PROJECTFOLDER}/public">
+    DocumentRoot "/var/www/html/${PROJECTFOLDER}"
+    <Directory "/var/www/html/${PROJECTFOLDER}">
         AllowOverride All
         Require all granted
     </Directory>
