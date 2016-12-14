@@ -29,6 +29,11 @@
                                 SCHOOL REGISTRAR
                             </div>
                         </div></a>
+                        <a href="<?php echo(URL . '/badrequest')?>"><div class="row menuRow menuItem">
+                            <div class="col-md-12 col-sm-12">
+                                BAD REQUEST
+                            </div>
+                        </div></a>
                     </div>
                 </div>
 
@@ -78,7 +83,7 @@
 
                                 <p>The School Registrar page allows you to view all the schools in the National
                                 School Registrar database, as well as perform supported CRUD operations on them.
-                                The contact form will write a new information request to the database. </p>
+                                You can also test out fallbacks by making a bad request with the bad request link. </p>
                         </div>
                     </div>
                 </div>
