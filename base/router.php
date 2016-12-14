@@ -19,12 +19,11 @@ class Router
 	*
 	* Inititalizes the value of local memebers from arguments
 	*
-	* @param array The array containing all states defined states.php config file
 	* @param string The fallback state that the class should redirect to if no matching state for request is found
 	*/
-	function __construct($stateTable, $fallback = '/otherwise')
+	function __construct($fallback = '/otherwise')
 	{	
-		$this->stateTable = $stateTable;
+		$this->stateTable = STATES;
 		$this->fallback = $fallback;
 		$this->Request = new Request();
 	}

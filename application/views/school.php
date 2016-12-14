@@ -28,6 +28,11 @@
                                 SCHOOL REGISTRAR
                             </div>
                         </div></a>
+                        <a href="<?php echo(URL . '/badrequest')?>"><div class="row menuRow menuItem">
+                            <div class="col-md-12 col-sm-12">
+                                BAD REQUEST
+                            </div>
+                        </div></a>
                     </div>
                 </div>
 

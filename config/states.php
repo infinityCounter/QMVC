@@ -9,10 +9,10 @@
 
 
 /**
-* $state contains all the routing information for the application
+* STATES contains all the routing information for the application
 * and take the form 
 *
-* $states = array(
+* array(
 *   
 *    '/routeURI' => array(
 *        'model' => 'StateModel',
@@ -27,7 +27,7 @@
 *
 * '/othwerise' is the default fallback state 
 */
-$states = array(
+define('STATES', array(
 
     //Uri for root
     '/' => array(
@@ -60,5 +60,5 @@ $states = array(
     '/otherwise' => array(
          'template' => 'application/views/error.php',
      ),
-);
+));
 ?>

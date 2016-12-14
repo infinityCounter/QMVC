@@ -36,8 +36,8 @@ require_once(APP_PATH . 'models/school.php');
 //Controller includes
 require_once(APP_PATH . 'controllers/school.php');
 
-//Creates a new Router object with the states defined in states.php
-$Router = new Router($states);
+//Creates a new Router object
+$Router = new Router();
 //Load the State that the request Uri mapped to
 $Router->loadRequestedState();
 ?>
