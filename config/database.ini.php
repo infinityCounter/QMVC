@@ -5,6 +5,6 @@
 [SQL]
 host = localhost
 port = 
-dbname = testdb
+dbname = national_school_registrar
 user = root
 password = 

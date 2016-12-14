@@ -18,7 +18,12 @@
 * othwise is to be set to the fallback/default state at all times.
 **/
 $states = array(
-    '/home' => array(
+
+    '/' => array(
+        'template' => 'application/views/home.php'
+    ),
+
+    '/school' => array(
         'model'     => 'SchoolModel',
         'controller' => 'SchoolCtrl',
         'template' => 'application/views/school.php',
@@ -26,7 +31,7 @@ $states = array(
                            'POST' => 'insertSchool')
     ),
 
-    '/home/{id}' => array(
+    '/school/{id}' => array(
         'model'     => 'SchoolModel',
         'controller' => 'SchoolCtrl',
         'template' => 'application/views/school.php',
@@ -36,7 +41,7 @@ $states = array(
     ),
 
     '/otherwise' => array(
-         'template' => 'views/error.php',
+         'template' => 'application/views/error.php',
      ),
 );
 ?>

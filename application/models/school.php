@@ -1,9 +1,10 @@
 <?php
 
 /**
-School class extends Model
+*School class extends Model
 */
-class SchoolModel extends Model {
+class SchoolModel extends Model 
+{
 	
 	
 	/**
@@ -19,8 +20,8 @@ class SchoolModel extends Model {
 	* @method getSchool($schoolId)
 	* Takes no argumets, returns all schools in database
 	**/
-	 public function getSchool($schoolId){
-		
+	 public function getSchool($schoolId)
+	 {	
 		$query = 'SELECT * FROM schools WHERE Id=:Id;';
 		$arg = array(':Id' => $schoolId);
 		$school = $this->databaseConnection->execQuery($query, $arg);
@@ -32,23 +33,24 @@ class SchoolModel extends Model {
 	* @method getAllSchools()
 	* Takes no argumets, returns all schools in database
 	**/
-	public function getAllSchools(){
-		
+	public function getAllSchools()
+	{	
 		$query = 'SELECT * FROM schools;';
 		$schools = $this->databaseConnection->execQuery($query);
 		return $schools;
 	}
 	
-	public function getAllTeachers(){
-		
+	public function getAllTeachers()
+	{	
 		$query = 'SELECT * FROM teachers;';
 		$teachers = $this->databaseConnection->execQuery($query);
 		return $teachers;
 	}
 	
-	public function deleteSchool($schoolId = ''){
-		
-		if(isset($schoolId) && $schoolId !== NULL){
+	public function deleteSchool($schoolId = '')
+	{	
+		if (isset($schoolId) && $schoolId !== NULL){
+			
 			$query = 'DELETE FROM schools WHERE Id=:id;';
 			$args = array(':id' => $schoolId);
 			$numOfRowsAffected = $this->databaseConnection->execQuery($query, $args);
@@ -59,31 +61,26 @@ class SchoolModel extends Model {
 		}
 	}
 	
-	public function insertSchool($name, $address, $telephone, $principal = NULL){
-		
-		$query = 'INSERT INTO schools (Id, Name, Address, Telephone, Principal) 
-                    VALUES (NULL, :name, :address, :telephone, :principal);';
-		
+	public function insertSchool($name, $address, $telephone, $principal = NULL)
+	{	
+		$query = 'INSERT INTO schools (Id, Name, Address, Telephone) 
+                    VALUES (NULL, :name, :address, :telephone);';	
 		$args = array(
 		                ':name' => $name,
 		                ':address' => $address,
-		                ':telephone' => $telephone,
-		                ':principal' => $principal
+		                ':telephone' => $telephone
 		        );
 		$numOfRowsAffected = $this->databaseConnection->execQuery($query, $args);
 		return $numOfRowsAffected;
 	}
 	
-	public function updateSchool($schoolId, $name, $address, $telephone, $principal = NULL){
-		
-		$query = "UPDATE schools SET Name=:name, Address=:address, Telephone=:telephone, Principal=:principal 
-                    WHERE Id=:Id;";
-		
+	public function updateSchool($schoolId, $name, $address, $telephone, $principal = NULL)
+	{	
+		$query = "UPDATE schools SET Name=:name, Address=:address, Telephone=:telephone WHERE Id=:Id;";	
 		$args = array(
 		                ':name' => $name,
 		                ':address' => $address,
 		                ':telephone' => $telephone,
-		                ':principal' => $principal,
 		                ':Id' => $schoolId
 		        );
 		$numOfRowsAffected = $this->databaseConnection->execQuery($query, $args);

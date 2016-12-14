@@ -1,25 +1,36 @@
 
 function deleteSchool(id){
 
-    console.log(id);
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "DELETE", 'http://localhost/QMVC/home/'+id, false ); // false for synchronous request
+    console.log('http://localhost/QMVC/school/'+id);
+    xmlHttp.open( "DELETE", 'http://localhost/QMVC/school/'+id, false ); // false for synchronous request
     xmlHttp.send( null );
-    return xmlHttp.responseText;
+    location.reload();
+}
+
+function createSchool(){
+
+    var name = document.getElementById('newName').value;
+    var address = document.getElementById('newAddress').value;
+    var telephone = document.getElementById('newTelephone').value;
+    var requestBody = JSON.stringify({"Name": name, "Address": address, "Telephone": telephone});
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "POST", 'http://localhost/QMVC/school', false ); // false for synchronous request
+    xmlHttp.setRequestHeader("Content-Type", "application/json");
+    xmlHttp.send(requestBody);
+    location.reload();
 }
 
 function updateSchool(id){
 
-    console.log(id);
-    var name = document.getElementsByName('Name')[0].value;
-    var address = document.getElementsByName('Address')[0].value;
-    var telephone = document.getElementsByName('Telephone')[0].value;
-    var principal = document.getElementsByName('Principal')[0].value;
-    var requestBody = JSON.stringify({"Name": name, "Address": address, "Telephone": telephone, "Principal": principal});
+    var name = document.getElementById(id+'Name').value;
+    var address = document.getElementById(id+'Address').value;
+    var telephone = document.getElementById(id+'Telephone').value;
+    var requestBody = JSON.stringify({"Name": name, "Address": address, "Telephone": telephone});
+    console.log(requestBody);
     var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "PUT", 'http://localhost/QMVC/home/'+id, false ); // false for synchronous request
+    xmlHttp.open( "PUT", 'http://localhost/QMVC/school/'+id, false ); // false for synchronous request
     xmlHttp.setRequestHeader("Content-Type", "application/json");
-  //  console.log(xmlHttp);
     xmlHttp.send(requestBody);
-    console.log(xmlHttp.response);
+    location.reload();
 }

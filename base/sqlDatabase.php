@@ -2,8 +2,8 @@
 
 require_once(ROOT_PATH . 'base/dbInterface.php');
 
-class SqlDatabase implements DBInterface{
-
+class SqlDatabase implements DBInterface
+{
     private $database;    //PDO object for database connection
     private $isConnected; //Boolean if successfully connected
 
@@ -18,11 +18,12 @@ class SqlDatabase implements DBInterface{
     * @param string $password
     **/
 
-    function __construct($host, $port, $dbname, $username, $password){
-
+    function __construct($host, $port, $dbname, $username, $password)
+    {
         try{
             $host = "mysql:host=${host}";
-            if( isset($port) && $port !== '' ){
+            if ( isset($port) && $port !== '' ){
+
                 $host_port = $host . ":${port}";
             }    
             $connectionString = $host . ";dbname=${dbname}" ;
@@ -30,8 +31,7 @@ class SqlDatabase implements DBInterface{
             $this->database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $this->isConnected = true;
 
-        }   catch(PDOException $e)  {
-            
+        }   catch (PDOException $e){
             //Left unhandled; To be handled in model
             throw new Exception("Connection failed: " . $e->getMessage());
         }
@@ -41,7 +41,8 @@ class SqlDatabase implements DBInterface{
     * void closeConnection()
     * Closes PDO database connection by setting PDO object to NULL
     **/
-    public function closeConnection(){
+    public function closeConnection()
+    {
         $this->database = NULL;
         $this->isConnected = NULL;
     }
@@ -65,8 +66,8 @@ class SqlDatabase implements DBInterface{
     * Returns number of rows affected if query is insert, update, or delete.
     * Returns NULL otherwise
     **/
-    public function execQuery($query, $params = NULL, $fetchmode = PDO::FETCH_ASSOC){
-
+    public function execQuery($query, $params = NULL, $fetchmode = PDO::FETCH_ASSOC)
+    {
         //Replace return carriage with blank space
         $query = trim(str_replace("\r", " ", $query));
 
@@ -77,7 +78,7 @@ class SqlDatabase implements DBInterface{
         $preparedQuery = $this->database->prepare($query, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
         try{
             //If an argument array of parameters for the query is provided
-            if($params !== NULL && is_array($params)){
+            if ($params !== NULL && is_array($params)){
                 //Execute query with argument array
                 $preparedQuery->execute($params);
             } else {
@@ -85,16 +86,19 @@ class SqlDatabase implements DBInterface{
                 $preparedQuery->execute();
             }
         
-        }catch(PDOException $e){
+        }catch (PDOException $e){
             throw new Exception($e);
         }
 
         $statementType = strtolower($statementType);
         if ($statementType === 'select' || $statementType === 'show') {
+            
             return $preparedQuery->fetchAll($fetchmode);
         } else if ($statementType === 'insert' || $statementType === 'update' || $statementType === 'delete') {
+            
             return $preparedQuery->rowCount();
         } else {
+            
             return NULL;
         }
 
@@ -107,8 +111,8 @@ class SqlDatabase implements DBInterface{
     *
     * Returns the wether or not the database is connected.
     **/
-    public function isConnected(){
-        
+    public function isConnected()
+    {   
         return $this->isConnected;
     }
 
@@ -118,8 +122,8 @@ class SqlDatabase implements DBInterface{
     *
     * Closes database connection before destroying object.
     **/
-    function __destruct(){
-        
+    function __destruct()
+    {    
         $this->closeConnection();
     }
 

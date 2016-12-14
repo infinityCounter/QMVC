@@ -10,7 +10,7 @@ define('ROOT_PATH', dirname(__DIR__) . '/' );
 define('APP_PATH', ROOT_PATH . "application/");
 
 //Load composer dependencies
-if (file_exists(ROOT_PATH . 'vendor/autoload.php')) {
+if (file_exists(ROOT_PATH . 'vendor/autoload.php')){
     require ROOT_PATH . 'vendor/autoload.php';
 }
 
@@ -38,5 +38,6 @@ require_once(APP_PATH . 'models/school.php');
 //Controller includes
 require_once(APP_PATH . 'controllers/school.php');
 
-Router::loadState($states);
+$Router = new Router($states);
+$Router->loadRequestedState();
 ?>

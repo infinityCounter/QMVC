@@ -6,7 +6,8 @@
 * handle different types of databases: MySQL, Postgres
 * 
 **/  
-interface DBInterface {
+interface DBInterface 
+{
 
     public function closeConnection();
 

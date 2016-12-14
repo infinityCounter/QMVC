@@ -5,69 +5,66 @@
 * abstracts Request manipulation functions from Router
 **/
 
-class Request{
+class Request
+{	
+	
+	private $requestType = NULL;
+	private $requestURL = NULL;
+	private $requestBody = NULL;
+	private $requestURLArgs = NULL;
+	private $requestRESTArgs = NULL;
 	
 	
-	private static $requestType = NULL;
-	private static $requestURL = NULL;
-	private static $requestBody = NULL;
-	private static $requestURLArgs = NULL;
-	private static $requestRESTArgs = NULL;
-	
-	
-	public static function getRequestType(){
-		return self::$requestType;
+	public function getRequestType()
+	{
+		return $this->requestType;
 	}
 	
-	public static function getRequestBody(){
-		return self::$requestBody;
+	public function getRequestBody()
+	{
+		return $this->requestBody;
 	}
 	
-	public static function getRequestUrl(){
-		return self::$requestURL;
+	public function getRequestUrl()
+	{
+		return $this->requestURL;
 	}
 	
-	public static function getRequestUrlArgs(){
-		return self::$requestURLArgs;
+	public function getRequestUrlArgs()
+	{
+		return $this->requestURLArgs;
 	}
 	
-	public static function getRequestRestArgs(){
-		return self::$requestRESTArgs;
+	public function getRequestRestArgs()
+	{
+		return $this->requestRESTArgs;
 	}
 	
-	public static function spliceRestArgs($routeURI){
+	public function spliceRestArgs($routeURI)
+	{
 		$requestURLArray = explode('/', self::getRequestUrl());
 		$routeURIArray = explode('/', $routeURI);
-		self::$requestRESTArgs = array_diff($requestURLArray, $routeURIArray);
+		$this->requestRESTArgs = array_diff($requestURLArray, $routeURIArray);
 	}
 	
-	public static function parseRequest(){
-		
-		
-		self::$requestType = $_REQUEST["requestType"];
+	public function parseRequest()
+	{	
+		$this->requestType = $_REQUEST["requestType"];
 		$requestURL = $_REQUEST["url"];
 		$requestURL = trim($requestURL, " ");
 		$requestURL = trim($requestURL, " \t");
 		$requestURL = trim($requestURL, " \n");
-		self::$requestURL = "/".trim($requestURL, "/");
+		$this->requestURL = "/".trim($requestURL, '/');
 		
-		
-		/***
-		* Won't be using the body of DELETE or GET requests
-        * But get them anyway
-        ***/
-        if(self::$requestType === 'PUT' || self::$requestType === 'DELETE'){
-            if($_SERVER["CONTENT_TYPE"] !== 'application/json'){
-                parse_str(file_get_contents("php://input"), self::$requestBody); 
-            }
-            else{
-                self::$requestBody = json_decode(file_get_contents("php://input"), true);
-            }
-        }else if(self::$requestType === 'POST'){
-            self::$requestBody = $_POST;
-        }
-		self::$requestURLArgs = $_REQUEST; 
-        unset(self::$requestURLArgs['requestType'], self::$requestURLArgs['url']);
+		if ($this->requestType === 'PUT' && $_SERVER["CONTENT_TYPE"] !== 'application/json'){
+			parse_str(file_get_contents("php://input"), $this->requestBody); 
+		}else if (($this->requestType === 'PUT' || $this->requestType === 'POST')&& $_SERVER["CONTENT_TYPE"] === 'application/json'){
+			$this->requestBody = json_decode(file_get_contents("php://input"), true);
+		}else if ($this->requestType === 'POST' && $_SERVER["CONTENT_TYPE"] !== 'application/json'){
+			$this->requestBody = $_POST;
+		}
+		$this->requestURLArgs = $_REQUEST;
+		unset($this->requestURLArgs['requestType'], $this->requestURLArgs['url']);
     }
 }
 ?>
