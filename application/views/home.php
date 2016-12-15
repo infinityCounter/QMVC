@@ -74,7 +74,7 @@
                                         JSON friendly
                                     </li>
                                     <li>
-                                        Easily to setup, and go!
+                                        Easy to setup, and go!
                                     </li>
                                     <li>
                                         Various MVC combinations.
