@@ -8,20 +8,29 @@ ______
 I recommed using method 1, as the environment will be the same as when this project was being created.
 
 Method 1:
+
 1. Clone this repository.
+
 2. If not already installed, install [Vagrant](http://vagrantup.com).
+
 3. Navigate to the \_vagrant under the project root and run Vagrant up. 
+
 4. That's it. Server and test application should be running and accessible on localhost:9820/QMVC/
 
-Metod 2:
+
+Method 2:
+
 1. Download the bootstrap.sh file located under \_vagrant in this repository.
+
 2. Run the script.
+
 3. Done. Project should be live on localhost:80/QMVC/ 
 ______
 
 ##Understanding project layout
 
 The QMVC project is structured as follows:
+
 ```
 *application --- Folder where all source code and project resources should be placed
 
@@ -103,14 +112,14 @@ abstract class Controller
 defined by abstract Controller class:  
 
 ######*protected* $template:
-    An inheritable private variable of type String that will contain the relative path from project root to your template file.
+ An inheritable private variable of type String that will contain the relative path from project root to your template file.
     
 ######*protected* $model:
-    An inheritable private variable of type Model that will keep an instance of the model.
+ An inheritable private variable of type Model that will keep an instance of the model.
 
 
 #######function render();
-    May be ovewridden in extending controller. Default Renders the view template provided to the constructor.
+ May be ovewridden in extending controller. Default Renders the view template provided to the constructor.
 
 --
 
@@ -187,7 +196,8 @@ Please keep that in mind when creating states.
 * Subviews
 * Support for Postgres, MongoDB, and Firebase databases
 * Getting environment database information
-______
+
+_________
 
 *DOCUMENTATION TO BE UPDATED IN THE FUTURE*
 author: Emile Keith (@infinityCounter)
