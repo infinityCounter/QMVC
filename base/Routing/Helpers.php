@@ -32,5 +32,4 @@ function validRequestType($unsureType)
     if($unsureType == DELETE) return true;
     return false;
 }
-
 ?>

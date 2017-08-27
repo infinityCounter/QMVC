@@ -4,36 +4,61 @@ namespace QMVC\Base\Routing;
 
 class Router 
 {
-    private $routeMap = [GET => [], POST => [], PUT => [], DELETE => []];
+    private static $routeMap = [GET => [], POST => [], PUT => [], DELETE => []];
 
-    public function get($URI, $routeHandler) 
-    { 
-        addRoute($URI, GET, $routeHandler); 
+    public static function getRouteMap()
+    {
+        return self::$routeMap;
     }
 
-    public function post($URI, $routeHandler) 
+    public static function get($URI, $routeHandler) 
     { 
-        addRoute($URI, POST, $routeHandler); 
+        self::addRoute($URI, GET, $routeHandler); 
     }
 
-    public function put($URI, $routeHandler) 
+    public static function post($URI, $routeHandler) 
     { 
-        addRoute($URI, PUT, $routeHandler); 
+        self::addRoute($URI, POST, $routeHandler); 
     }
 
-    public function delete($URI, $routeHandler) 
+    public static function put($URI, $routeHandler) 
     { 
-        addRoute($URI, DELETE, $routeHandler); 
+        self::addRoute($URI, PUT, $routeHandler); 
     }
 
-    public function addRoute($URI, $reqType, $routeHandler)
+    public static function delete($URI, $routeHandler) 
+    { 
+        self::addRoute($URI, DELETE, $routeHandler); 
+    }
+
+    public static function any($URI, $routeHandler)
+    {
+        self::get($URI, $routeHandler);
+        self::post($URI, $routeHandler);
+        self::put($URI, $routeHandler);
+        self::delete($URI, $routeHandler);
+    }
+
+    public static function addRoute($URI, $reqType, $routeHandler)
     {
         $cleanURI = cleanURI($URI);
         $cleanReqType = trim(strtoupper($reqType));
         if(!validReqType($cleanReqType)) 
             throw new InvalidArgumentException("${cleanReqType} is not a supported HTTP method.");
         $route = ($routeHandler instanceof Route ) ? new Route($cleanURI, $routeHandler) : $routeHandler;
-        $this->routeMap[$cleanReqType][$cleanURI] = $route; 
+        self::$routeMap[$cleanReqType][$cleanURI] = $route; 
+    }
+
+    public static function matchRoute($requestedURI)
+    {
+        // Requested URI is clean and returned without query string
+        // ex. /uri/fX/19/hello/?million=5 => uri/fx/19/hello
+        $cleanReqURI = cleanURI(strtok($requestedURI, '?'));
+        $queryStringCleaner = function($uncleanVal) 
+        {
+            return cleanURI($uncleanVal);
+        };
+        array_map($queryStringCleaner, $_REQUEST);
     }
 }
 

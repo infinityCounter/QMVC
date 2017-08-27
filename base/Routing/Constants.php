@@ -11,6 +11,6 @@ const JSON_HEADER = 'application/json';
 const CONTENT_TYPE = 'CONTENT_TYPE';
 const PHP_INPUT = 'php://input';
 
-const HANDLER_METHOD_SIG = 'handler';
+const HANDLER_METHOD_SIG = 'handleRequest';
 
 ?>
