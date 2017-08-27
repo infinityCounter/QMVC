@@ -1,5 +1,8 @@
 <?php
 
+namespace QMVC\base;
+use Security;
+
 /**
 * class Request
 *
@@ -15,6 +18,7 @@ class Request
 	private $requestBody = null;
 	private $requestURLArgs = null;
 	private $requestRESTArgs = null;
+
 	
 	/**
 	* public function getRequestType
@@ -96,9 +100,7 @@ class Request
 		$this->requestType = $_REQUEST["requestType"];
 		$requestURL = $_REQUEST["url"];
 		//Trim any white space, tabs or line feeds from the URL
-		$requestURL = trim($requestURL, " ");
-		$requestURL = trim($requestURL, " \t");
-		$requestURL = trim($requestURL, " \n");
+		$requestURL = trim($requestURL);
 		//Trim any forward slashes from the body and concatiante one to the start of the string
 		//Allows it to later properly match routes defines in $state
 		$this->requestURL = "/".trim($requestURL, '/');

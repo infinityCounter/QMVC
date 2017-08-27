@@ -1,5 +1,7 @@
 <?php
 
+namespace QMVC\base;
+
 /**
 * abstract class Controller
 *
