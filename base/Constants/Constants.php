@@ -16,4 +16,6 @@ const PHP_INPUT = 'php://input';
 
 const HANDLER_METHOD_SIG = 'handleRequest';
 
+const DELIM_URI = '/';
+
 ?>

@@ -58,6 +58,11 @@ class Request
         $this->requestURI = $cleanedURI;
     }
 
+    public function getRequestURI()
+    {
+        return $this->requestURI;
+    }
+
     public function setRequestHTTPType($type)
     {
         if(!isValidHTTPRequestType($type))
@@ -65,24 +70,64 @@ class Request
         $this->requestHTTPType = $type;
     }
 
+    public function getRequestHTTPType()
+    {
+        return $this->requestHTTPType;
+    }
+
     public function setRequestHeaders($headers)
     {
         $this->requestHeaders = array_map(CLEAN_STR, $headers);
     }
 
-    public function setRequestBodyArgs($bodyArgs)
+    public function getRequestHeaders()
     {
-        throw new Exception("NOT YET IMPELEMENTED!");
+        return $this->requestHeaders;
     }
 
-    public function setRequestQueryStringArgs()
+    public function setRequestBodyArgs($bodyArgs)
     {
-        throw new Exception("NOT YET IMPELEMENTED!");
+        if(!is_array($bodyArgs)) 
+            throw new InvalidArgumentException("The argument passed is not an array. An array must be passed to the setRequestBodyArgs method.");
+        $this->requestBodyArgs = array_map(function($val)
+        {
+            return cleanInputStr($val, true);
+        }, $bodyArgs);
+    }
+
+    public function getRequestBodyArgs()
+    {
+        return $this->requestBodyArgs;
+    }
+
+    public function setRequestQueryStringArgs($queryStringArgs)
+    {
+        if(!is_array($queryStringArgs)) 
+            throw new InvalidArgumentException("The argument passed is not an array. An array must be passed to the setQueryStringArgs method.");
+        $this->requestQueryStringArgs = cleanInputStrArray($queryStringArgs);
+    }
+
+    public function getRequestQueryStringArgs()
+    {
+        return $this->requestQueryStringArgs;
     }
 
     public function setRequestRESTArgs($routeURI)
     {
-        throw new Exception("NOT YET IMPELEMENTED!");
+        $cleanedRouteURI = cleanURI(parse_url($routeURI, PHP_URL_PATH));
+        $cleanedRouteURI = array_map(function($val)
+        {
+            return trim($val, "{}");
+        }, $cleanedRouteURI);   
+        $exactURIArr = explode(DELIM_URI, trim($this->requestURI, DELIM_URI));
+        $matchedURIArr = explode(DELIM_URI, trim($cleanedRouteURI, DELIM_URI));
+        $arrDiffPairs = arrayTrueDiff($exactURIArr, $matchedURIArr);
+        $this->requestRESTArgs = convertValPairsToAssociate($arrDiffPairs);
+    }
+
+    public function getRequestRESTArgs()
+    {
+        return $this->requestRESTArgs();
     }
 
     public function isHTTPS()
