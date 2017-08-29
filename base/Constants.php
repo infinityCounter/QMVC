@@ -1,8 +1,8 @@
 <?php 
 
 namespace QMVC\Base;
-use Routing;
+use Constants;
 
-const VERSION = 1.1;
+const VERSION = 2.0;
 
 ?>

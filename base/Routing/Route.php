@@ -27,7 +27,7 @@ class Route
 
     public function setHandler($handler) 
     {
-        if(!validRouteHandler($handler))
+        if(!isValidRouteHandler($handler))
             throw new RuntimeException("Handler is not callable. Argument not method or class with public " . HANDLER_METHOD_SIG . " method.");
         $this->handler = $handler;
     }

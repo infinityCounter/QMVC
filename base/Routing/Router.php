@@ -54,11 +54,7 @@ class Router
         // Requested URI is clean and returned without query string
         // ex. /uri/fX/19/hello/?million=5 => uri/fx/19/hello
         $cleanReqURI = cleanURI(strtok($requestedURI, '?'));
-        $queryStringCleaner = function($uncleanVal) 
-        {
-            return cleanURI($uncleanVal);
-        };
-        array_map($queryStringCleaner, $_REQUEST);
+        
     }
 }
 

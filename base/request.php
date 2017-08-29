@@ -21,7 +21,7 @@ class Request
 
 	
 	/**
-	* public function getRequestType
+	* publi-c function getRequestType
 	*
 	* @return string The type of the request(GET, POST, PUT, DELETE)
 	*/
