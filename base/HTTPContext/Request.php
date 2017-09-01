@@ -35,84 +35,84 @@ class Request
         // passed to the php script from the web server
         // such as by using redirect rules on the apache web server
         if (isset($overridingURI)) 
-            $request->setRequestURI($overridingURI); 
+            $request->setURI($overridingURI); 
         else
-            $request->setRequestURI($_SERVER['REQUEST_URI']);
+            $request->setURI($_SERVER['REQUEST_URI']);
         // REQUEST_METHOD is not 100% reliable, therefore a setter is used for validation
-        $request->setRequestHTTPType($_SERVER['REQUEST_METHOD']);
+        $request->setHTTPType($_SERVER['REQUEST_METHOD']);
         $request->requestHTTPProtocol = getHTTPProtocol();
-        $request->setRequestHeaders(getAllHeaders());
+        $request->setHeaders(getAllHeaders());
         $request->requestClientRemoteAddr = getClientRemoteAddr();
         // There is no case where this property should need to be modified
         // Futhermore no validation / sanitization is requires for REQUEST_Time
         // Therefore this property requires no setter, only a getter
         $this->requestDateTime = $_SERVER['REQUEST_TIME'];
-        $request->setRequestBodyArgs(stream_get_contents(STDIN));
-        $request->setRequestQueryStringArgs($_REQUEST);
+        $request->setBodyArgs(stream_get_contents(STDIN));
+        $request->setQueryStringArgs($_REQUEST);
         return $request;
     }
 
-    public function setRequestURI($url)
+    public function setURI($url)
     {
         $cleanedURI = cleanURI(parse_url($url, PHP_URL_PATH));
         $this->requestURI = $cleanedURI;
     }
 
-    public function getRequestURI()
+    public function getURI()
     {
         return $this->requestURI;
     }
 
-    public function setRequestHTTPType($type)
+    public function setHTTPType($type)
     {
         if(!isValidHTTPRequestType($type))
             throw new InvalidArgumentException("{$type} is not a supported (GET, POST, PUT, DELETE) HTTP type.");
         $this->requestHTTPType = $type;
     }
 
-    public function getRequestHTTPType()
+    public function getHTTPType()
     {
         return $this->requestHTTPType;
     }
 
-    public function setRequestHeaders($headers)
+    public function setHeaders($headers)
     {
         $this->requestHeaders = array_map(CLEAN_STR, $headers);
     }
 
-    public function getRequestHeaders()
+    public function getHeaders()
     {
         return $this->requestHeaders;
     }
 
-    public function setRequestBodyArgs($bodyArgs)
+    public function setBodyArgs($bodyArgs)
     {
         if(!is_array($bodyArgs)) 
-            throw new InvalidArgumentException("The argument passed is not an array. An array must be passed to the setRequestBodyArgs method.");
+            throw new InvalidArgumentException("The argument passed is not an array. An array must be passed to the setBodyArgs method.");
         $this->requestBodyArgs = array_map(function($val)
         {
             return cleanInputStr($val, true);
         }, $bodyArgs);
     }
 
-    public function getRequestBodyArgs()
+    public function getBodyArgs()
     {
         return $this->requestBodyArgs;
     }
 
-    public function setRequestQueryStringArgs($queryStringArgs)
+    public function setQueryStringArgs($queryStringArgs)
     {
         if(!is_array($queryStringArgs)) 
             throw new InvalidArgumentException("The argument passed is not an array. An array must be passed to the setQueryStringArgs method.");
         $this->requestQueryStringArgs = cleanInputStrArray($queryStringArgs);
     }
 
-    public function getRequestQueryStringArgs()
+    public function getQueryStringArgs()
     {
         return $this->requestQueryStringArgs;
     }
 
-    public function setRequestRESTArgs($routeURI)
+    public function setRESTArgs($routeURI)
     {
         $cleanedRouteURI = cleanURI(parse_url($routeURI, PHP_URL_PATH));
         $cleanedRouteURI = array_map(function($val)
@@ -125,7 +125,7 @@ class Request
         $this->requestRESTArgs = convertValPairsToAssociate($arrDiffPairs);
     }
 
-    public function getRequestRESTArgs()
+    public function getRESTArgs()
     {
         return $this->requestRESTArgs();
     }

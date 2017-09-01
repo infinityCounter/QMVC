@@ -18,4 +18,7 @@ const HANDLER_METHOD_SIG = 'handleRequest';
 
 const DELIM_URI = '/';
 
+const FILESTREAM = 0;
+const JSON = 1;
+const XML = 2;
 ?>
