@@ -63,15 +63,3 @@ class Response
     }
 }
 ?>
-
-A response has:
-
-- Status Code
-- Body
-- Headers
-
-Body can be:
--A regular string
--JSON
--XML
--OR a file
