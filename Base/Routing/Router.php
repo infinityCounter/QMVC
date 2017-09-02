@@ -72,6 +72,9 @@ class Router
         $cleanedURI = Sanitizers::cleanURI($URI);
         $cleanSpeculatedURI = Sanitizers::cleanURI($speculatedURI);
         if ($cleanedURI === $cleanSpeculatedURI) return true;
+        $preRegexURI = preg_replace("/{[a-zA-z0-9]+}/", '[a-zA-Z0-9]+', $cleanSpeculatedURI);
+        $regexURI = "/\A".$preRegexURI."\z/";
+        return preg_match($regexURI, $cleanedURI);
     }
 }
 
