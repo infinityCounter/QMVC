@@ -23,7 +23,7 @@ class Constants
     const DELIM_URI = '/';
 
     const FILESTREAM_RESP = 0;
-    const VIEW_RESP = 1;
+    const HTML_RESP = 1;
     const JSON_RESP = 2;
 }
 

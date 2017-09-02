@@ -65,6 +65,14 @@ final class Helpers
         }    
         return $headers; 
     } 
+
+    public static function isValidRespBodyType(int $type)
+    {
+        if($type === Constants::FILESTREAM_RESP) return true;
+        if($type === Constants::JSON_RESP) return true;
+        if($type === Constants::HTML_RESP) return true;
+        return false;
+    }
     
     /* END ACCESSORS */
 

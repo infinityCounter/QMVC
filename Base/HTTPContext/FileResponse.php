@@ -25,15 +25,30 @@ class FileResponse
         $this->filePath = $cleanedPath;
     }
 
+    public function getFileName()
+    {
+        return basename($this->filePath);
+    }
+
     public function setDownloadLimit(float $limit)
     {
         $this->downloadLimit = $limit;
         $this->setIsLimited(($limit > 0));
     }
 
+    public function getDownloadLimit()
+    {
+        return $this->downloadLimit;
+    }
+
     private function setIsLimited(boolean $hasLimit)
     {
         $this->hasDownloadLimit = $hasLimit;
+    }
+
+    public function isLimited()
+    {
+        return $this->hasDownloadLimited;
     }
 
     public function getFileSize()
