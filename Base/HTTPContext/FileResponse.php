@@ -3,6 +3,7 @@
 namespace QMVC\Base\HTTPContext;
 
 use QMVC\Base\Security\Sanitizers as Sanitizers;
+use QMVC\Base\Helpers\Helpers as Helpers;
 
 class FileResponse
 {
@@ -33,5 +34,10 @@ class FileResponse
     private function setIsLimited(boolean $hasLimit)
     {
         $this->hasDownloadLimit = $hasLimit;
+    }
+
+    public function getFileSize()
+    {
+        return Helpers::getRealFileSize($this->filePath);
     }
 }

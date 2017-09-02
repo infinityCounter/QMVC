@@ -108,5 +108,52 @@ final class Helpers
         }
         return $associateArray;
     }
+    
+    /**
+    * Return file size (even for file > 2 Gb)
+    * For file size over PHP_INT_MAX (2 147 483 647), PHP filesize function loops from -PHP_INT_MAX to PHP_INT_MAX.
+    *
+    * @param string $path Path of the file
+    * @return mixed File size or false if error
+    */
+    public static function realFileSize($path)
+    {
+        $cleanedPath = self::cleanInputStr($path, false, true);
+        if (!file_exists($cleanedPath))
+            return false;
+
+        $size = filesize($cleanedPath);
+    
+        if (!($file = fopen($cleanedPath, 'rb')))
+            return false;
+    
+        if ($size >= 0)
+        {//Check if it really is a small file (< 2 GB)
+            if (fseek($file, 0, SEEK_END) === 0)
+            {//It really is a small file
+                fclose($file);
+                return $size;
+            }
+        }
+    
+        //Quickly jump the first 2 GB with fseek. After that fseek is not working on 32 bit php (it uses int internally)
+        $size = PHP_INT_MAX - 1;
+        if (fseek($file, PHP_INT_MAX - 1) !== 0)
+        {
+            fclose($file);
+            return false;
+        }
+        $length = 1024 * 1024;
+        while (!feof($file))
+        {//Read the file until end
+            $read = fread($file, $length);
+            $size = bcadd($size, $length);
+        }
+        $size = bcsub($size, $length);
+        $size = bcadd($size, strlen($read));
+    
+        fclose($file);
+        return $size;
+    }
 }
 ?>
