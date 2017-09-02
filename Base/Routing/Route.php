@@ -2,16 +2,26 @@
 
 namespace QMVC\Base\Routing;
 
+use QMVC\Base\Contants\Contants as Constants;
+use QMVC\Base\Helpers\Helpers as Helpers;
+
 class Route 
 {
     private $URI = null;
     private $handler = null;
     // TODO: Implement middleware stack to execute before callback
     private $middlewareStack = [];
+    private $allowableActions = [
+        Constants::GET => false,
+        Constants::POST => false,
+        Constants::PUT => false,
+        Constants::DELETE => false
+    ];
     
-    function __construct($URI = null, $handler = null)
+    function __construct(string $URI = null, array $allowbles = [], $handler = null)
     {
         $this->setURI($URI);
+        $this->setAllowableActions($allowables);
         $this->setHandler($handler);
     }
 
@@ -23,6 +33,23 @@ class Route
     public function getURI($URI)
     {
         return $this->getURI;
+    }
+
+    public function setAllowableActions(array $actions)
+    {
+        $actionTypes = array_keys($actions);
+        $cleanedTypes = Helpers::cleanInputStrArray($actionTypes, false, true);
+        $cleanedActions = Helpers::cleanedInputStrArray($actions, false, true);
+        array_combine($cleanedTypes, $cleanedActions);
+        $filteredActions = array_map(function($action){
+            if(Helpers::isValidHTTPRequestType($action)) return $action;
+        }, $cleanedActions);
+        array_merge($this->allowableActions, $filteredActions);
+    }
+
+    public function getAllowableActions()
+    {
+        return $this->allowableActions;
     }
 
     public function setHandler($handler) 
