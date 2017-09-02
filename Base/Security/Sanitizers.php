@@ -34,7 +34,10 @@ class Sanitizers
     
     public static function cleanURI($dirtyURI)
     {
-        return Self::cleanInputStr(strtolower($dirtyURI));
+        $URISlashesReplaced = str_replace('\\', '/', $dirtyURI);
+        $URISpacesRemoved = preg_replace( array('/\v/','/\s\s+/'), '', $URISlashesReplaced);
+        $URISlashesTrimmed = trim($URISpacesRemoved, "/");
+        return Self::cleanInputStr(strtolower($URISlashesTrimmed));
     }
     
     public static function cleanQueryStringArg($queryStringArg)

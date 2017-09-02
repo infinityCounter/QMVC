@@ -52,12 +52,26 @@ class Router
         self::$routeMap[$cleanedURI] = $route; 
     }
 
-    public static function matchRoute($requestedURI)
+    public static function getRoute($requestedURI)
     {
         // Requested URI is clean and returned without query string
         // ex. /uri/fX/19/hello/?million=5 => uri/fx/19/hello
         $cleanReqURI = Sanitizers::cleanURI(strtok($requestedURI, '?'));
-        
+        if(isset(self::$routeMap[$cleanReqURI])) return $routeMap[$cleanReqURI];
+        foreach ($routeMap as $routeURI => $routeObj) {
+            if (self::isURIRegexRoute($cleanReqURI, $routeURI))
+            {
+                return $routeObj;
+            }
+        }
+        return null;
+    }
+
+    public static function isURIRegexRoute($URI, $speculatedURI)
+    {
+        $cleanedURI = Sanitizers::cleanURI($URI);
+        $cleanSpeculatedURI = Sanitizers::cleanURI($speculatedURI);
+        if ($cleanedURI === $cleanSpeculatedURI) return true;
     }
 }
 
