@@ -75,10 +75,15 @@ class Router
         $cleanedURI = Sanitizers::cleanURI($URI);
         $cleanSpeculatedURI = Sanitizers::cleanURI($speculatedURI);
         if ($cleanedURI === $cleanSpeculatedURI) return true;
-        $preRegexURI = str_replace('/', '\/', $cleanSpeculatedURI);
+        return preg_match(self::convertRESTToRegexURI($cleanSpeculatedURI), $cleanedURI);
+    }
+
+    private static function convertRESTToRegexURI($restURI)
+    {
+        $preRegexURI = str_replace('/', '\/', $restURI);
         $regexURI = preg_replace("/\/{[a-zA-Z][a-zA-Z0-9]*}/", '/[a-zA-Z0-9.()]+', $preRegexURI);
         $regexURI = "/\A" . $regexURI . "\z/";
-        return preg_match($regexURI, $cleanedURI);
+        return $regexURI;
     }
 }
 
