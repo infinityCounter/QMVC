@@ -55,7 +55,7 @@ class Router
         self::$routeMap[$cleanedURI] = $route; 
     }
 
-    public static function getRoute($requestedURI)
+    public static function getRoute(string $requestedURI)
     {
         // Requested URI is clean and returned without query string
         // ex. /uri/fX/19/hello/?million=5 => uri/fx/19/hello
@@ -70,7 +70,7 @@ class Router
         return null;
     }
 
-    public static function isURIRegexRoute($URI, $speculatedURI)
+    public static function isURIRegexRoute(string $URI, string $speculatedURI)
     {
         $cleanedURI = Constants::DELIM_URI . Sanitizers::cleanURI($URI);
         $cleanSpeculatedURI = Constants::DELIM_URI . Sanitizers::cleanURI($speculatedURI);
@@ -78,7 +78,7 @@ class Router
         return preg_match(self::convertRESTToRegexURI($cleanSpeculatedURI), $cleanedURI);
     }
 
-    private static function convertRESTToRegexURI($restURI)
+    private static function convertRESTToRegexURI(string $restURI)
     {
         $preRegexURI = str_replace('/', '\/', $restURI);
         $regexURI = preg_replace("/\/{[a-zA-Z][a-zA-Z0-9]*}/", '/[a-zA-Z0-9.()]+', $preRegexURI);

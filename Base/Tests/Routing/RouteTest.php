@@ -4,7 +4,7 @@ namespace QMVC\Base\Tests\Routing;
 
 use PHPUnit\Framework\TestCase;
 
-use QMVC\Base\Contants\Contants;
+use QMVC\Base\Constants\Constants;
 use QMVC\Base\Security\Sanitizers;
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\Routing\Route;
@@ -65,6 +65,90 @@ class RouteTest extends TestCase
         $route->setHandler($callbackB);
         $this->expectOutputString($myName);
         $route->callHandler($request);
+    }
+
+    /**
+    *@dataProvider allowablesOverrideProvider
+    */
+    public function testAllowablesOverride($allowActions, $expectedAfterOverride)
+    {
+        $route = new Route('/', $allowActions, function(){}); 
+        $this->assertEquals($expectedAfterOverride, $route->getAllowableActions());  
+    }
+
+    public function allowablesOverrideProvider()
+    {
+        return 
+        [
+            [
+                [Constants::GET => true], 
+                [
+                    Constants::GET => true, 
+                    Constants::POST => false, 
+                    Constants::PUT => false, 
+                    Constants::DELETE => false
+                ]
+            ],
+            [
+                [Constants::POST => true], 
+                [
+                    Constants::GET => false, 
+                    Constants::POST => true, 
+                    Constants::PUT => false, 
+                    Constants::DELETE => false
+                ]
+            ],
+            [
+                [Constants::PUT => true], 
+                [
+                    Constants::GET => false, 
+                    Constants::POST => false, 
+                    Constants::PUT => true, 
+                    Constants::DELETE => false
+                ]
+            ],
+            [
+                [Constants::DELETE => true], 
+                [
+                    Constants::GET => false, 
+                    Constants::POST => false, 
+                    Constants::PUT => false, 
+                    Constants::DELETE => true
+                ]
+            ],
+            [
+                [Constants::GET => true, Constants::POST => true], 
+                [
+                    Constants::GET => true, 
+                    Constants::POST => true, 
+                    Constants::PUT => false, 
+                    Constants::DELETE => false
+                ]
+            ],
+            [
+                [Constants::POST => true, Constants::DELETE => true], 
+                [
+                    Constants::GET => false, 
+                    Constants::POST => true, 
+                    Constants::PUT => false, 
+                    Constants::DELETE => true
+                ]
+            ],
+            [
+                [
+                    Constants::GET => true, 
+                    Constants::POST => true, 
+                    Constants::PUT => true, 
+                    Constants::DELETE => true
+                ],
+                [
+                    Constants::GET => true, 
+                    Constants::POST => true, 
+                    Constants::PUT => true, 
+                    Constants::DELETE => true
+                ]
+            ]
+        ];
     }
 }
 

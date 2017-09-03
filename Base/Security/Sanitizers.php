@@ -13,20 +13,23 @@ use QMVC\Base\Constants\Constants as Constants;
 
 class Sanitizers
 {
-    public static function cleanInputStr($unsanitizedString, $preserveHTML = false, $doTrim = false)
+    public static function cleanInputStr($unsanitizedString, 
+        $preserveHTML = false, 
+        $doTrim = false)
     {
         $sanitizedString = ($preserveHTML) ? filter_var($unsanitizedString, FILTER_SANITIZE_STRING) : filter_var($unsanitizedString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         return ($doTrim) ? trim($sanitizedString) : $sanitizedString;
     }
     
-    public static function cleanInputStrArray($unsanitizedArr, $preserveHTML = false, $doTrim = false)
+    public static function cleanInputStrArray(array $unsanitizedArr, 
+        $preserveHTML = false, 
+        $doTrim = false)
     {
-        if (!is_array($unsanitizedArr))
-            throw new InvalidArgumentException("The argument passed is not an array. An array must be passed to the cleanInputStrArray method.");
-        return array_map(function($val)
+        $arrayFilter = function($val) use ($preserveHTML, $doTrim)
         {
-            return Self::cleanInputStr($val, $preserveHTML, $doTrim);
-        }, $unsanitizedArr);
+            return self::cleanInputStr($val, $preserveHTML, $doTrim);
+        };
+        return array_map($arrayFilter, $unsanitizedArr);
     }
     
     public static function cleanEmail($unsanitizedEmail)
