@@ -1,7 +1,10 @@
 <?php
 
+namespace QMVC\Base\Tests\Helpers;
+
 use PHPUnit\Framework\TestCase;
-use QMVC\Base\Helpers\Helpers as Helpers;
+
+use QMVC\Base\Helpers\Helpers;
 
 final class HelpersTest extends TestCase
 {

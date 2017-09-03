@@ -1,7 +1,10 @@
 <?php
 
-use QMVC\Base\Routing\Router as Router;
+namespace QMVC\Base\Tests\Routing;
+
 use PHPUnit\Framework\TestCase;
+
+use QMVC\Base\Routing\Router as Router;
 
 final class RouterTest extends TestCase
 {

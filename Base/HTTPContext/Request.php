@@ -13,9 +13,9 @@ class Request
     private $requestHeaders;
     private $requestClientRemoteAddr;
     private $requestDateTime;
-    private $requestBodyArgs;
-    private $requestQueryStringArgs;
-    private $requestRESTArgs;
+    private $requestBodyArgs = [];
+    private $requestQueryStringArgs = [];
+    private $requestRESTArgs = [];
 
     const CLEAN_URI = 'Sanitizers::cleanURI';
     const CLEAN_STR = 'Sanitizers::cleanInputStr';
