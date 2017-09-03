@@ -2,6 +2,8 @@
 
 namespace QMVC\Base\Security;
 
+use QMVC\Base\Constants\Constants as Constants;
+
 /**
  * function cleanInputStr
  * 
@@ -36,7 +38,7 @@ class Sanitizers
     {
         $URISlashesReplaced = str_replace('\\', '/', $dirtyURI);
         $URISpacesRemoved = preg_replace( array('/\v/','/\s\s+/'), '', $URISlashesReplaced);
-        $URISlashesTrimmed = trim($URISpacesRemoved, "/");
+        $URISlashesTrimmed = Constants::DELIM_URI . trim($URISpacesRemoved, "/");
         return Self::cleanInputStr(strtolower($URISlashesTrimmed));
     }
     

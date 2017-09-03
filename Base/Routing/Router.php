@@ -2,6 +2,9 @@
 
 namespace QMVC\Base\Routing;
 
+use QMVC\Base\Security\Sanitizers;
+use QMVC\Base\Security\Constants;
+
 class Router 
 {
     private static $routeMap = [];
@@ -72,8 +75,9 @@ class Router
         $cleanedURI = Sanitizers::cleanURI($URI);
         $cleanSpeculatedURI = Sanitizers::cleanURI($speculatedURI);
         if ($cleanedURI === $cleanSpeculatedURI) return true;
-        $preRegexURI = preg_replace("/{[a-zA-z0-9]+}/", '[a-zA-Z0-9]+', $cleanSpeculatedURI);
-        $regexURI = "/\A".$preRegexURI."\z/";
+        $preRegexURI = str_replace('/', '\/', $cleanSpeculatedURI);
+        $regexURI = preg_replace("/\/{[a-zA-Z][a-zA-Z0-9]*}/", '/[a-zA-Z0-9.()]+', $preRegexURI);
+        $regexURI = "/\A" . $regexURI . "\z/";
         return preg_match($regexURI, $cleanedURI);
     }
 }
