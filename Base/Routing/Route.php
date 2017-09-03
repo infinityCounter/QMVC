@@ -25,14 +25,14 @@ class Route
         $this->setHandler($handler);
     }
 
-    public function setURI($URI)
+    public function setURI(string $URI)
     {
         $this->URI = Sanitizers::cleanURI($URI);
     }
 
-    public function getURI($URI)
+    public function getURI()
     {
-        return $this->getURI;
+        return $this->URI;
     }
 
     public function setAllowableActions(array $actions)

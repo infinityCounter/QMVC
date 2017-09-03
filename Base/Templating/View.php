@@ -17,7 +17,7 @@ class View {
 
     public function setTemplatePath(string $templatePath)
     {
-        $cleanedPath = Sanitizers::cleanURI($templatePath);
+        $cleanedPath = Sanitizers::cleanInputStr($templatePath);
         $this->templatePath = $cleanedPath;
     }
 
