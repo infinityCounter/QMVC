@@ -17,6 +17,8 @@ final class RouterTest extends TestCase
     {
         return 
         [
+            ['/','/', true],
+            ['/','', true],
             ['/api/1.0/user/43/friends','/api/{version}/user/{id}/friends', true],
             ['/api/cars/toyota/2005/manual','/api/cars/{make}/{year}/{transmission}', true],
             ['/products/stationary/paper','/animals/{type}/size', false],

@@ -2,8 +2,9 @@
 
 namespace QMVC\Base\Routing;
 
-use QMVC\Base\Contants\Contants as Constants;
-use QMVC\Base\Helpers\Helpers as Helpers;
+use QMVC\Base\Constants\Constants;
+use QMVC\Base\Helpers\Helpers;
+use QMVC\Base\Security\Sanitizers;
 
 class Route 
 {
@@ -18,7 +19,7 @@ class Route
         Constants::DELETE => false
     ];
     
-    function __construct(string $URI = null, array $allowbles = [], $handler = null)
+    function __construct(string $URI = null, array $allowables = [], $handler = null)
     {
         $this->setURI($URI);
         $this->setAllowableActions($allowables);
@@ -38,8 +39,8 @@ class Route
     public function setAllowableActions(array $actions)
     {
         $actionTypes = array_keys($actions);
-        $cleanedTypes = Helpers::cleanInputStrArray($actionTypes, false, true);
-        $cleanedActions = Helpers::cleanedInputStrArray($actions, false, true);
+        $cleanedTypes = Sanitizers::cleanInputStrArray($actionTypes, false, true);
+        $cleanedActions = Sanitizers::cleanInputStrArray($actions, false, true);
         array_combine($cleanedTypes, $cleanedActions);
         $filteredActions = array_map(function($action){
             if(Helpers::isValidHTTPRequestType($action)) return $action;
@@ -54,7 +55,7 @@ class Route
 
     public function setHandler($handler) 
     {
-        if(!isValidRouteHandler($handler))
+        if(!Helpers::isValidRouteHandler($handler))
             throw new RuntimeException("Handler is not callable. Argument not method or class with public " . HANDLER_METHOD_SIG . " method.");
         $this->handler = $handler;
     }
