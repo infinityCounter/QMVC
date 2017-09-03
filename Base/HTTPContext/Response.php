@@ -14,9 +14,9 @@ class Response
     private $responseBody;
 
     const DEF_GEN_HEADERS = [
-        'Strict-Transport-Security' => 'max-age=31536000; includeSubDomains',
+        'Strict-Transport-Security' => '',
         'Content-Length' => '',
-        'Content-Disposition' => 'attachment; filename=',
+        'Content-Disposition' => '',
         'Expires' => 0,
         'Cache-Control' => 'must-revalidate',
         'Pragma' => 'Public' // Left for pre HTTP\1.1 clients
@@ -121,17 +121,26 @@ class Response
         {
             $typeHeaders = array_merge(self::DEF_GEN_HEADERS, self::DEF_FILESTREAM_HEADERS);
             $typeHeaders['Content-Length'] = $this->responseBody->getFileSize();
-            $typeHeaders['Content-Disposition'] = $this->responseBody->getFileName();
+            $typeHeaders['Content-Disposition'] = 'attachment; filename=' . $this->responseBody->getFileName();
         }
         else if($this->type === Constants::HTML_RESP)
         {
             $typeHeaders = array_merge(self::DEF_GEN_HEADERS, self::DEF_HTML_HEADERS);
             $typeHeaders['Content-Length'] = strlen($this->responseBody);
+            $typeHeaders['Content-Disposition'] = 'inline';
         }
         else if($this->type === Constants::JSON_RESP)
         {
             $typeHeaders = array_merge(self::DEF_GEN_HEADERS, self::DEF_JSON_HEADERS);
             $typeHeaders['Content-Length'] = strlen($this->responseBody);
+            $typeHeaders['Content-Disposition'] = 'inline';
+        }
+
+        if(AppConfig::isOnlyUsingHTTPS())
+        {
+            $type['Strict-Transport-Security'] = 'max-age=' . AppConfig::getSTSTime();
+            if(AppConfig::isOnlyUsingHTTPSSubdomains()) 
+                $type['Strict-Transport-Security'] .= 'includeSubDomains';
         }
         array_merge($this->responseHeaders, $typeHeaders);
     }
