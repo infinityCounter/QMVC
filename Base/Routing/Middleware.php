@@ -4,7 +4,7 @@ namespace QMVC\Base\Routing;
 
 use QMVC\Base\Constants\Constants;
 
-abstract class Middleware
+class Middleware
 {
     private $next = null;
     private $handler = null;
