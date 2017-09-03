@@ -10,8 +10,8 @@ final class Helpers
     /* VALIDATORS */
     public static function objectHasPublicRequestHandler($object)
     {
-        if(!method_exists($object, HANDLER_METHOD_SIG) ) return false;
-        $reflection = new ReflectionMethod($object, HANDLER_METHOD_SIG);
+        if(!method_exists($object, Constants::HANDLER_METHOD_SIG) ) return false;
+        $reflection = new \ReflectionMethod($object, Constants::HANDLER_METHOD_SIG);
         if (!$reflection->isPublic()) return false;
         return true;
     }

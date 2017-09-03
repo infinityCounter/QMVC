@@ -1,8 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use QMVC\Base\Routing\Route;
 use QMVC\Base\Security\Sanitizers;
+use QMVC\Base\HTTPContext\Request;
+use QMVC\Base\Routing\Route;
 
 final class mock {
 
@@ -10,7 +11,7 @@ final class mock {
 
     public static function handleRequest(Request $request)
     {
-                return self::OUTPUT;
+        echo self::OUTPUT;
     }
 }
 
@@ -26,7 +27,6 @@ class RouteTest extends TestCase
     public function testGetHandler()
     {
         $outputStr = 'Hello World';
-        $this->expectOutputString($outputStr);
         $callback = function() use ($outputStr) { echo $outputStr; };
         $route = new Route('/', [], $callback);
         $this->assertEquals($callback, $route->getHandler());
@@ -38,15 +38,16 @@ class RouteTest extends TestCase
         $this->expectOutputString($outputStr);
         $callback = function() use ($outputStr) { echo $outputStr; };
         $route = new Route('/', [], $callback);
-        $handler = $route->callHandler();
+        $request = new Request();
+        $route->callHandler($request);
     }
 
     public function testInvokeClassHandler()
     {
-        $outputStr = 'Hello World';
-        $this->expectOutputString($outputStr);
+        $this->expectOutputString(mock::OUTPUT);
         $route = new Route('/', [], mock::class);
-        $handler = $route->callHandler();
+        $request = new Request();
+        $route->callHandler($request);
     }
 }
 

@@ -68,8 +68,8 @@ class Route
 
     public function callHandler(Request $request)
     {
-        if(is_callable($this->handler)) return $handler($request);
-        return call_user_func([$this->handler, HANDLER_METHOD_SIG], $request);
+        if(is_callable($this->handler)) return ($this->handler)($request);
+        return call_user_func([$this->handler, Constants::HANDLER_METHOD_SIG], $request);
     }
 
     // TODO: Implement methods to enable middleware functionality
