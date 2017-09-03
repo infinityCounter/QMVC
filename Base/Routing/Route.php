@@ -131,10 +131,13 @@ class Route
     private function pushResponseWrapperMiddleware()
     {
         $wrapper = new ResponseWrapper($this->handler);
-        $numMidware = count($this->middlwareStack);
-        $currentLastMidware = $this->middlewareStack[$numMidware - 1];
-        $currentLastMidware->setNext($wrapper);
-        $this->middlewareStack[$numMidware - 1] = $currentLastMidware;
+        $numMidware = count($this->middlewareStack);
+        if($numMidware > 0)
+        {
+            $currentLastMidware = $this->middlewareStack[$numMidware - 1];
+            $currentLastMidware->setNext($wrapper);
+            $this->middlewareStack[$numMidware - 1] = $currentLastMidware;
+        }
         array_push($this->middlewareStack, $wrapper);
     }
 
