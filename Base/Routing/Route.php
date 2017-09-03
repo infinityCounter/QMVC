@@ -5,6 +5,7 @@ namespace QMVC\Base\Routing;
 use QMVC\Base\Constants\Constants;
 use QMVC\Base\Helpers\Helpers;
 use QMVC\Base\Security\Sanitizers;
+use QMVC\Base\HTTPContext\Request;
 
 class Route 
 {
@@ -65,7 +66,7 @@ class Route
         return $this->handler;
     }
 
-    public function callHandler($request)
+    public function callHandler(Request $request)
     {
         if(is_callable($this->handler)) return $handler($request);
         return call_user_func([$this->handler, HANDLER_METHOD_SIG], $request);

@@ -4,6 +4,16 @@ use PHPUnit\Framework\TestCase;
 use QMVC\Base\Routing\Route;
 use QMVC\Base\Security\Sanitizers;
 
+final class mock {
+
+    const OUTPUT = 'testing';
+
+    public static function handleRequest(Request $request)
+    {
+                return self::OUTPUT;
+    }
+}
+
 class RouteTest extends TestCase
 {
     public function testGetURI()
@@ -19,8 +29,24 @@ class RouteTest extends TestCase
         $this->expectOutputString($outputStr);
         $callback = function() use ($outputStr) { echo $outputStr; };
         $route = new Route('/', [], $callback);
-        $handler = $route->getHandler();
-        $handler();
+        $this->assertEquals($callback, $route->getHandler());
+    }
+
+    public function testInvokeFuncHandler()
+    {
+        $outputStr = 'Hello World';
+        $this->expectOutputString($outputStr);
+        $callback = function() use ($outputStr) { echo $outputStr; };
+        $route = new Route('/', [], $callback);
+        $handler = $route->callHandler();
+    }
+
+    public function testInvokeClassHandler()
+    {
+        $outputStr = 'Hello World';
+        $this->expectOutputString($outputStr);
+        $route = new Route('/', [], mock::class);
+        $handler = $route->callHandler();
     }
 }
 

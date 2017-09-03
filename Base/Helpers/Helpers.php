@@ -19,7 +19,7 @@ final class Helpers
     function isValidRouteHandler($uncheckedHandler) 
     {
         if(is_callable($uncheckedHandler)) return true;
-        if(is_object($uncheckedHandler) && 
+        if((is_object($uncheckedHandler) || class_exists($uncheckedHandler)) && 
             Self::objectHasPublicRequestHandler($uncheckedHandler)) return true;
         return false;
     }
