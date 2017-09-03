@@ -13,21 +13,17 @@ use QMVC\Base\Constants\Constants as Constants;
 
 class Sanitizers
 {
-    public static function cleanInputStr($unsanitizedString, 
-        $preserveHTML = false, 
-        $doTrim = false)
+    public static function cleanInputStr($unsanitizedString, $preserveHTML = false)
     {
-        $sanitizedString = ($preserveHTML) ? filter_var($unsanitizedString, FILTER_SANITIZE_STRING) : filter_var($unsanitizedString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        return ($doTrim) ? trim($sanitizedString) : $sanitizedString;
+        $sanitizedString = (!$preserveHTML) ? filter_var($unsanitizedString, FILTER_SANITIZE_STRING) : filter_var($unsanitizedString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        return preg_replace('/\s+/', '', $trimmed);
     }
     
-    public static function cleanInputStrArray(array $unsanitizedArr, 
-        $preserveHTML = false, 
-        $doTrim = false)
+    public static function cleanInputStrArray(array $unsanitizedArr, $preserveHTML = false)
     {
-        $arrayFilter = function($val) use ($preserveHTML, $doTrim)
+        $arrayFilter = function($val) use ($preserveHTML)
         {
-            return self::cleanInputStr($val, $preserveHTML, $doTrim);
+            return self::cleanInputStr($val, $preserveHTML);
         };
         return array_map($arrayFilter, $unsanitizedArr);
     }
