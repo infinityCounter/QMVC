@@ -21,7 +21,7 @@ class Middleware
 
     public function setNext($next)
     {
-        if(!Helpers::isValidRouteHandler($next) && !is_a($next, static::class))
+        if(!Helpers::isValidRouteHandler($next) && !Helpers::isMiddlware($next))
         {   
             $exceptionMessage = "Argument provided to Middleware setHandler method".
                 " must either be an instnace of Middleware or a descendant of Middleware,".

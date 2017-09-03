@@ -36,7 +36,7 @@ class Response
         'Content-Type' => 'text/html; charset=utf-8',
     ];
 
-    function __construct($body = null, array $headers = [], int $statusCode = null)
+    function __construct($body = null, array $headers = [], $statusCode = 200)
     {
         $this->setBody($body);
         $this->setHeaders($headers);

@@ -2,8 +2,9 @@
 
 namespace QMVC\Base\Helpers;
 
-use QMVC\Base\Constants\Constants as Constants;
-use QMVC\Base\Security\Sanitizers as Sanitizers;
+use QMVC\Base\Constants\Constants;
+use QMVC\Base\Security\Sanitizers;
+use QMVC\Base\Security\Middleware;
 
 final class Helpers
 {
@@ -16,7 +17,7 @@ final class Helpers
         return true;
     }
 
-    function isValidRouteHandler($uncheckedHandler) 
+    public static function isValidRouteHandler($uncheckedHandler) 
     {
         if(is_callable($uncheckedHandler)) return true;
         if((is_object($uncheckedHandler) || class_exists($uncheckedHandler)) && 
@@ -31,6 +32,11 @@ final class Helpers
         if($unsureType === Constants::PUT) return true;
         if($unsureType === Constants::DELETE) return true;
         return false;
+    }
+
+    public static function isMiddleware($speculatedMiddleware)
+    {
+        return is_a($next, Middleware::class);
     }
 
     /* END VALIDATORS */
