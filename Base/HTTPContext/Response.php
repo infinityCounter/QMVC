@@ -121,7 +121,8 @@ class Response
         {
             $typeHeaders = array_merge(self::DEF_GEN_HEADERS, self::DEF_FILESTREAM_HEADERS);
             $typeHeaders['Content-Length'] = $this->responseBody->getFileSize();
-            $typeHeaders['Content-Disposition'] = 'attachment; filename=' . $this->responseBody->getFileName();
+            $typeHeaders['Content-Disposition'] = 'attachment; filename="' . 
+                                                  $this->responseBody->getFileName() . '"';
         }
         else if($this->type === Constants::HTML_RESP)
         {
