@@ -2,6 +2,7 @@
 
 namespace QMVC\Base\Routing;
 
+use QMVC\Base\Helpers\Helpers;
 use QMVC\Base\Constants\Constants;
 
 class Middleware
