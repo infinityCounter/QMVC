@@ -14,6 +14,7 @@ class Response
     private $responseBody;
 
     const DEF_GEN_HEADERS = [
+        'Strict-Transport-Security' => 'max-age=31536000; includeSubDomains',
         'Content-Length' => '',
         'Content-Disposition' => 'attachment; filename=',
         'Expires' => 0,

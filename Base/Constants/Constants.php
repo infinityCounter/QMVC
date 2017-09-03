@@ -25,6 +25,8 @@ class Constants
     const FILESTREAM_RESP = 0;
     const HTML_RESP = 1;
     const JSON_RESP = 2;
+
+    const VALID_URI_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;=`";
 }
 
 ?>
