@@ -29,7 +29,7 @@ class Middleware
                 Constants::HANDLER_METHOD_SIG . "method ";
             throw new InvalidArgumentException($exceptionMessage);
         }
-        $this->next = $nextS;
+        $this->next = $next;
     }
 
     public function getNext()
