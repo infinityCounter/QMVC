@@ -42,9 +42,9 @@ class Route
         $actionTypes = array_keys($actions);
         $cleanedTypes = Sanitizers::cleanInputStrArray($actionTypes, false, true);
         $cleanedActions = array_combine($cleanedTypes, $actions);
-        $filteredActions = array_map(function($action){
+        $filteredActions = array_filter($cleanedActions, function($action){
             if(Helpers::isValidHTTPRequestType($action)) return $action;
-        }, $cleanedActions);
+        }, ARRAY_FILTER_USE_KEY);
         $this->allowableActions = array_merge($this->allowableActions, $filteredActions);
     }
 

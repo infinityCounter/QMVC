@@ -150,6 +150,18 @@ class RouteTest extends TestCase
             ]
         ];
     }
+
+    public function testFilterAllowables()
+    {
+        $route = new Route('/', [Constants::POST => true, 'HEAD' => true], function(){}); 
+        $expectedAllowables = [
+            Constants::GET => false,
+            Constants::POST => true,
+            Constants::PUT => false,
+            Constants::DELETE => false
+        ];
+        $this->assertEquals($expectedAllowables, $route->getAllowableActions());     
+    }
 }
 
 ?>

@@ -26,10 +26,10 @@ final class Helpers
 
     public static function isValidHTTPRequestType($unsureType)
     {
-        if($unsureType == Constants::GET) return true;
-        if($unsureType == Constants::POST) return true;
-        if($unsureType == Constants::PUT) return true;
-        if($unsureType == Constants::DELETE) return true;
+        if($unsureType === Constants::GET) return true;
+        if($unsureType === Constants::POST) return true;
+        if($unsureType === Constants::PUT) return true;
+        if($unsureType === Constants::DELETE) return true;
         return false;
     }
 
