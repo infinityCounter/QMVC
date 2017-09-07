@@ -2,9 +2,12 @@
 
 namespace QMVC\Base\HTTPContext;
 
-use QMVC\Base\Helpers\Helpers as Helpers;
-use QMVC\Base\Constants\Constants as Constants;
-use QMVC\Base\Templating\View as View;
+use QMVC\Base\AppConfig;
+use QMVC\Base\Constants\Constants;
+use QMVC\Base\Helpers\Helpers;
+use QMVC\Base\Security\Sanitizers;
+use QMVC\Base\HTTPContext\FileResponse;
+use QMVC\Base\Templating\View;
 
 class Response
 {
@@ -39,8 +42,8 @@ class Response
 
     function __construct($body = null, array $headers = [], $statusCode = 200)
     {
-        $this->setBody($body);
         $this->setHeaders($headers);
+        $this->setBody($body);
         $this->setStatusCode($statusCode);
     }
 
@@ -117,20 +120,20 @@ class Response
     private function evalTypeHeaders()
     {
         $typeHeaders = [];
-        if($this->type === Constants::FILESTREAM_RESP)
+        if($this->responseType === Constants::FILESTREAM_RESP)
         {
             $typeHeaders = array_merge(self::DEF_GEN_HEADERS, self::DEF_FILESTREAM_HEADERS);
             $typeHeaders['Content-Length'] = $this->responseBody->getFileSize();
             $typeHeaders['Content-Disposition'] = 'attachment; filename="' . 
                                                   $this->responseBody->getFileName() . '"';
         }
-        else if($this->type === Constants::HTML_RESP)
+        else if($this->responseType === Constants::HTML_RESP)
         {
             $typeHeaders = array_merge(self::DEF_GEN_HEADERS, self::DEF_HTML_HEADERS);
             $typeHeaders['Content-Length'] = strlen($this->responseBody);
             $typeHeaders['Content-Disposition'] = 'inline';
         }
-        else if($this->type === Constants::JSON_RESP)
+        else if($this->responseType === Constants::JSON_RESP)
         {
             $typeHeaders = array_merge(self::DEF_GEN_HEADERS, self::DEF_JSON_HEADERS);
             $typeHeaders['Content-Length'] = strlen($this->responseBody);
@@ -150,7 +153,7 @@ class Response
     {
         if(!Helpers::isValidStatusCode($statusCode))
             throw new InvalidArgumentException("{$statusCode} is not a valid HTTP Response Status Code.");
-        $this->responseStatusCode = $statuscode;
+        $this->responseStatusCode = $statusCode;
     }
 
     public function getStatusCode()

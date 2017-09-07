@@ -15,8 +15,8 @@ class Sanitizers
 {
     public static function cleanInputStr($unsanitizedString, $preserveHTML = false)
     {
-        $sanitizedString = (!$preserveHTML) ? filter_var($unsanitizedString, FILTER_SANITIZE_STRING) : filter_var($unsanitizedString, FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        return preg_replace('/\s+/', '', $trimmed);
+        $sanitizedString = ($preserveHTML) ? filter_var($unsanitizedString, FILTER_SANITIZE_FULL_SPECIAL_CHARS) : filter_var($unsanitizedString, FILTER_SANITIZE_STRING);
+        return preg_replace('/\s+/', ' ', $sanitizedString);
     }
     
     public static function cleanInputStrArray(array $unsanitizedArr, $preserveHTML = false)

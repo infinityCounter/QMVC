@@ -8,8 +8,8 @@ use QMVC\Base\HTTPContext\Request;
 
 class Middleware
 {
-    private $next = null;
-    private $handler = null;
+    protected $next = null;
+    protected $handler = null;
 
     function __construct($next = null, $handler = null)
     {
@@ -22,7 +22,7 @@ class Middleware
 
     public function setNext($next)
     {
-        if(!Helpers::isValidRouteHandler($next) && !Helpers::isMiddlware($next))
+        if(!Helpers::isValidRouteHandler($next) && !Helpers::isMiddleware($next))
         {   
             $exceptionMessage = "Argument provided to Middleware setHandler method".
                 " must either be an instnace of Middleware or a descendant of Middleware,".

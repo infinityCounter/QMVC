@@ -2,8 +2,9 @@
 
 namespace QMVC\Base\HTTPContext;
 
-use QMVC\Base\Helpers;
-use QMVC\Base\Security\Sanitizers as Sanitizers;
+use QMVC\Base\Helpers\Helpers;
+use QMVC\Base\Constants\Constants;
+use QMVC\Base\Security\Sanitizers;
 
 class Request
 {
@@ -65,7 +66,7 @@ class Request
 
     public function setHTTPType($type)
     {
-        if(!isValidHTTPRequestType($type))
+        if(!Helpers::isValidHTTPRequestType($type))
             throw new InvalidArgumentException("{$type} is not a supported (GET, POST, PUT, DELETE) HTTP type.");
         $this->requestHTTPType = $type;
     }
@@ -77,7 +78,9 @@ class Request
 
     public function setHeaders($headers)
     {
-        $this->requestHeaders = array_map(CLEAN_STR, $headers);
+        $this->requestHeaders = array_map(function($header) {
+            return Sanitizers::cleanURI($header);
+        }, $headers);
     }
 
     public function getHeaders()
@@ -119,10 +122,10 @@ class Request
         {
             return trim($val, "{}");
         }, $cleanedRouteURI);   
-        $exactURIArr = explode(DELIM_URI, trim($this->requestURI, DELIM_URI));
-        $matchedURIArr = explode(DELIM_URI, trim($cleanedRouteURI, DELIM_URI));
-        $arrDiffPairs = arrayTrueDiff($exactURIArr, $matchedURIArr);
-        $this->requestRESTArgs = convertValPairsToAssociate($arrDiffPairs);
+        $exactURIArr = explode(Constants::DELIM_URI, trim($this->requestURI, Constants::DELIM_URI));
+        $matchedURIArr = explode(Constants::DELIM_URI, trim($cleanedRouteURI, Constants::DELIM_URI));
+        $arrDiffPairs = Helpers::arrayTrueDiff($exactURIArr, $matchedURIArr);
+        $this->requestRESTArgs = Helpers::convertValPairsToAssociate($arrDiffPairs);
     }
 
     public function getRESTArgs()
@@ -132,7 +135,7 @@ class Request
 
     public function isHTTPS()
     {
-        return ($this->requestHTTPProtocol === HTTPS);
+        return ($this->requestHTTPProtocol === Constants::HTTPS);
     }
 
     public function __get($memberName)
@@ -144,7 +147,7 @@ class Request
         throw new RuntimeException("{$memberName} property does not exist on Request object");
     }
 
-    public function __set($memeberName, $value)
+    public function __set($memberName, $value)
     {
         if(array_key_exists($memberName, $this->requestRESTArgs))
             $this->requestRESTArgs[$memberName] = $value;
