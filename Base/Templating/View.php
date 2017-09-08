@@ -6,8 +6,14 @@ use QMVC\Base\Security\Sanitizers as Sanitizers;
 
 class View {
 
+    private static $twig;
     private $templatePath;
     private $injectArgs;
+
+    public static function setTwigEnvironment($twig)
+    {
+        self::$twig = $twig;
+    }
 
     function __construct(string $templatePath = "", array $templateArgs = [])
     {
@@ -30,9 +36,9 @@ class View {
         $this->templateArgs = $cleanedArgs;
     }
 
-    public function redner()
+    public function render()
     {
-
+        return self::$twig->render($this->templatePath, $this->templateArgs);
     }
 }
 

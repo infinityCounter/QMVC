@@ -22,7 +22,7 @@ class MockHandler
 
 class ResponseWrapperTest extends TestCase
 {
-    public function testWrapper()
+    public function testWrapperReturnsResponse()
     {
         $request = new Request();
         $request->setURI('/qmvc/test/lib/responsewrapper');
