@@ -28,32 +28,20 @@ class Sanitizers
         return preg_replace('/(<\?).*(\?>)*/', '', $unstrippedString);
     }
 
-    public static function cleanInputStr($unsanitizedString, $preserveHTML = false)
+    public static function stripAllTags($unstrippedString)
     {
-        $sanitizedString = ($preserveHTML) ? filter_var($unsanitizedString, FILTER_SANITIZE_FULL_SPECIAL_CHARS) : filter_var($unsanitizedString, FILTER_SANITIZE_STRING);
-        return preg_replace('/\s+/', ' ', $sanitizedString);
+        $noScriptTags = self::stripScriptTags($unsanitizedString);
+        $noClosingTags = self::stripClosingTags($noScriptTags);
+        $noPHPTags = self::stripPHPTags($noClosingTags);
+        return $noPHPTags;
     }
-    
-    public static function cleanInputStrArray(array $unsanitizedArr, $preserveHTML = false)
-    {
-        $arrayFilter = function($val) use ($preserveHTML)
-        {
-            return self::cleanInputStr($val, $preserveHTML);
-        };
-        return array_map($arrayFilter, $unsanitizedArr);
-    }
-    
+
     public static function cleanURI($dirtyURI)
     {
         $URISlashesReplaced = str_replace('\\', '/', $dirtyURI);
         $URISpacesRemoved   = preg_replace( array('/\v/','/\s\s+/'), '', $URISlashesReplaced);
         $URISlashesTrimmed  = trim($URISpacesRemoved, "/");
         return preg_replace("/[^a-zA-Z0-9\-._~:\/?#\[\]@!$&'()*+,;=`]/",'',(strtolower($URISlashesTrimmed)));
-    }
-    
-    public static function cleanQueryStringArg($queryStringArg)
-    {
-        return filter_var($queryStringArg, FILTER_SANITIZE_URL);
     }
 }
 
