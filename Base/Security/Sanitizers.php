@@ -13,6 +13,21 @@ use QMVC\Base\Constants\Constants as Constants;
 
 class Sanitizers
 {
+    public static function stripScriptTags($unstrippedString)
+    {
+         return preg_replace('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i', '', $unstrippedString);
+    }
+
+    public static function stripClosingTags($unstrippedString)
+    {
+        return preg_replace('/(<.*>).*(<\/.*>)*/','', $unstrippedString);
+    }
+
+    public static function stripPHPTags($unstrippedString)
+    {
+        return preg_replace('/(<\?).*(\?>)*/', '', $unstrippedString);
+    }
+
     public static function cleanInputStr($unsanitizedString, $preserveHTML = false)
     {
         $sanitizedString = ($preserveHTML) ? filter_var($unsanitizedString, FILTER_SANITIZE_FULL_SPECIAL_CHARS) : filter_var($unsanitizedString, FILTER_SANITIZE_STRING);
@@ -26,11 +41,6 @@ class Sanitizers
             return self::cleanInputStr($val, $preserveHTML);
         };
         return array_map($arrayFilter, $unsanitizedArr);
-    }
-    
-    public static function cleanEmail($unsanitizedEmail)
-    {
-        throw new Exception("NOT YET IMPELEMENTED!");
     }
     
     public static function cleanURI($dirtyURI)
