@@ -20,7 +20,7 @@ class Sanitizers
 
     public static function stripClosingTags($unstrippedString)
     {
-        return preg_replace('/(<.*>).*(<\/.*>)*/','', $unstrippedString);
+        return preg_replace('/(<.*>).*?(<\/.*>)*/','', $unstrippedString);
     }
 
     public static function stripPHPTags($unstrippedString)
@@ -30,7 +30,7 @@ class Sanitizers
 
     public static function stripAllTags($unstrippedString)
     {
-        $noScriptTags = self::stripScriptTags($unsanitizedString);
+        $noScriptTags = self::stripScriptTags($unstrippedString);
         $noClosingTags = self::stripClosingTags($noScriptTags);
         $noPHPTags = self::stripPHPTags($noClosingTags);
         return $noPHPTags;
