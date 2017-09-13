@@ -64,7 +64,7 @@ In addition the Mozilla web security resources mentioned, [OWASP](https://www.ow
 Pure Object Oriented PHP7 code
 -------------
 
-The switch to PHP7 was a simple one, the richer feature set of PHP7 in addition to optimizations and known vulnerabilities made it the simple choise. PHP7 is more efficient than ever before:
+The switch to PHP7 was a simple one, the richer feature set of PHP7 in addition to optimizations and known vulnerabilities made it the simple choice. PHP7 is more efficient than ever before:
 
 - Improvements to optimizations for internal data structures have resulted in significant memory savings, increases in performance, and the ability to support a higher load capacity on the same hardware.
 
