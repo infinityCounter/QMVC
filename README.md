@@ -37,7 +37,7 @@ To facilitate the new requirements several new features have been added in addit
 
 - Migrating from Vagrant to Docker for simpler and less expensive development and testing.
 
-Additionally greater care is now also taken to **sanitize both input and output data to/from the client side** as to protect as **injection attacks**. More on each of the aforementioned will be discussed in further detail in additional sections.
+Additionally greater care is now also taken to **sanitize both input and output data to/from the client side**, helping to defend against **injection attacks**. More on each of the aforementioned will be discussed in further detail in additional sections.
 
 -------
 Mozilla Web Security Recommendations
@@ -78,5 +78,28 @@ Additionally PHP7 though still fairly new has resolved many vulnerabilities of p
 
 -------
 
+Switching to TWIG Templating Engine
+-------
+
+The TWIG Templating engine was developed as a part of the PHP [symfony framework](https://symfony.com), however it readily available as an independent library to be used in any PHP application. 
+
+Switching from regular PHP/HTML views to Compiled TWIG templates **abstracts backend code from front end, making it easier for front end developers to work independently of backend developers**.
+
+While there exist other templating engines, TWIG was selected after considering factors presented in the following articles: [TOP 5 PHP templating engines](http://www.sitecrafting.com/blog/top-5-php-template-engines/), and [OWASP XSS Cheat Sheet](https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet). TWIG is not only popular, but has active development, a large reservoir of documentation and support, and includes many powerful features that **increase the flexibility and security of applications that use TWIG**. [Such as contextuale escaping](https://twig.symfony.com/doc/2.x/filters/escape.html).
+
+
+--------
+
+
+Contributing
+------
+
+Feel free to submit any pull request or fork and continue to develop!
+
+Lincensed under the MIT license, see [here](https://github.com/infinityCounter/QMVC/blob/dev_v2.0/LICENSE).
+
+-------
+
 *DOCUMENTATION TO BE UPDATED IN THE FUTURE*
+
 author: Emile Keith (@infinityCounter)
