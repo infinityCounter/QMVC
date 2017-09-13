@@ -25,11 +25,9 @@ To facilitate the new requirements several new features have been added in addit
 
 - QMVC v2.0 now uses the TWIG templating engine for view rendering.
 
-- New laravel style router instead of the QMVC v1.0 Angular like state router.
+- New Routing system that follows a laravel style router implementation. The new routing system now supports middleware for HTTP request and response manipulation.
 
 - Removal of custom QMVC psudeo-ORM in favor of allowing user chosen ORM or other database management library.
-
-- Middlewares for HTTP request interactions.
 
 - PHPUnit Unit Tests for all base core code.
 
@@ -107,6 +105,37 @@ Routes will no longer tightly couple a controller to a view, thus creating and i
 
 ---------
 
+Removing QMVC Native Database Interface
+--------
+
+QMVC v1.0 boasted an incomplete Native Interface for Querying MySQL databases. This psuedo **ORM** required users of QMVC to manually write and implement their own models since it had no scafolding tools. 
+
+Additionally the functionality supported was very very limited, while the system not being a complete ORM of its own could be crudely manipulated to possibly perform malicious attacks.
+
+This functionality from **QMVC v1.0** was directly in opposition to the desired results of **QMVC v2.0**, and as such was subsequently removed.
+
+Adding a popular PHP ORM was considered at first, however after much deliberation this was decided against. QMVC on its own would not provide any additional functionality or interface over the ORM, therefore there was no point in choosing one prematurely.
+
+However it is recommended to use an ORM that will fulfill the criteria of being:
+
+- Simple to use.
+- Supports major relational database systems: **MySQL, SQL Server, PostgreSQL, and SQLite**.
+- Secure with no major known vulnerabilities that have not been patched.
+- Extensive documentation and support available.
+
+Against these criteria QMVC v2.0 suggests choosing from one of the following ORMs:
+
+- [Doctrine 2](http://www.doctrine-project.org) ---  [Vulnerability Report](http://www.cvedetails.com/vendor/11395/Doctrine-project.html)
+- [RedBeanPHP](https://redbeanphp.com/index.php)
+- [Propel](http://propelorm.org)
+
+Due consideration should be given to which ORM is chosen, but regardless of ORM chosen proper data sanitization practices will help to secure your data source.
+--------
+
+Unit Tests for all QMVC v2.0 core code
+--------
+
+--------
 
 Contributing
 ------
