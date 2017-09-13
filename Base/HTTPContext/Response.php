@@ -64,7 +64,7 @@ class Response
         {
             // Anything other than Files and Views will be json encoded
             $this->setResponseType(Constants::JSON_RESP);
-            $cleanedBody = Sanitizers::cleanInputStr(json_encode($body), false, true);
+            $cleanedBody = Sanitizers::stripAllTags(json_encode($body), false, true);
             $this->responseBody = $body;
         }
         $this->evalTypeHeaders();
@@ -92,12 +92,12 @@ class Response
         $uncleanedHeaderKeys = array_keys($uncleanedHeaders);
         $cleanedKeys = array_map(function($uncleanKey)
         {
-            return Sanitizers::cleanInputStr((string)$uncleanKey, false, true);
+            return Sanitizers::stripAllTags((string)$uncleanKey, false, true);
         }, $uncleanedHeaderKeys);
 
         $cleanedValues = array_map(function($uncleanValue)
         {
-            return Sanitizers::cleanInputStr((string)$uncleanValue, false, true);
+            return Sanitizers::stripAllTags((string)$uncleanValue, false, true);
         }, $uncleanedHeaders);
         $this->responseHeaders = array_combine($cleanedKeys, $cleanedValues);
     }
@@ -107,7 +107,7 @@ class Response
         $uncleanedHeaderKeys = array_keys($uncleanedHeaders);
         $cleanedKeys = array_map(function($uncleanKey)
         {
-            return Sanitizers::cleanInputStr((string)$uncleanKey, false, true);
+            return Sanitizers::stripAllTags((string)$uncleanKey, false, true);
         }, $uncleanedHeaderKeys);
 
         $cleanedValues = array_map(function($uncleanValue)

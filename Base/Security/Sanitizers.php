@@ -4,13 +4,6 @@ namespace QMVC\Base\Security;
 
 use QMVC\Base\Constants\Constants as Constants;
 
-/**
- * function cleanInputStr
- * 
- * @param string $unsanitizedString
- * @param boolean $doTrim
- */
-
 class Sanitizers
 {
     public static function stripScriptTags($unstrippedString)

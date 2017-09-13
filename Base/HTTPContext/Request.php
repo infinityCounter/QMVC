@@ -107,7 +107,7 @@ class Request
     {
         if(!is_array($queryStringArgs)) 
             throw new InvalidArgumentException("The argument passed is not an array. An array must be passed to the setQueryStringArgs method.");
-        $this->requestQueryStringArgs = Sanitizers::cleanInputStrArray($queryStringArgs);
+        $this->requestQueryStringArgs = Sanitizers::stripAllTags($queryStringArgs);
     }
 
     public function getQueryStringArgs()

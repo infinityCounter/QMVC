@@ -7,7 +7,7 @@ use QMVC\Base\Security\Sanitizers as Sanitizers;
 class View {
 
     private static $twig;
-    private $templatePath;
+    private $templateName;
     private $injectArgs;
 
     public static function setTwigEnvironment($twig)
@@ -15,30 +15,26 @@ class View {
         self::$twig = $twig;
     }
 
-    function __construct(string $templatePath = "", array $templateArgs = [])
+    function __construct(string $templateName = "", array $templateArgs = [])
     {
-        $this->setTemplatePath($templatePath);
+        $this->setTemplate($templateName);
         $this->setTempalteArgs($templateArgs);
     }
 
-    public function setTemplatePath(string $templatePath)
+    public function setTemplate(string $templateName)
     {
-        $cleanedPath = Sanitizers::cleanInputStr($templatePath);
-        $this->templatePath = $cleanedPath;
+        $cleanedName = filter_var($templateName, FILTER_SANITIZE_STRING);
+        $this->templateName = $cleanedName;
     }
 
     public function setTemplateArgs(array $templateArgs)
     {
-        $cleanedArgs = array_map(function($val)
-        {
-            return Sanitizers::cleanInputStr($val, true, false);
-        }, $templateArgs);
         $this->templateArgs = $cleanedArgs;
     }
 
     public function render()
     {
-        return self::$twig->render($this->templatePath, $this->templateArgs);
+        return self::$twig->render($this->templateName, $this->templateArgs);
     }
 }
 

@@ -147,7 +147,7 @@ final class Helpers
     */
     public static function realFileSize($path)
     {
-        $cleanedPath = self::cleanInputStr($path, false, true);
+        $cleanedPath = filter_var($path, FILTER_SANITIZE_STRING);
         if (!file_exists($cleanedPath))
             return false;
 
