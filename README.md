@@ -21,13 +21,13 @@ To facilitate the new requirements several new features have been added in addit
 
 - Implementations of Mozilla web security recommendations as defined [here](https://developer.mozilla.org/en-US/docs/Web/Security), Including Subresource Integrity, and Content Security Policy.
 
-- Strictly PHP7 only code in QMVC v2.0 base, avoiding any pitfalls caused by pre PHP7 vulnerabilities.
+- Strictly PHP7 only code in QMVC v2.0 base code (*not including project dependencies*), avoiding any pitfalls caused by pre PHP7 vulnerabilities.
 
 - QMVC v2.0 now uses the TWIG templating engine for view rendering.
 
 - New laravel style router instead of the QMVC v1.0 Angular like state router.
 
-- Removal of custom QMVC psudeo-ORM infavor of allowing user chosen ORM or other database management library.
+- Removal of custom QMVC psudeo-ORM in favor of allowing user chosen ORM or other database management library.
 
 - Middlewares for HTTP request interactions.
 
