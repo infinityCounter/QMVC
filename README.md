@@ -6,6 +6,8 @@ QMVC v2.0 is on its way!
 ===================
 Through positive feedback and continued development, **QMVC** has really been able to grow into its own with the impending v2.0 release. Featuring major changes to its code and available APIs, **QMVC v2.0** more readily fulfills its purpose as a **simple to use barebone PHP7 MVC application**, which is **now more secure than ever**!
 
+*Please note that while QMVC v2.0 is intended to be a simple and secure MVC solution for PHP7, do not rely entirely on the claims made here to gaurantee the security of your web application. Please follow proper procedure in testing and securing your application.*
+
 ----------
 
 What's New in v2.0?
@@ -36,6 +38,26 @@ To facilitate the new requirements several new features have been added in addit
 - Migrating from Vagrant to Docker for simpler and less expensive development and testing.
 
 Additionally greater care is now also taken to **sanitize both input and output data to/from the client side** as to protect as **injection attacks**. More on each of the aforementioned will be discussed in further detail in additional sections.
+
+-------
+Mozilla Web Security Recommendations
+--------------
+Mozilla in its series of [web security articles](https://developer.mozilla.org/en-US/docs/Web/Security) outlines several  measures that can be taken to help increase the security of websites and web applications by eliminating potential vulnerabilities. These recommendations fall under data sanitation, securely storing and transporting sensitive data, utilizing existing web protocols (HTTPS) to your advantage to secure your application, and others. 
+
+Based on the wide area of coverage of these recommendations it is not possible to implement all of them in this barebone application, however many key recommendations are **already built into QMVC v2.0**.  
+
+- QMVC v2.0 assures Content Security by using HTTP Strict Transport Security and Content Security Policy to reduce Man-in-the-middle, Cross Site Scripting(XSS), and data injection vulnerabilities.
+
+-  QMVC v2.0 automatically detects server response content type and automatically sets the correct MIME header. While usually overlooked this is a potential attack vector. It is recommended that the server set the correct MIME type [instead of having the web browser guess](https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Configuring_server_MIME_types#Why_browsers_should_not_guess_MIME_types).
+
+- QMVC v2.0 will include a custom *TWIG extension* for supporting [subresource integrity](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity). Securing you application against any unexpected external resource alteration. 
+
+-  TLS is of utmost importance, and that's why QMVC v2.0 made the big switch from Apache 2 to Caddy, but more on this will be discussed later.
+
+In addition the Mozilla web security resources mentioned, [OWASP](https://www.owasp.org/index.php/Main_Page) was heavily used as a reference. OWASP though no longer heavily actively maintained is a not-for-profit organization focused on improving web security, that can be utilized as a trusted point of reference. 
+
+*Please consider reading the entirety of both the Mozilla web security and OWASP web security document for information on how to properly secure your web application.* 
+
 
 -------
 
