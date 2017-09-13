@@ -99,7 +99,7 @@ Previously QMVC v1.0 used an Angular like routing style
 
 > *Angulars routing system primarily focused on the use of States, which were composed of a view bound to a controller. While this style of routing makes sense when considering a framework that will only be used to develop web applcations where views and controllers are tightly coupled.  QMVC v2.0 seeks to be useful not only for developing MVC applications, but regular web APIs as well.*
 
-Instead, **QMVC v2.0 has switched to a laravel style routing**. Laravel which is one of the most popular PHP web frameworks, is known for it's simple routing which makes it easy and quick to get a web application up and running.
+Instead, **QMVC v2.0 has switched to a laravel style routing**. Laravel which is one of the most popular PHP web frameworks, is known for its simple routing, which makes it easy and quick to get a web application up and running.
 
 Routes will no longer tightly couple a controller to a view, thus creating and impleneting new routes will be simpler than ever. Additionally with the inclusion of the TWIG templating engine, returning views is simpler than ever.
 
