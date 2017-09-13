@@ -1,10 +1,10 @@
 # QMVC
-A barebone, secure, simple PHP7 MVC application.
+A **simple**, **secure** PHP7 MVC microframework.
 ______
 
 QMVC v2.0 is on its way!
 ===================
-Through positive feedback and continued development, **QMVC** has really been able to grow into its own with the impending v2.0 release. Featuring major changes to its code and available APIs, **QMVC v2.0** more readily fulfills its purpose as a **simple to use barebone PHP7 MVC application**, which is **now more secure than ever**!
+Through positive feedback and continued development, **QMVC** has really been able to grow into its own with the impending v2.0 release. Featuring major changes to its code and available APIs, **QMVC v2.0** more readily fulfills its purpose as a **simple to use, and secure PHP7 MVC microframework**, which is **now more secure than ever**!
 
 *Please note that while QMVC v2.0 is intended to be a simple and secure MVC solution for PHP7, do not rely entirely on the claims made here to gaurantee the security of your web application. Please follow proper procedure in testing and securing your application.*
 
