@@ -130,6 +130,7 @@ Against these criteria QMVC v2.0 suggests choosing from one of the following ORM
 - [Propel](http://propelorm.org)
 
 Due consideration should be given to which ORM is chosen, but regardless of ORM chosen proper data sanitization practices will help to secure your data source.
+
 --------
 
 Unit Tests for all QMVC v2.0 core code
