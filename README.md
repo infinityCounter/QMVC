@@ -78,7 +78,7 @@ Additionally PHP7 though still fairly new has resolved many vulnerabilities of p
 
 -------
 
-Switching to TWIG Templating Engine
+Switching to TWIG v2 Templating Engine
 -------
 
 The TWIG Templating engine was developed as a part of the PHP [symfony framework](https://symfony.com), however it readily available as an independent library to be used in any PHP application. 
@@ -87,8 +87,25 @@ Switching from regular PHP/HTML views to Compiled TWIG templates **abstracts bac
 
 While there exist other templating engines, TWIG was selected after considering factors presented in the following articles: [TOP 5 PHP templating engines](http://www.sitecrafting.com/blog/top-5-php-template-engines/), and [OWASP XSS Cheat Sheet](https://www.owasp.org/index.php/XSS_(Cross_Site_Scripting)_Prevention_Cheat_Sheet). TWIG is not only popular, but has active development, a large reservoir of documentation and support, and includes many powerful features that **increase the flexibility and security of applications that use TWIG**. [Such as contextuale escaping](https://twig.symfony.com/doc/2.x/filters/escape.html).
 
+Additionally if any features desired are not by default included in the TWIG templating engine, it is easy to just write a [TWIG extension](https://twig.symfony.com/doc/2.x/advanced.html).
+
 
 --------
+
+New Routing System
+--------
+
+Previously QMVC v1.0 used an Angular like routing style
+
+> *Angulars routing system primarily focused on the use of States, which were composed of a view bound to a controller. While this style of routing makes sense when considering a framework that will only be used to develop web applcations where views and controllers are tightly coupled.  QMVC v2.0 seeks to be useful not only for developing MVC applications, but regular web APIs as well.*
+
+Instead, **QMVC v2.0 has switched to a laravel style routing**. Laravel which is one of the most popular PHP web frameworks, is known for it's simple routing which makes it easy and quick to get a web application up and running.
+
+Routes will no longer tightly couple a controller to a view, thus creating and impleneting new routes will be simpler than ever. Additionally with the inclusion of the TWIG templating engine, returning views is simpler than ever.
+
+**Middlewares** are the coolest new feature added to QMVC. Middlewares make it possible to manipulate Request and Response data *before and after* being proccessed by a route's handling method.
+
+---------
 
 
 Contributing
