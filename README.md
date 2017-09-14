@@ -136,6 +136,16 @@ Due consideration should be given to which ORM is chosen, but regardless of ORM 
 Unit Tests for all QMVC v2.0 core code
 --------
 
+All QMVC v2.0 core code has been tested using [PHPUnit](https://phpunit.de). Unit tests are available in the [**Base/Tests/**](https://github.com/infinityCounter/QMVC/tree/dev_v2.0/Base/Tests) directory. Writing tests with PHPUnit is fairly simple and it ensures code functions as expected before a deploy or publish. 
+
+Testing against multiple casses in a controlled environemnt reveals flaws and potential attack vectors in your code. Which is why QMVC v2.0 now recommends using **PHPUnit** or any other unit testing framework of your choosing to properly test all your code when developing. **Aim for max test coverage!** Maybe give [Test Driven Development](https://code.tutsplus.com/tutorials/lets-tdd-a-simple-app-in-php--net-26186) a spin while you're at it. 
+
+--------
+
+Caddy, a mondern webserver
+--------
+
+
 --------
 
 Contributing
