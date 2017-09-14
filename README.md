@@ -103,6 +103,10 @@ Routes will no longer tightly couple a controller to a view, thus creating and i
 
 **Middlewares** are the coolest new feature added to QMVC. Middlewares make it possible to manipulate Request and Response data *before and after* being proccessed by a route's handling method.
 
+Middlewares are simple classes with handler methods that process a request/response in a HTTP request pipline. Middlewares make a chain of successive calls, pushing other middleware calls to the stack until the request is handled by a route's handler. The stack is then unwound as the request is returned back up down stack for processing and finally returned at the end of the chain.
+
+This makes the middleware implementation style of QMVC very simplar to the that of both Laravel and .NET MVC.
+
 ---------
 
 Removing QMVC Native Database Interface
