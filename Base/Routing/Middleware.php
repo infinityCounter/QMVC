@@ -13,7 +13,8 @@ class Middleware
 
     function __construct($next = null, $handler = null)
     {
-        $this->setNext($next);
+        if(isset($next))
+            $this->setNext($next);
         if($handler != null)
             $this->setHandler($handler);
         else

@@ -2,7 +2,23 @@
 
 namespace QMVC\Base;
 
+require_once(__DIR__ . '/Constants.php');
+require_once(__DIR__ . '/Helpers.php');
+require_once(__DIR__ . '/Security/Sanitizers.php');
+require_once(__DIR__ . '/AppConfig.php');
+require_once(__DIR__ . '/Templating/View.php');
+require_once(__DIR__ . '/Routing/IRequestHandler.php');
+require_once(__DIR__ . '/Routing/Middleware.php');
+require_once(__DIR__ . '/Routing/Route.php');
+require_once(__DIR__ . '/Routing/Router.php');
+require_once(__DIR__ . '/HTTPContext/Request.php');
+require_once(__DIR__ . '/HTTPContext/Response.php');
+require_once(__DIR__ . '/HTTPContext/FileResponse.php');
+require_once(__DIR__ . '/Lib/ResponseWrapper.php');
+
 use QMVC\Base\Constants;
+use QMVC\Base\Routing\Middleware;
+use QMVC\Base\Routing\Route;
 use QMVC\Base\Routing\Router;
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\HTTPContext\Response;
@@ -14,34 +30,38 @@ final class QMVC
     public static function run()
     {
         $request = Request::BuildRequest();
-        $route = Router::getRoute($userRequest->getURI());
+        $route = Router::getRoute($request->getURI());
         $response = null;
-        if (!isset($route)) 
+        if (!isset($route)) {
             $response = Response::NotFound();
+        }
         else
-            $response = $route->execPipline($request);
-        if(is_a($response, Response::class))
+        {
+            $response = $route->execPipeline($request);
+        }
+        if(!is_a($response, Response::class))
             $response = new Response($response);
         self::sendStatusCode($response->getStatusCode());
         self::sendHeaders($response->getHeaders());
-        if($response->getResponseType() === Constants::JSON_RESP)
-            self::sendStringResponse($response->getBody());
-        else if($response->getResponseType() === Constants::FILESTREAM_RESP)
+        if($response->getResponseType() === Constants::FILESTREAM_RESP)
             self::sendFileResponse($response->getBody());
         else if($response->getResponseType() === Constants::HTML_RESP)
             self::sendViewResponse($response->getBody());
+        else
+            self::sendStringResponse($response->getBody());
+        
     }
 
     private static function sendStatusCode(int $statusCode)
     {
         // When called with a strin argument with no colon, only the status code and phrase is sent
-        header('x', true, $statusCode());
+        http_response_code($statusCode);
     }
 
     private static function sendHeaders(array $respHeaders)
     {
         foreach ($respHeaders as $headerKey => $headerValue) {
-            header($headerKey . ": " . $headerValue);
+            echo($headerKey . ": " . $headerValue);
         }
     }
 

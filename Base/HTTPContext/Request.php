@@ -18,9 +18,6 @@ class Request
     private $requestQueryStringArgs = [];
     private $requestRESTArgs = [];
 
-    const CLEAN_URI = 'Sanitizers::cleanURI';
-    const CLEAN_STR = 'Sanitizers::cleanInputStr';
-
     public static function cleanQueryStringArgs($queryStringArgs) 
     {
         if (!is_array($queryStringArgs)) 
@@ -43,13 +40,13 @@ class Request
             $request->setURI($_SERVER['REQUEST_URI']);
         // REQUEST_METHOD is not 100% reliable, therefore a setter is used for validation
         $request->setHTTPType($_SERVER['REQUEST_METHOD']);
-        $request->requestHTTPProtocol = getHTTPProtocol();
-        $request->setHeaders(getAllHeaders());
-        $request->requestClientRemoteAddr = getClientRemoteAddr();
+        $request->requestHTTPProtocol = Helpers::getHTTPProtocol();
+        $request->setHeaders(Helpers::getAllHeaders());
+        $request->requestClientRemoteAddr = Helpers::getClientRemoteAddr();
         // There is no case where this property should need to be modified
         // Futhermore no validation / sanitization is requires for REQUEST_Time
         // Therefore this property requires no setter, only a getter
-        $this->requestDateTime = $_SERVER['REQUEST_TIME'];
+        $request->requestDateTime = $_SERVER['REQUEST_TIME'];
         $request->setBodyArgs(stream_get_contents(STDIN));
         $request->setQueryStringArgs($_REQUEST);
         return $request;
@@ -92,12 +89,21 @@ class Request
 
     public function setBodyArgs($bodyArgs)
     {
-        if(!is_array($bodyArgs)) 
-            throw new InvalidArgumentException("The argument passed is not an array. An array must be passed to the setBodyArgs method.");
-        $this->requestBodyArgs = array_map(function($val)
+        if(is_array($bodyArgs))
         {
-            return htmlentities($val, true);
-        }, $bodyArgs);
+            $this->requestBodyArgs = array_map(function($val)
+            {
+                return htmlentities($val, true);
+            },  $bodyArgs);
+        }
+        else if(Helpers::isJson($bodyArgs))
+        {
+            $this->requestBodyArgs = json_decode($bodyArgs, true);
+        }
+        else
+        {
+            $this->requestBodyArgs = $bodyArgs;
+        }
     }
 
     public function getBodyArgs()
@@ -109,7 +115,9 @@ class Request
     {
         if(!is_array($queryStringArgs)) 
             throw new InvalidArgumentException("The argument passed is not an array. An array must be passed to the setQueryStringArgs method.");
-        $this->requestQueryStringArgs = Sanitizers::stripAllTags($queryStringArgs);
+        $this->requestQueryStringArgs = array_map(function($arg) {
+            return Sanitizers::stripAllTags($arg);
+        }, $queryStringArgs);
     }
 
     public function getQueryStringArgs()

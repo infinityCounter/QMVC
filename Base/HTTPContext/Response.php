@@ -35,6 +35,11 @@ class Response
         'Content-Type' => 'application/json; charset=UTF-8',
     ];
 
+    const DEF_TEXT_HEADERS = [
+        'Content-Description' => 'Text Response',
+        'Content-Type' => 'text/plain; charset=UTF-8',
+    ];
+
     const DEF_HTML_HEADERS = [
         'Content-Description' => 'HTML Response',
         'Content-Type' => 'text/html; charset=utf-8',
@@ -60,12 +65,19 @@ class Response
             $this->setResponseType(Constants::HTML_RESP);
             $this->responseBody = $body;
         }
-        else 
+        else if(is_array($body) || is_object($body))
         {
             // Anything other than Files and Views will be json encoded
             $this->setResponseType(Constants::JSON_RESP);
-            $cleanedBody = Sanitizers::stripAllTags(json_encode($body), false, true);
+            $cleanedBody = Sanitizers::stripAllTags(json_encode($body));
+            //echo $cleanedBody;
             $this->responseBody = $body;
+        } 
+        else
+        {
+            $this->setResponseType(Constants::TEXT_RESP);
+            $cleanedBody = htmlentities($body);
+            $this->responseBody = $cleanedBody;
         }
         $this->evalTypeHeaders();
     }
@@ -139,6 +151,12 @@ class Response
             $typeHeaders['Content-Length'] = strlen($this->responseBody);
             $typeHeaders['Content-Disposition'] = 'inline';
         }
+        else if($this->responseType === Constants::TEXT_RESP)
+        {
+            $typeHeaders = array_merge(self::DEF_GEN_HEADERS, self::DEF_TEXT_HEADERS);
+            $typeHeaders['Content-Length'] = strlen($this->responseBody);
+            $typeHeaders['Content-Disposition'] = 'inline';
+        }
 
         if(AppConfig::isOnlyUsingHTTPS())
         {
@@ -146,7 +164,7 @@ class Response
             if(AppConfig::isOnlyUsingHTTPSSubdomains()) 
                 $type['Strict-Transport-Security'] .= 'includeSubDomains';
         }
-        array_merge($this->responseHeaders, $typeHeaders);
+        $this->responseHeaders = array_merge($this->responseHeaders, $typeHeaders);
     }
 
     public function setStatusCode(int $statusCode)
@@ -161,4 +179,4 @@ class Response
         return $this->responseStatusCode;
     }
 }
-?>;
+?>

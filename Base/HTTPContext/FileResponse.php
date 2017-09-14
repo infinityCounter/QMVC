@@ -2,7 +2,7 @@
 
 namespace QMVC\Base\HTTPContext;
 
-use QMVC\Base\AppConfig as AppConfig;
+use QMVC\Base\AppConfig;
 use QMVC\Base\Security\Sanitizers;
 use QMVC\Base\Helpers;
 

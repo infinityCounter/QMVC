@@ -160,7 +160,7 @@ final class Route
         $this->middlewareStack = array_pop($this->middlewareStack);
     }
 
-    public function execPipeline(Request $request): Response
+    public function execPipeline(Request $request)
     {
         // Invoke request should chain down piple of middlewares and route handler and back up
         return $this->middlewareStack[0]->invoke($request);

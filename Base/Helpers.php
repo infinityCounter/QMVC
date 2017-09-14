@@ -44,6 +44,11 @@ final class Helpers
         return in_array($unsureCode, Constants::HTTP_RESP_CODES);
     }
 
+    public static function isJson($string) {
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
+    }
+
     /* END VALIDATORS */
 
     /* ACCESSORS */
@@ -87,6 +92,7 @@ final class Helpers
         if($type === Constants::FILESTREAM_RESP) return true;
         if($type === Constants::JSON_RESP) return true;
         if($type === Constants::HTML_RESP) return true;
+        if($type === Constants::TEXT_RESP) return true;
         return false;
     }
     
