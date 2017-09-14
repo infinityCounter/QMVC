@@ -165,9 +165,9 @@ class Response
 
         if(AppConfig::isOnlyUsingHTTPS())
         {
-            $type['Strict-Transport-Security'] = 'max-age=' . AppConfig::getSTSTime();
+            $typeHeaders['Strict-Transport-Security'] = 'max-age=' . AppConfig::getSTSTime();
             if(AppConfig::isOnlyUsingHTTPSSubdomains()) 
-                $type['Strict-Transport-Security'] .= 'includeSubDomains';
+                $typeHeaders['Strict-Transport-Security'] .= '; includeSubDomains';
         }
         $this->responseHeaders = array_merge($this->responseHeaders, $typeHeaders);
     }

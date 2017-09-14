@@ -6,12 +6,12 @@ final class AppConfig
 {
     private static $onlyHTTPS = true;
     private static $onlyHTTPSSubdomains = true;
-    private static $STSTime = 31536000; // 1 Year
+    private static $STSTime = 0;
     private static $twigLoader = null;
     private static $twigLocations = [];
     private static $twigEnvironment = null;
 
-    public static function useOnlyHTTPS(boolean $https)
+    public static function useOnlyHTTPS(bool $https)
     {
         self::$onlyHTTPS = $https;
         if(!$https)
@@ -26,7 +26,7 @@ final class AppConfig
         return self::$onlyHTTPS;
     }
 
-    public static function UseOnlyHTTPSSubdomains(boolean $https)
+    public static function UseOnlyHTTPSSubdomains(bool $https)
     {
         self::$onlyHTTPSSubdomains = $https;
     }
@@ -36,8 +36,10 @@ final class AppConfig
         return self::$onlyHTTPSSubdomains;
     }
 
-    public static function setSTSTime(integer $time)
+    public static function setSTSTime(int $time)
     {
+        if($time < 0)
+            throw new InvalidArgumentException("Time cannot be less than 0");
         self::$STSTime = $time;
     }
 

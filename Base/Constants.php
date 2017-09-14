@@ -38,6 +38,9 @@ class Constants
 
     const VALID_URI_CHARSET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;=`";
     
+    const YEAR = 31536000; // 1 Year
+    const MONTH = YEAR / 12;
+    const DAY = 3600 * 24;
 }
 
 ?>
