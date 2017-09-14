@@ -18,12 +18,12 @@ class FileResponse
         $this->setDownloadLimit($downloadLimit);
     }
 
-    public function setFile(string $filePath)
+    public function setFilePath(string $filePath)
     {
         $this->filePath = $cleanedPath;
     }
 
-    public function getFileName()
+    public function getFilePath()
     {
         return basename($this->filePath);
     }

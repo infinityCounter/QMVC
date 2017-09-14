@@ -28,7 +28,7 @@ final class QMVC
         else if($response->getResponseType() === Constants::FILESTREAM_RESP)
             self::sendFileResponse($response->getBody());
         else if($response->getResponseType() === Constants::HTML_RESP)
-            self::sendView($response->getBody());
+            self::sendViewResponse($response->getBody());
     }
 
     private static function sendStatusCode(int $statusCode)
@@ -46,17 +46,32 @@ final class QMVC
 
     private static function sendFileResponse(FileResponse $fileResponse)
     {
-        
+        $filePath = realPath($fileResponse->getFilePath());
+        if(!$filePath || !file_exists($filePath) || is_dir($filePath))
+            throw new InvalidArgumentException("Cannot find file {$filePath}.");
+        flush();
+        $file = fopen($filePath, "r");
+        $downloadRate = ($fileResponse->isLimited()) ? $fileResponse->getDownloadLimit() : 1024;
+        while(!feof($file))
+        {
+            // send the current file part to the browser
+            echo fread($file, round($downloadRate * 1024));
+            // flush the content to the browser
+            flush();
+        }
+        fclose($file);
     }
 
     private static function sendStringResponse(string $jsonBody)
     {
         echo $jsonBody;
+        flush();
     }
 
-    private static function sendView(View $view)
+    private static function sendViewResponse(View $view)
     {
         echo $view->render();
+        flush();
     }
 }
 
