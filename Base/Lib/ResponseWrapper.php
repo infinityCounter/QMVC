@@ -2,7 +2,7 @@
 
 namespace QMVC\Base\Lib;
 
-use QMVC\Base\Helpers\Helpers;
+use QMVC\Base\Helpers;
 use QMVC\Base\Routing\Middleware;
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\HTTPContext\Response;

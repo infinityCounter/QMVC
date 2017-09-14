@@ -4,7 +4,7 @@ namespace QMVC\Base\Tests\Helpers;
 
 use PHPUnit\Framework\TestCase;
 
-use QMVC\Base\Helpers\Helpers;
+use QMVC\Base\Helpers;
 
 final class HelpersTest extends TestCase
 {

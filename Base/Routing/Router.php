@@ -3,7 +3,7 @@
 namespace QMVC\Base\Routing;
 
 use QMVC\Base\Security\Sanitizers;
-use QMVC\Base\Constants\Constants;
+use QMVC\Base\Constants;
 
 class Router 
 {

@@ -4,7 +4,7 @@ namespace QMVC\Base\Tests\Routing;
 
 use PHPUnit\Framework\TestCase;
 
-use QMVC\Base\Constants\Constants;
+use QMVC\Base\Constants;
 use QMVC\Base\Security\Sanitizers;
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\Routing\Route;

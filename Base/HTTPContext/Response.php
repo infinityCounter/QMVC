@@ -3,8 +3,8 @@
 namespace QMVC\Base\HTTPContext;
 
 use QMVC\Base\AppConfig;
-use QMVC\Base\Constants\Constants;
-use QMVC\Base\Helpers\Helpers;
+use QMVC\Base\Constants;
+use QMVC\Base\Helpers;
 use QMVC\Base\Security\Sanitizers;
 use QMVC\Base\HTTPContext\FileResponse;
 use QMVC\Base\Templating\View;

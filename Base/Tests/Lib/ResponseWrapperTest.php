@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use QMVC\Base\Lib\ResponseWrapper;
 use QMVC\Base\HTTPContext\Response;
 use QMVC\Base\HTTPContext\Request;
-use QMVC\Base\Constants\Constants;
+use QMVC\Base\Constants;
 use QMVC\Base\Security\Sanitizers;
 use QMVC\Base\Routing\Router;
 use QMVC\Base\Routing\Route;

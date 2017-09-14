@@ -2,6 +2,7 @@
 
 namespace QMVC\Base;
 
+use QMVC\Base\Constants;
 use QMVC\Base\Routing\Router;
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\HTTPContext\Response;

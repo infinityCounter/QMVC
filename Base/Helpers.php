@@ -2,7 +2,7 @@
 
 namespace QMVC\Base\Helpers;
 
-use QMVC\Base\Constants\Constants;
+use QMVC\Base\Constants;
 use QMVC\Base\Security\Sanitizers;
 use QMVC\Base\Security\Middleware;
 

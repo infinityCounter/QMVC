@@ -2,7 +2,7 @@
 
 namespace QMVC\Base\Security;
 
-use QMVC\Base\Constants\Constants as Constants;
+use QMVC\Base\Constants as Constants;
 
 class Sanitizers
 {

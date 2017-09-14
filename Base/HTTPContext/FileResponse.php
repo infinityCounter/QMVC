@@ -4,7 +4,7 @@ namespace QMVC\Base\HTTPContext;
 
 use QMVC\Base\AppConfig as AppConfig;
 use QMVC\Base\Security\Sanitizers;
-use QMVC\Base\Helpers\Helpers;
+use QMVC\Base\Helpers;
 
 class FileResponse
 {

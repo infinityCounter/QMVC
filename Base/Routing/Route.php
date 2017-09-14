@@ -2,8 +2,8 @@
 
 namespace QMVC\Base\Routing;
 
-use QMVC\Base\Constants\Constants;
-use QMVC\Base\Helpers\Helpers;
+use QMVC\Base\Constants;
+use QMVC\Base\Helpers;
 use QMVC\Base\Security\Sanitizers;
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\HTTPContext\Response;

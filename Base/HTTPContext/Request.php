@@ -2,8 +2,8 @@
 
 namespace QMVC\Base\HTTPContext;
 
-use QMVC\Base\Helpers\Helpers;
-use QMVC\Base\Constants\Constants;
+use QMVC\Base\Helpers;
+use QMVC\Base\Constants;
 use QMVC\Base\Security\Sanitizers;
 
 class Request
