@@ -18,12 +18,7 @@ final class RouterTest extends TestCase
         $route = Router::getRoute('/');
         $this->assertTrue(is_a($route, Route::class));
     }
-
-    /*public function testRouterAddRoute()
-    {
-        Router::get
-    }*/
-
+    
     /**
     *@dataProvider routerShortHandProvider()
     */
