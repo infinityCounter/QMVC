@@ -145,6 +145,20 @@ Testing against multiple casses in a controlled environemnt reveals flaws and po
 Caddy, a mondern webserver
 --------
 
+[Caddy](https://caddyserver.com) is the new alternative web server, written in [Go](https://golang.org),  on the block. Caddy supports an impresive set of feature that make securing and deploying a modern application a breeze.
+
+- Caddy supports and enables [HTTP/2](https://tools.ietf.org/html/rfc7540) by default.
+
+- Caddy automatically deployes sites to HTTPS, with freee TLS/SSL certificates issued by ACME-enabled certificate authority [Let's Encrypt](https://letsencrypt.org).
+
+- Caddy is simple to install since it is a single executable that has precombiled binaries containing any desired extensions.
+
+- Configuring Caddy is incredibely simple compared to Apache or Nginx.
+
+Caddy was chosen for a simple reason that relates to a philosphy of security.
+> *The simpler something is, the simpler it is to secure and reduce potential attack vectors.*
+
+While Apache and Nginx are battle tested, **they are too complicated and thus too easy to deploy an application to an unsecure web server**. Caddy fixes this probelm using a simple Caddyfile where each line is a command to configure the web server. **While making it simple, and free to securely deploy application with HTTPS**.
 
 --------
 
