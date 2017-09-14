@@ -1,7 +1,7 @@
 # QMVC
 A **simple**, **secure** PHP7 MVC microframework.
 
-*For the QMVC v2.0 API docs please check the [wiki](https://github.com/infinityCounter/QMVC/wiki)*.
+*For the QMVC v2.0 API, and deploy docs please check the [wiki](https://github.com/infinityCounter/QMVC/wiki)*.
 ______
 
 QMVC v2.0 is on its way!
