@@ -61,7 +61,7 @@ final class QMVC
     private static function sendHeaders(array $respHeaders)
     {
         foreach ($respHeaders as $headerKey => $headerValue) {
-            echo($headerKey . ": " . $headerValue);
+            header($headerKey . ": " . $headerValue);
         }
     }
 

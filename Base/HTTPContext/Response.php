@@ -114,6 +114,11 @@ class Response
         $this->responseHeaders = array_combine($cleanedKeys, $cleanedValues);
     }
 
+    public function getHeaders()
+    {
+        return $this->responseHeaders;
+    }
+
     public function addHeaders(array $uncleanHeaders)
     {
         $uncleanedHeaderKeys = array_keys($uncleanedHeaders);
