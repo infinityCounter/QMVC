@@ -1,6 +1,6 @@
 <?php
 
-namespace QMVC\Base\Helpers;
+namespace QMVC\Base;
 
 use QMVC\Base\Constants;
 use QMVC\Base\Security\Sanitizers;

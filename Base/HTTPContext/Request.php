@@ -81,7 +81,7 @@ class Request
     public function setHeaders($headers)
     {
         $this->requestHeaders = array_map(function($header) {
-            return Santiziers::stripAllTags($header);
+            return Sanitizers::stripAllTags($header);
         }, $headers);
     }
 

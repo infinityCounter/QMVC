@@ -1,6 +1,6 @@
 <?php
 
-namespace QMVC\Base\Constants;
+namespace QMVC\Base;
 
 class Constants
 {
