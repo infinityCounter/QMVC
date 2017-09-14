@@ -1,5 +1,7 @@
 # QMVC
 A **simple**, **secure** PHP7 MVC microframework.
+
+*For the QMVC v2.0 API docs please check the [wiki](https://github.com/infinityCounter/QMVC/wiki)*.
 ______
 
 QMVC v2.0 is on its way!
@@ -166,6 +168,30 @@ While Apache and Nginx are battle tested, **they are too complicated and thus to
 
 --------
 
+From Virtual Machines (Vagrant) to Containers (Docker)
+-------
+
+[Docker](https://docs.docker.com) offers a container solution to virtualization as opposed to Vagrant's virtual machines. While Virtual Machine provide a higher level of abstraction from the host operating system, they are heavy and more resource consuming the containers. Docker is also significantly easier to configure, and quicker to deploy.
+
+Docker is actively developed and maintained, is used by enterprise giants, and has a slew of resources and large community support. 
+
+These things make Docker the perfect environment for cross-platform and team collaboration as opposed to the more resource intensive Vagrant.
+
+*Containers offer less isolation from other container images, therefore it is a possible attack vector and for that reason should not be used unless properly secured for deploying your application into production. For more information see the following: [Docker Security Docs](https://docs.docker.com/engine/security/security/), [Docker security rules to live by](https://www.infoworld.com/article/3154711/security/8-docker-security-rules-to-live-by.html)*.
+
+-------
+
+Data Sanitization
+------
+
+QMVC v2.0 takes liberties with sanitizing both input and output. All publicly exposed QMVC v2.0 API methods perform data sanitization including tag stripping, and string escaping.
+
+All request data is sanitized based on how it is passed to the application. All URIs and Query String are stripped of all xml style tags and php tags. Similarly all header key value pairs are stripped of any xml/php type tags. Request Bodies have all contents html encoded. 
+
+Using Twig Templating contextual escaping whether for CSS, HTML, HTML Attribute, or JS is very simple. Additionally all returned data is once again escaped however html/plain text data is not html encoded in responses.
+
+-------
+
 Contributing
 ------
 
@@ -175,6 +201,4 @@ Lincensed under the MIT license, see [here](https://github.com/infinityCounter/Q
 
 -------
 
-*DOCUMENTATION TO BE UPDATED IN THE FUTURE*
-
-author: Emile Keith (@infinityCounter)
+Author: [Emile Keith](https://github.com/infinityCounter)
