@@ -2,8 +2,9 @@
 
 namespace QMVC\Base\Routing;
 
-use QMVC\Base\Security\Sanitizers;
 use QMVC\Base\Constants;
+use QMVC\Base\Helpers;
+use QMVC\Base\Security\Sanitizers;
 
 class Router 
 {
@@ -51,11 +52,12 @@ class Router
             if(!Helpers::isMiddleware($middleware))
                 throw new InvalidArgumentException("Invalid middleware passed to addRoute method.");
         });
-        $cleanedURI = Sanitizers::stripAllTags($URI);
-        $cleanReqType = trim(strtoupper($reqType));
-        if(!validReqType($cleanReqType)) 
-            throw new InvalidArgumentException("${cleanReqType} is not a supported HTTP method.");
-        $route = ($routeHandler instanceof Route ) ? new Route($cleanedURI, $reqTypes, $routeHandler) : $routeHandler;
+        $cleanedURI = strtolower(Sanitizers::stripAllTags($URI));
+        foreach ($reqTypes as $reqType => $allowed) {
+            if(!Helpers::isValidHTTPRequestType($reqType)) 
+                throw new InvalidArgumentException("${reqType} is not a supported HTTP method.");    
+        }
+        $route = ($routeHandler instanceof Route ) ? $routeHandler : new Route($cleanedURI, $reqTypes, $routeHandler);
         self::$routeMap[$cleanedURI] = $route; 
     }
 
@@ -64,8 +66,8 @@ class Router
         // Requested URI is clean and returned without query string
         // ex. /uri/fX/19/hello/?million=5 => uri/fx/19/hello
         $cleanReqURI = Sanitizers::stripAllTags(strtok($requestedURI, '?'));
-        if(isset(self::$routeMap[$cleanReqURI])) return $routeMap[$cleanReqURI];
-        foreach ($routeMap as $routeURI => $routeObj) {
+        if(isset(self::$routeMap[$cleanReqURI])) return self::$routeMap[$cleanReqURI];
+        foreach (self::$routeMap as $routeURI => $routeObj) {
             if (self::isURIRegexRoute($cleanReqURI, $routeURI))
             {
                 return $routeObj;

@@ -34,7 +34,7 @@ class Sanitizers
         $URISlashesReplaced = str_replace('\\', '/', $dirtyURI);
         $URISpacesRemoved   = preg_replace( array('/\v/','/\s\s+/'), '', $URISlashesReplaced);
         $URISlashesTrimmed  = trim($URISpacesRemoved, "/");
-        return stripAllTags($URISlashesTrimmed);
+        return self::stripAllTags($URISlashesTrimmed);
     }
 }
 

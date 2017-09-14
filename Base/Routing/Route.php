@@ -10,7 +10,7 @@ use QMVC\Base\HTTPContext\Response;
 use QMVC\Base\Routing\Middleware;
 use QMVC\Base\Lib\ResponseWrapper;
 
-class Route 
+final class Route 
 {
     private $URI = null;
     private $handler = null;
@@ -44,8 +44,12 @@ class Route
     public function setAllowableActions(array $actions)
     {
         $actionTypes = array_keys($actions);
-        $cleanedTypes = Sanitizers::cleanInputStrArray($actionTypes, false, true);
-        $cleanedActions = array_combine($cleanedTypes, $actions);
+        $cleanedTypes = array_map(function($actionType) {
+            return Sanitizers::stripAllTags($actionType);
+        }, $actionTypes);
+        $cleanedActions = array_map(function($action) {
+            return (bool)Sanitizers::stripAllTags((string)$action);
+        }, $actions);
         $filteredActions = array_filter($cleanedActions, function($action){
             if(Helpers::isValidHTTPRequestType($action)) return $action;
         }, ARRAY_FILTER_USE_KEY);
