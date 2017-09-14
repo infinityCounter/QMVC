@@ -2,8 +2,9 @@
 
 namespace QMVC\Base\HTTPContext;
 
-use QMVC\Base\Security\Sanitizers as Sanitizers;
-use QMVC\Base\Helpers\Helpers as Helpers;
+use QMVC\Base\AppConfig as AppConfig;
+use QMVC\Base\Security\Sanitizers;
+use QMVC\Base\Helpers\Helpers;
 
 class FileResponse
 {
@@ -19,9 +20,6 @@ class FileResponse
 
     public function setFile(string $filePath)
     {
-        $cleanedPath = Sanitizers::cleanInputStr($filePath);
-        if(!file_exists($cleanedPath))
-            throw new RuntimeException("File not found at path {$cleanedPath}");
         $this->filePath = $cleanedPath;
     }
 

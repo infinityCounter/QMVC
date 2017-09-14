@@ -14,27 +14,27 @@ class Router
         return self::$routeMap;
     }
 
-    public static function get(string $URI, $routeHandler) 
+    public static function get(string $URI, $routeHandler, array $middlewares = []) 
     { 
-        self::addRoute($URI, [Constants::GET => true], $routeHandler); 
+        self::addRoute($URI, [Constants::GET => true], $routeHandler, $middlewares); 
     }
 
-    public static function post(string $URI, $routeHandler) 
+    public static function post(string $URI, $routeHandler, array $middlewares = []) 
     { 
-        self::addRoute($URI, [Constants::POST => true], $routeHandler); 
+        self::addRoute($URI, [Constants::POST => true], $routeHandler, $middlewares); 
     }
 
-    public static function put(string $URI, $routeHandler) 
+    public static function put(string $URI, $routeHandler, array $middlewares = []) 
     { 
-        self::addRoute($URI, [Constants::PUT => true], $routeHandler); 
+        self::addRoute($URI, [Constants::PUT => true], $routeHandler, $middlewares); 
     }
 
-    public static function delete(string $URI, $routeHandler) 
+    public static function delete(string $URI, $routeHandler, array $middlewares = []) 
     { 
-        self::addRoute($URI, [Constants::DELETE => true], $routeHandler); 
+        self::addRoute($URI, [Constants::DELETE => true], $routeHandler, $middlewares); 
     }
 
-    public static function any(string $URI, $routeHandler)
+    public static function any(string $URI, $routeHandler, array $middlewares = [])
     {
         $reqs = [
             Constants::GET => true, 
@@ -42,12 +42,16 @@ class Router
             Constants::PUT => true,
             Constants::DELETE => true
         ];
-        self::addRoute($URI, $reqs, $routeHandler);
+        self::addRoute($URI, $reqs, $routeHandler, $middlewares);
     }
 
-    public static function addRoute(string $URI, array $reqTypes = [], $routeHandler)
+    public static function addRoute(string $URI, array $reqTypes = [], $routeHandler, array $middlewares = [])
     {
-        $cleanedURI = Sanitizers::cleanURI($URI);
+        array_walk($middlewares, function($middleware) {
+            if(!Helpers::isMiddleware($middleware))
+                throw new InvalidArgumentException("Invalid middleware passed to addRoute method.");
+        });
+        $cleanedURI = Sanitizers::stripAllTags($URI);
         $cleanReqType = trim(strtoupper($reqType));
         if(!validReqType($cleanReqType)) 
             throw new InvalidArgumentException("${cleanReqType} is not a supported HTTP method.");
@@ -59,7 +63,7 @@ class Router
     {
         // Requested URI is clean and returned without query string
         // ex. /uri/fX/19/hello/?million=5 => uri/fx/19/hello
-        $cleanReqURI = Sanitizers::cleanURI(strtok($requestedURI, '?'));
+        $cleanReqURI = Sanitizers::stripAllTags(strtok($requestedURI, '?'));
         if(isset(self::$routeMap[$cleanReqURI])) return $routeMap[$cleanReqURI];
         foreach ($routeMap as $routeURI => $routeObj) {
             if (self::isURIRegexRoute($cleanReqURI, $routeURI))
@@ -72,8 +76,8 @@ class Router
 
     public static function isURIRegexRoute(string $URI, string $speculatedURI)
     {
-        $cleanedURI = Constants::DELIM_URI . Sanitizers::cleanURI($URI);
-        $cleanSpeculatedURI = Constants::DELIM_URI . Sanitizers::cleanURI($speculatedURI);
+        $cleanedURI = Constants::DELIM_URI . Sanitizers::stripAllTags($URI);
+        $cleanSpeculatedURI = Constants::DELIM_URI . Sanitizers::stripAllTags($speculatedURI);
         if ($cleanedURI === $cleanSpeculatedURI) return true;
         return preg_match(self::convertRESTToRegexURI($cleanSpeculatedURI), $cleanedURI);
     }

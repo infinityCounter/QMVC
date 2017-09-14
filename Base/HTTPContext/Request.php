@@ -25,7 +25,9 @@ class Request
     {
         if (!is_array($queryStringArgs)) 
             throw new InvalidArgumentException('cleanQueryString Args only accepts arrays as argument. Argument was not array');
-        return array_map(CLEAN_URI, $queryStringArgs);
+        return array_map(function($arg) {
+            return Sanitizers::stripAllTags($arg);
+        }, $queryStringArgs);
     }
 
     public static function BuildRequest($overridingURI = null)
@@ -55,7 +57,7 @@ class Request
 
     public function setURI($url)
     {
-        $cleanedURI = Sanitizers::cleanURI(parse_url($url, PHP_URL_PATH));
+        $cleanedURI = strtolower(Sanitizers::stripAllTags(parse_url($url, PHP_URL_PATH)));
         $this->requestURI = $cleanedURI;
     }
 
@@ -79,7 +81,7 @@ class Request
     public function setHeaders($headers)
     {
         $this->requestHeaders = array_map(function($header) {
-            return Sanitizers::cleanURI($header);
+            return Santiziers::stripAllTags($header);
         }, $headers);
     }
 
@@ -94,7 +96,7 @@ class Request
             throw new InvalidArgumentException("The argument passed is not an array. An array must be passed to the setBodyArgs method.");
         $this->requestBodyArgs = array_map(function($val)
         {
-            return Sanitizers::cleanInputStr($val, true);
+            return htmlentities($val, true);
         }, $bodyArgs);
     }
 
@@ -117,7 +119,7 @@ class Request
 
     public function setRESTArgs($routeURI)
     {
-        $cleanedRouteURI = Sanitizers::cleanURI(parse_url($routeURI, PHP_URL_PATH));
+        $cleanedRouteURI = Sanitizers::stripAllTags(parse_url($routeURI, PHP_URL_PATH));
         $cleanedRouteURI = array_map(function($val)
         {
             return trim($val, "{}");

@@ -1,7 +1,9 @@
 <?php
 
 spl_autoload_register(function ($class) {
-    $file = __DIR__ . "/../../" . str_replace('\\', '/', $class) .'.php';
+    $escaped = str_replace('\\', '/', $class);
+    $removedPrefix = str_replace('QMVC/Base/', '', $escaped);
+    $file = __DIR__ . $removedPrefix .'.php';
     if (file_exists($file)) {
         require_once($file);
     }
