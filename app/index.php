@@ -21,14 +21,6 @@ use QMVC\Base\Routing\Middleware;
 use QMVC\Base\Routing\Router;
 use QMVC\Base\QMVC;
 
-TwigAutoloader::register();
-
-$loader = new \Twig_Loader_Array(array(
-    'index' => 'Hello {{ name }}!',
-));
-$twig = new \Twig_Environment($loader);
-var_dump($twig);
-
 Router::get('/', function(Request $request) {
     return 'QMVC v2.0 ON!';
 });

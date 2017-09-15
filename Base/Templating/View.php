@@ -2,18 +2,17 @@
 
 namespace QMVC\Base\Templating;
 
-use QMVC\Base\Security\Sanitizers as Sanitizers;
+require_once(dirname(__DIR__) . '/AppConfig.php');
+require_once(dirname(__DIR__) . '/Security/Sanitizers.php');
+
+use QMVC\Base\AppConfig;
+use QMVC\Base\Security\Sanitizers;
 
 class View {
 
     private static $twig;
     private $templateName;
     private $injectArgs;
-
-    public static function setTwigEnvironment($twig)
-    {
-        self::$twig = $twig;
-    }
 
     function __construct(string $templateName = "", array $templateArgs = [])
     {
@@ -34,7 +33,7 @@ class View {
 
     public function render()
     {
-        return self::$twig->render($this->templateName, $this->templateArgs);
+        return AppConfig::getTwigEnvironment()->render($this->templateName, $this->templateArgs);
     }
 }
 

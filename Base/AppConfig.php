@@ -2,13 +2,15 @@
 
 namespace QMVC\Base;
 
+require_once('TwigAutoloader.php');
+TwigAutoloader::register();
+
 final class AppConfig
 {
     private static $onlyHTTPS = false;
     private static $onlyHTTPSSubdomains = false;
     private static $STSTime = 0;
     private static $twigLoader = null;
-    private static $twigLocations = [];
     private static $twigEnvironment = null;
     private static $contentSecurityPolicy = "default-src 'self'; img-src *; media-src youtube+////////////////////////////.com media2.com; script-src userscripts.example.com";
 
@@ -49,24 +51,31 @@ final class AppConfig
         return (self::$onlyHTTPS) ? self::$STSTime : 0;
     }
 
-    public static function addTemplateDirs(array $templateDirs)
+    private static function setTwigLoader($loader)
     {
-        foreach ($templateDirs as $key => $dir) {
-            self::addTemplateDir($dir);
+        if(!is_a($loader, \Twig_Loader_Array::class) && 
+           !is_a($loader, \Twig_Loader_Filesystem::class))
+        {
+            $type = gettype($loader);
+            throw new InvalidArgumentException("Argument passed to AppConfig::setTwigLoader".
+            " must either be a Twig_Loader_Array or Twig_Loader_Filesystem, {$loader} given.");
         }
+        self::$twigLoader = $loader;
     }
 
-    public static function addTemplateDir(string $templateDir)
+    private static function getTwigLoader()
     {
-        if(!is_dir($templateDir))
-            throw new InvalidArgumentException("Argument provided must be directory path. {$templateDir} is not a valid directory");
-        $fullPath = realpath($templateDir);
-        if(!in_array($fullPath, self::$twigLocations)) array_push(self::$twigLocations, $fullPath);
-        if(self::$twigLoader == null) self::bootstrapTwig();
+        return self::$twigLoader;
     }
 
-    private static function bootstrapTwig()
+    private static function setTwigEnvironment(\Twig_Environment $environment)
     {
-        
+        self::$twigEnvironment = $environment;
+        self::setTwigLoader($environment->getLoader());
+    }
+
+    private static function getTwigEnvironment()
+    {
+        return self::$twigEnvironment;
     }
 }
