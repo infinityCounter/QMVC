@@ -3,12 +3,14 @@
 require_once(dirname(dirname(__DIR__)) . '/Base/HTTPContext/Request.php');
 require_once(dirname(dirname(__DIR__)) . '/Base/HTTPContext/FileResponse.php');
 require_once(dirname(dirname(__DIR__)) . '/Base/HTTPContext/Response.php');
+require_once(dirname(dirname(__DIR__)) . '/Base/Templating/View.php');
 require_once(dirname(dirname(__DIR__)) . '/Base/Routing/Middleware.php');
 require_once(dirname(dirname(__DIR__)) . '/Base/Routing/Router.php');
 
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\HTTPContext\Response;
 use QMVC\Base\HTTPContext\FileResponse;
+use QMVC\Base\Templating\View;
 use QMVC\Base\Routing\Middleware;
 use QMVC\Base\Routing\Router;
 
@@ -70,6 +72,12 @@ Router::get('/intercept', function(Request $request)
         return $resp;
     }
 ]);
+
+Router::any('/view', function(Request $request)
+{
+    $view = new View('index', ['name' => $request->name]);
+    return $view;
+});
 
 
 ?>

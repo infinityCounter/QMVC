@@ -147,7 +147,6 @@ class Response
         else if($this->responseType === Constants::HTML_RESP)
         {
             $typeHeaders = array_merge(self::DEF_GEN_HEADERS, self::DEF_HTML_HEADERS);
-            $typeHeaders['Content-Length'] = strlen($this->responseBody);
             $typeHeaders['Content-Disposition'] = 'inline';
         }
         else if($this->responseType === Constants::JSON_RESP)

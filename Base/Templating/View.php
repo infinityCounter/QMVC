@@ -17,7 +17,7 @@ class View {
     function __construct(string $templateName = "", array $templateArgs = [])
     {
         $this->setTemplate($templateName);
-        $this->setTempalteArgs($templateArgs);
+        $this->setTemplateArgs($templateArgs);
     }
 
     public function setTemplate(string $templateName)
@@ -28,7 +28,7 @@ class View {
 
     public function setTemplateArgs(array $templateArgs)
     {
-        $this->templateArgs = $cleanedArgs;
+        $this->templateArgs = $templateArgs;
     }
 
     public function render()
