@@ -4,7 +4,7 @@ namespace QMVC\Base;
 
 use QMVC\Base\Constants;
 use QMVC\Base\Security\Sanitizers;
-use QMVC\Base\Security\Middleware;
+use QMVC\Base\Routing\Middleware;
 
 final class Helpers
 {
@@ -41,7 +41,11 @@ final class Helpers
 
     public static function isMiddleware($speculatedMiddleware)
     {
-        return is_a($speculatedMiddleware, Middleware::class);
+        return 
+        (
+            is_a($speculatedMiddleware, Middleware::class) ||
+            is_subclass_of($speculatedMiddleware, Middleware::class)
+        );
     }
 
     public static function isValidStatusCode($unsureCode)

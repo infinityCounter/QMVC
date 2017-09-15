@@ -11,7 +11,7 @@ class ResponseWrapper extends Middleware
 {
     public function invoke(Request $request)
     {
-        $unwrapped;
+        $unwrapped = null;
         if(Helpers::isMiddleware($this->next)) 
             $unwrapped = $this->next->invoke($request);
         // $this->next cannot be set to anything besides a middleware or a route handler

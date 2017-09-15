@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+require_once('../Base/Routing/Middleware.php');
 require_once('../Base/Routing/Router.php');
 require_once('../Base/QMVC.php');
 require_once('../Base/HTTPContext/Request.php');
@@ -14,6 +15,7 @@ require_once('../Base/HTTPContext/Response.php');
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\HTTPContext\Response;
 use QMVC\Base\HTTPContext\FileResponse;
+use QMVC\Base\Routing\Middleware;
 use QMVC\Base\Routing\Router;
 use QMVC\Base\QMVC;
 
@@ -45,6 +47,35 @@ class PersonController
 }
 
 Router::get('/person', PersonController::class);
+
+class DemoMiddleware extends Middleware
+{
+    public function invoke(Request $request)
+    {
+        $resp = $this->next->invoke($request);
+        $resp->setBody('Third times the charm');
+        return $resp;
+    }
+}
+
+Router::get('/intercept', function(Request $request)
+{
+    return "I'm in the clear!";
+}, [
+    DemoMiddleware::class,
+    function($next, Request $request) 
+    {
+        $resp = $next->invoke($request);
+        $resp->setBody('Intercepted Again!');
+        return $resp;
+    },
+    function($next, Request $request) 
+    {
+        $resp = $next->invoke($request);
+        $resp->setBody('Intercepted!');
+        return $resp;
+    }
+]);
 
 
 QMVC::run();

@@ -26,7 +26,7 @@ class Middleware
         if(!Helpers::isValidRouteHandler($next) && !Helpers::isMiddleware($next))
         {   
             $exceptionMessage = "Argument provided to Middleware setHandler method".
-                " must either be an instnace of Middleware or a descendant of Middleware,".
+                " must either be an instance of Middleware or a descendant of Middleware,".
                 " or must be a valid route handler as a callable or class with a ".
                 Constants::HANDLER_METHOD_SIG . "method ";
             throw new \InvalidArgumentException($exceptionMessage);
@@ -51,7 +51,7 @@ class Middleware
 
     public function invoke(Request $request)
     {
-        return $this->handler($this->next, $request);
+        return ($this->handler)($this->next, $request);
     }
 }
 ?>

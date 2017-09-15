@@ -16,6 +16,7 @@ final class Route
     private $handler = null;
     // TODO: Implement middleware stack to execute before callback
     private $middlewareStack = [];
+    private $respWrapper = null;
     private $allowableActions = [
         Constants::GET => false,
         Constants::POST => false,
@@ -83,81 +84,55 @@ final class Route
     public function emptyMiddleware()
     {
         $this->middlewareStack = [];
-        $this->pushResponseWrapperMiddleware();
     }
 
     public function pushMiddleware($handler)
     {
         if(!is_callable($handler) && !Helpers::isMiddleware($handler))
             throw new InvalidArgumentException("Argument must either be callable or a descendant of the Middleware class.");
+        $newMidware = null;
+        $numMidware = count($this->middlewareStack);
         if(is_callable($handler))
         {
             // Create new middleware pointing to route handler
-            $newMidware = $this->createMiddlewareFromCallable($handler);
-            // get the current number of middleware
-            $numMidware = count($this->middlwareStack);
+            $newMidware = new Middleware($this->respWrapper, $handler);
+        } 
+        else 
+        {
+            $newMidware = new $handler;
+            $newMidware->setNext($this->respWrapper);
+        }
+            
+        if($numMidware !== 0)
+        {
             // get the current last middleware
             $currentLastMidware = $this->middlewareStack[$numMidware - 1];
             $currentLastMidware->setNext($newMidware);
             $this->middlewareStack[$numMidware - 1] = $currentLastMidware;
-            // Push new middleware to stack
-            array_push($this->middlewareStack, $newMidware);
-        } 
-        else 
-        {
-            $newMidware = $handler;
-            $numMidware = count($this->middlwareStack);
-            $currentLastMidware = $this->middlewareStack[$numMidware - 1];
-            $newMidware->setNext($currentLastMidware->getNext());
-            $currentLastMidware->setNext($newMidware);
-            $this->middlewareStack[$numMidware - 1] = $currentLastMidware;
-            // Push new middleware to stack
-            array_push($this->middlewareStack, $newMidware);
         }
-        $this->removeFrontMiddlewareStack();
-        $this->pushResponseWrapperMiddleware();
-    }
-
-    private function createMiddlewareFromCallable(callable $callable)
-    {
-        $numMidware = count($this->middlwareStack);
-        if($numMidware > 0)
-        {
-            $currentLastMidware = $this->middlewareStack[$numMidware - 1];
-            return new Middlware($currentLastMidware->getNext(), $callable);
-        } 
-        else
-        {
-            return new Middlware($this->handler, $callback);
-        }
+        // Push new middleware to stack
+        array_push($this->middlewareStack, $newMidware);
     }
 
     private function pushResponseWrapperMiddleware()
     {
         $wrapper = new ResponseWrapper($this->handler);
-        $numMidware = count($this->middlewareStack);
-        if($numMidware > 0)
-        {
-            $currentLastMidware = $this->middlewareStack[$numMidware - 1];
-            $currentLastMidware->setNext($wrapper);
-            $this->middlewareStack[$numMidware - 1] = $currentLastMidware;
-        }
-        array_push($this->middlewareStack, $wrapper);
+        $this->respWrapper = $wrapper;
     }
 
     private function removeFrontMiddlewareStack()
     {
-        $this->middlewareStack = array_shift($this->middlewareStack);
+        return array_shift($this->middlewareStack);
     }
 
     public function getNumMiddleware()
     {
-        return count($this->middlewareStack);
+        return count($this->middlewareStack) + 1;
     }
 
     public function popMiddleware()
     {
-        $this->middlewareStack = array_pop($this->middlewareStack);
+        return array_pop($this->middlewareStack);
     }
 
     public function execPipeline(Request $request)

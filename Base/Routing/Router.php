@@ -48,16 +48,15 @@ class Router
 
     public static function addRoute(string $URI, array $reqTypes = [], $routeHandler, array $middlewares = [])
     {
-        array_walk($middlewares, function($middleware) {
-            if(!Helpers::isMiddleware($middleware))
-                throw new InvalidArgumentException("Invalid middleware passed to addRoute method.");
-        });
         $cleanedURI = strtolower(Sanitizers::stripAllTags($URI));
         foreach ($reqTypes as $reqType => $allowed) {
             if(!Helpers::isValidHTTPRequestType($reqType)) 
                 throw new InvalidArgumentException("${reqType} is not a supported HTTP method.");    
         }
         $route = ($routeHandler instanceof Route ) ? $routeHandler : new Route($cleanedURI, $reqTypes, $routeHandler);
+        foreach($middlewares as $middleware) {
+            $route->pushMiddleware($middleware);
+        };
         self::$routeMap[$cleanedURI] = $route; 
     }
 
