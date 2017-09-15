@@ -31,17 +31,18 @@ final class QMVC
     {
         $request = Request::BuildRequest();
         $route = Router::getRoute($request->getURI());
-        $request->setRESTArgs($route->getURI());
         $response = null;
-        if (!isset($route)) {
+        if (!isset($route)) 
+        {
             $response = Response::NotFound();
         }
         else
         {
+            $request->setRESTArgs($route->getURI());
             $response = $route->execPipeline($request);
+            if(!is_a($response, Response::class))
+                $response = new Response($response);
         }
-        if(!is_a($response, Response::class))
-            $response = new Response($response);
         self::sendStatusCode($response->getStatusCode());
         self::sendHeaders($response->getHeaders());
         if($response->getResponseType() === Constants::FILESTREAM_RESP)

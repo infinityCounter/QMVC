@@ -183,5 +183,10 @@ class Response
     {
         return $this->responseStatusCode;
     }
+
+    public static function NotFound()
+    {
+        return new self(null, [], 404);
+    }
 }
 ?>
