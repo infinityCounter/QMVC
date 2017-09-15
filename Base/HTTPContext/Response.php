@@ -48,7 +48,7 @@ class Response
     function __construct($body = null, array $headers = [], $statusCode = 200)
     {
         $this->setBody($body);
-        $this->setHeaders($headers);
+        $this->addHeaders($headers);
         $this->setStatusCode($statusCode);
     }
 
@@ -121,7 +121,7 @@ class Response
 
     public function addHeaders(array $uncleanHeaders)
     {
-        $uncleanedHeaderKeys = array_keys($uncleanedHeaders);
+        $uncleanedHeaderKeys = array_keys($uncleanHeaders);
         $cleanedKeys = array_map(function($uncleanKey)
         {
             return Sanitizers::stripAllTags((string)$uncleanKey, false, true);
@@ -130,7 +130,7 @@ class Response
         $cleanedValues = array_map(function($uncleanValue)
         {
             return Sanitizers::cleanInputStr((string)$uncleanValue, false, true);
-        }, $uncleanedHeaders);
+        }, $uncleanHeaders);
         array_merge($this->responseHeaders , array_combine($cleanedKeys, $cleanedValues));
     }
 

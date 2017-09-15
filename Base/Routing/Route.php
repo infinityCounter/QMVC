@@ -138,7 +138,10 @@ final class Route
     public function execPipeline(Request $request)
     {
         // Invoke request should chain down piple of middlewares and route handler and back up
-        return $this->middlewareStack[0]->invoke($request);
+        if(count($this->middlewareStack) > 0)
+            return $this->middlewareStack[0]->invoke($request);
+        else
+            return $this->respWrapper->invoke($request);
     }
 }
 
