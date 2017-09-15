@@ -49,8 +49,10 @@ final class QMVC
             self::sendFileResponse($response->getBody());
         else if($response->getResponseType() === Constants::HTML_RESP)
             self::sendViewResponse($response->getBody());
+        else if($response->getResponseType() === Constants::JSON_RESP)
+            self::sendStringResponse(json_encode($response->getBody()));
         else
-            self::sendStringResponse(json_encode($response->getBody()));      
+            self::sendStringResponse($response->getBody());
     }
 
     private static function sendStatusCode(int $statusCode)
@@ -84,9 +86,9 @@ final class QMVC
         fclose($file);
     }
 
-    private static function sendStringResponse(string $jsonBody)
+    private static function sendStringResponse(string $strBody)
     {
-        echo $jsonBody;
+        echo $strBody;
         flush();
     }
 
