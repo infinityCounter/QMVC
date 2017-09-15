@@ -17,6 +17,7 @@ class Request
     private $requestBodyArgs = [];
     private $requestQueryStringArgs = [];
     private $requestRESTArgs = [];
+    private static $requestErrors = [];
 
     public static function cleanQueryStringArgs($queryStringArgs) 
     {
@@ -47,10 +48,87 @@ class Request
         // Futhermore no validation / sanitization is requires for REQUEST_Time
         // Therefore this property requires no setter, only a getter
         $request->requestDateTime = $_SERVER['REQUEST_TIME'];
-        //$request->setBodyArgs(stream_get_contents(STDIN));
         $request->setQueryStringArgs($_REQUEST);
+        if(isset($_FILES))
+        {
+            $file = self::getUploadedFile();
+            $request->setBodyArgs($file);
+        }
+        else if(isset($_POST))
+        {
+            $request->setBodyArgs($_POST);
+        }
+        else
+        {
+            $request->setBodyArgs(file_get_contents('php://input'));
+        }
         return $request;
     }
+
+    private static function getUploadedFile()
+    {
+        try
+        {
+
+            // Undefined | Multiple Files | $_FILES Corruption Attack
+            // If this request falls under any of them, treat it invalid.
+            if (!isset($_FILES['upfile']['error']) || is_array($_FILES['upfile']['error']))
+            {
+                array_push(self::$requestErrors, 'Invalid parameters in file upload.');
+                return null;
+            }
+            // Check $_FILES['upfile']['error'] value.
+
+            switch ($_FILES['upfile']['error'])
+            {
+                case UPLOAD_ERR_OK:
+                    break;
+
+                case UPLOAD_ERR_NO_FILE:
+                    return null;
+            
+                case UPLOAD_ERR_INI_SIZE:
+                case UPLOAD_ERR_FORM_SIZE:
+                   array_push(self::$requestErrors, 'Uploaded file exceeded filesize limit.');
+                   return null;
+            
+                default:
+                    array_push(self::$requestErrors, 'Unknown errors.');
+                    return null;
+            }
+            // Based on configurations of php.ini there can be multiple properties that may limit 
+            // file size upload. These may not all fall under UPLOAD_ERR_INI_SIZE and 
+            // UPLOAD_ERR_FORM_SIZE, thus double checking here
+            if ($_FILES['upfile']['size'] > Helpers::getMaxFileUploadInBytes())
+            {
+                array_push(self::$requestErrors, 'Uploaded file exceeded filesize limit.');
+                return null;
+            }
+
+            // MIME type may be altered, checking self
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            if (false === ($ext = array_search($finfo->file($_FILES['upfile']['tmp_name']), 
+                array(AppConfig::getUploadExtensionsWhitelist()) , true)))
+            {
+                array_push(self::$requestErrors,'Uploaded invalid file format.');
+                return null;
+            }
+
+            // Rename file name to unique name from SHA1 hash
+            $newFilename = AppConfig::getUploadsDirectory() . sha1_file(sha1_file($_FILES['upfile']['tmp_name'])) . $ext;
+            if (!move_uploaded_file($_FILES['upfile']['tmp_name'], $newFilename))
+            {
+                array_push(self::$requestErrors,'Failed to move uploaded file.');
+                return null;
+            }
+            return fopen($newFilename);
+        }
+        catch(RuntimeException $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+
 
     public function setURI($url)
     {
@@ -102,7 +180,8 @@ class Request
         }
         else
         {
-            $this->requestBodyArgs = $bodyArgs;
+            if(is_string($bodyArgs)) $this->requestBodyArgs = htmlentities($bodyArgs);
+            else $this->requestBodyArgs = $bodyArgs;
         }
     }
 
@@ -148,6 +227,11 @@ class Request
         return ($this->requestHTTPProtocol === Constants::HTTPS);
     }
 
+    public static function getRequestErrors()
+    {
+        return $this->requestErrors;
+    }
+
     public function __get($memberName)
     {
         if (array_key_exists($memberName, $this->requestRESTArgs)) 
@@ -156,7 +240,7 @@ class Request
             return $this->requestQueryStringArgs[$memberName];
         if (array_key_exists($memberName, $this->requestBodyArgs)) 
             return $this->requestBodyArgs[$memberName];
-        throw new RuntimeException("{$memberName} property does not exist on Request object");
+        throw new \RuntimeException("{$memberName} property does not exist on Request object");
     }
 
     public function __set($memberName, $value)
@@ -165,9 +249,9 @@ class Request
             $this->requestRESTArgs[$memberName] = $value;
         if(array_key_exists($memberName, $this->requestQueryStringArgs))
             $this->requestQueryStringArgs[$memberName] = $value;
-        if(array_key_exists($memberName, $this->requestBodyArgs))
+        if(is_array($this->requestBodyArgs) && array_key_exists($memberName, $this->requestBodyArgs))
             $this->requestBodyArgs[$memberName] = $value;
-        throw new Exception("{$memberName} property does not exist on Request object");
+        throw new \RuntimeException("{$memberName} property does not exist on Request object");
     }
 }
 

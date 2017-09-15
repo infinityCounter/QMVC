@@ -56,7 +56,7 @@ class DemoMiddleware extends Middleware
 
 Router::get('/intercept', function(Request $request)
 {
-    return "I'm in the clear!";
+    return $request->year;;
 }, [
     DemoMiddleware::class,
     function($next, Request $request) 
