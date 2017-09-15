@@ -51,7 +51,7 @@ final class AppConfig
         return (self::$onlyHTTPS) ? self::$STSTime : 0;
     }
 
-    private static function setTwigLoader($loader)
+    public static function setTwigLoader($loader)
     {
         if(!is_a($loader, \Twig_Loader_Array::class) && 
            !is_a($loader, \Twig_Loader_Filesystem::class))
@@ -63,18 +63,18 @@ final class AppConfig
         self::$twigLoader = $loader;
     }
 
-    private static function getTwigLoader()
+    public static function getTwigLoader()
     {
         return self::$twigLoader;
     }
 
-    private static function setTwigEnvironment(\Twig_Environment $environment)
+    public static function setTwigEnvironment(\Twig_Environment $environment)
     {
         self::$twigEnvironment = $environment;
         self::setTwigLoader($environment->getLoader());
     }
 
-    private static function getTwigEnvironment()
+    public static function getTwigEnvironment()
     {
         return self::$twigEnvironment;
     }
