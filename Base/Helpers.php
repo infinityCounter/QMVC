@@ -54,7 +54,7 @@ final class Helpers
     /* ACCESSORS */
     public static function getHTTPProtocol()
     {
-        return (isset($_SERVER['HTTPS'])) ? HTTPS : HTTP;
+        return (isset($_SERVER['HTTPS'])) ? Constants::HTTPS : Constants::HTTP;
     }
 
     public static function getHTTPProtocolVersion()

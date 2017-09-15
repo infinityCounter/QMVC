@@ -31,6 +31,7 @@ final class QMVC
     {
         $request = Request::BuildRequest();
         $route = Router::getRoute($request->getURI());
+        $request->setRESTArgs($route->getURI());
         $response = null;
         if (!isset($route)) {
             $response = Response::NotFound();

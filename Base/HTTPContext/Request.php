@@ -47,7 +47,7 @@ class Request
         // Futhermore no validation / sanitization is requires for REQUEST_Time
         // Therefore this property requires no setter, only a getter
         $request->requestDateTime = $_SERVER['REQUEST_TIME'];
-        $request->setBodyArgs(stream_get_contents(STDIN));
+        //$request->setBodyArgs(stream_get_contents(STDIN));
         $request->setQueryStringArgs($_REQUEST);
         return $request;
     }
@@ -128,13 +128,13 @@ class Request
     public function setRESTArgs($routeURI)
     {
         $cleanedRouteURI = Sanitizers::stripAllTags(parse_url($routeURI, PHP_URL_PATH));
-        $cleanedRouteURI = array_map(function($val)
-        {
-            return trim($val, "{}");
-        }, $cleanedRouteURI);   
         $exactURIArr = explode(Constants::DELIM_URI, trim($this->requestURI, Constants::DELIM_URI));
         $matchedURIArr = explode(Constants::DELIM_URI, trim($cleanedRouteURI, Constants::DELIM_URI));
-        $arrDiffPairs = Helpers::arrayTrueDiff($exactURIArr, $matchedURIArr);
+        $matchedURIArr = array_map(function($val)
+        {
+            return trim($val, "{}");
+        }, $matchedURIArr);   
+        $arrDiffPairs = Helpers::arrayTrueDiff($matchedURIArr, $exactURIArr);
         $this->requestRESTArgs = Helpers::convertValPairsToAssociate($arrDiffPairs);
     }
 

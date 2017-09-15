@@ -78,8 +78,8 @@ class Router
 
     public static function isURIRegexRoute(string $URI, string $speculatedURI)
     {
-        $cleanedURI = Constants::DELIM_URI . Sanitizers::stripAllTags($URI);
-        $cleanSpeculatedURI = Constants::DELIM_URI . Sanitizers::stripAllTags($speculatedURI);
+        $cleanedURI = "/" . trim(Sanitizers::stripAllTags($URI),"/");
+        $cleanSpeculatedURI = "/" . trim(Sanitizers::stripAllTags($speculatedURI), "/");
         if ($cleanedURI === $cleanSpeculatedURI) return true;
         return preg_match(self::convertRESTToRegexURI($cleanSpeculatedURI), $cleanedURI);
     }
