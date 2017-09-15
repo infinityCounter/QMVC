@@ -1,4 +1,4 @@
-localhost:8080
+:8080
 root ./app/
 gzip
 log / ./app/logs/caddyaccess.log "{remote} - {user} [{when}] \"{method} {uri} -> {rewrite_path} {proto}\" {status} {size}" {

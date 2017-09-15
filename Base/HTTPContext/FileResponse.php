@@ -12,18 +12,26 @@ class FileResponse
     private $downloadLimit;
     private $hasDownloadLimit = false;
     
-    function __construct(string $filePath, float $downloadLimit)
+    function __construct(string $filePath, float $downloadLimit = null)
     {
-        $this->setFile($filePath);
-        $this->setDownloadLimit($downloadLimit);
+        $this->setFilePath($filePath);
+        if(isset($downloadLimit))
+            $this->setDownloadLimit($downloadLimit);
+        else 
+            $this->setDownloadLimit(0);
     }
 
     public function setFilePath(string $filePath)
     {
-        $this->filePath = $cleanedPath;
+        $this->filePath = $filePath;
     }
 
     public function getFilePath()
+    {
+        return $this->filePath;
+    }
+
+    public function getFileName()
     {
         return basename($this->filePath);
     }
@@ -39,14 +47,14 @@ class FileResponse
         return $this->downloadLimit;
     }
 
-    private function setIsLimited(boolean $hasLimit)
+    private function setIsLimited(bool $hasLimit)
     {
         $this->hasDownloadLimit = $hasLimit;
     }
 
     public function isLimited()
     {
-        return $this->hasDownloadLimited;
+        return $this->hasDownloadLimit;
     }
 
     public function getFileSize()

@@ -146,7 +146,7 @@ final class Helpers
     * @param string $path Path of the file
     * @return mixed File size or false if error
     */
-    public static function realFileSize($path)
+    public static function getRealFileSize($path)
     {
         $cleanedPath = filter_var($path, FILTER_SANITIZE_STRING);
         if (!file_exists($cleanedPath))

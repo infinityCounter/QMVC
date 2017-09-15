@@ -8,10 +8,12 @@ error_reporting(E_ALL);
 require_once('../Base/Routing/Router.php');
 require_once('../Base/QMVC.php');
 require_once('../Base/HTTPContext/Request.php');
+require_once('../Base/HTTPContext/FileResponse.php');
 require_once('../Base/HTTPContext/Response.php');
 
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\HTTPContext\Response;
+use QMVC\Base\HTTPContext\FileResponse;
 use QMVC\Base\Routing\Router;
 use QMVC\Base\QMVC;
 
@@ -26,6 +28,12 @@ Router::get('/MyNameIs', function(Request $request) {
 Router::get('/MyNameIs/{name}', function(Request $request) {
     return 'Hello ' . $request->name;
 });
+
+Router::get('/doggo', function(Request $request) {
+    $fileResponse = new FileResponse('./assets/images/dog.jpg');
+    return $fileResponse;
+});
+
 
 QMVC::run();
 
