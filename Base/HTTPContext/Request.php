@@ -2,6 +2,11 @@
 
 namespace QMVC\Base\HTTPContext;
 
+require_once('FileResponse.php');
+require_once(dirname(__DIR__) . '/Helpers.php');
+require_once(dirname(__DIR__) . '/Constants.php');
+require_once(dirname(__DIR__) . '/Security/Sanitizers.php');
+
 use QMVC\Base\Helpers;
 use QMVC\Base\Constants;
 use QMVC\Base\Security\Sanitizers;
@@ -17,7 +22,6 @@ class Request
     private $requestBodyArgs = [];
     private $requestQueryStringArgs = [];
     private $requestRESTArgs = [];
-    private static $requestErrors = [];
 
     public static function cleanQueryStringArgs($queryStringArgs) 
     {
@@ -67,68 +71,47 @@ class Request
 
     private static function getUploadedFile()
     {
-        try
+        $errs = [];
+        // If errors (WHICH SHOULD BE DEFINED) is undefined, if there are multiple files
+        // or a corruption
+        if (!isset($_FILES['upfile']['error']) || is_array($_FILES['upfile']['error']))
         {
-
-            // Undefined | Multiple Files | $_FILES Corruption Attack
-            // If this request falls under any of them, treat it invalid.
-            if (!isset($_FILES['upfile']['error']) || is_array($_FILES['upfile']['error']))
-            {
-                array_push(self::$requestErrors, 'Invalid parameters in file upload.');
-                return null;
-            }
-            // Check $_FILES['upfile']['error'] value.
-
-            switch ($_FILES['upfile']['error'])
-            {
-                case UPLOAD_ERR_OK:
-                    break;
-
-                case UPLOAD_ERR_NO_FILE:
-                    return null;
-            
-                case UPLOAD_ERR_INI_SIZE:
-                case UPLOAD_ERR_FORM_SIZE:
-                   array_push(self::$requestErrors, 'Uploaded file exceeded filesize limit.');
-                   return null;
-            
-                default:
-                    array_push(self::$requestErrors, 'Unknown errors.');
-                    return null;
-            }
-            // Based on configurations of php.ini there can be multiple properties that may limit 
-            // file size upload. These may not all fall under UPLOAD_ERR_INI_SIZE and 
-            // UPLOAD_ERR_FORM_SIZE, thus double checking here
-            if ($_FILES['upfile']['size'] > Helpers::getMaxFileUploadInBytes())
-            {
-                array_push(self::$requestErrors, 'Uploaded file exceeded filesize limit.');
-                return null;
-            }
-
-            // MIME type may be altered, checking self
-            $finfo = new finfo(FILEINFO_MIME_TYPE);
-            if (false === ($ext = array_search($finfo->file($_FILES['upfile']['tmp_name']), 
-                array(AppConfig::getUploadExtensionsWhitelist()) , true)))
-            {
-                array_push(self::$requestErrors,'Uploaded invalid file format.');
-                return null;
-            }
-
-            // Rename file name to unique name from SHA1 hash
-            $newFilename = AppConfig::getUploadsDirectory() . sha1_file(sha1_file($_FILES['upfile']['tmp_name'])) . $ext;
-            if (!move_uploaded_file($_FILES['upfile']['tmp_name'], $newFilename))
-            {
-                array_push(self::$requestErrors,'Failed to move uploaded file.');
-                return null;
-            }
-            return fopen($newFilename);
+            array_push($errs, 'Invalid parameters in file upload.');
         }
-        catch(RuntimeException $e)
+        switch ($_FILES['upfile']['error'])
         {
-            echo $e->getMessage();
+            case UPLOAD_ERR_OK:
+                break;
+
+            case UPLOAD_ERR_NO_FILE:
+                return null;
+            
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                array_push($errs, 'Uploaded file exceeded filesize limit.');
+                return null;
+            
+            default:
+                array_push($errs, 'Unknown errors.');
+                return null;
         }
+        // Based on configurations of php.ini there can be multiple properties that may limit 
+        // file size upload. These may not all fall under UPLOAD_ERR_INI_SIZE and 
+        // UPLOAD_ERR_FORM_SIZE, thus double checking here
+        if ($_FILES['upfile']['size'] > Helpers::getMaxFileUploadInBytes())
+        {
+            array_push($errs, 'Uploaded file exceeded filesize limit.');
+        }
+        // MIME type may be altered, checking self
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        if (false === ($ext = array_search($finfo->file($_FILES['upfile']['tmp_name']), 
+            array(AppConfig::getUploadExtensionsWhitelist()) , true)))
+        {
+            array_push($errs,'Uploaded invalid file format.');
+        }
+        $uploadedfile = new FileUpload($_FILES['upfile']['tmp_name'], $ext, $_FILES['upfile']['size'], $errs);
+        return $uploadedfile;
     }
-
 
     public function setURI($url)
     {
@@ -225,11 +208,6 @@ class Request
     public function isHTTPS()
     {
         return ($this->requestHTTPProtocol === Constants::HTTPS);
-    }
-
-    public static function getRequestErrors()
-    {
-        return $this->requestErrors;
     }
 
     public function __get($memberName)

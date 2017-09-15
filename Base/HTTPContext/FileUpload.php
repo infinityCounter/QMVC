@@ -8,24 +8,32 @@ use QMVC\Base\Helpers;
 
 class FileUpload 
 {
-    private $filePath;
-    private $fileExtension;
-    private $fileSize;
-    private $fileHash;
+    private $filePath = null;
+    private $fileExtension = null;
+    private $fileSize = 0;
+    private $fileHash = null;
+    private $uploadErrors = [];
 
-    function __construct(string $filePath, string $fileExtension, int $fileSize)
+    function __construct(string $filePath, string $fileExtension, int $fileSize, array $uploadErrors)
     {
         $this->setFilePath($filePath);
         $this->setFileExtension($fileExtension);
-        $this->setFileSize($fileSize);
+        $this->fileSize = $fileSize;
+        $this->uploadErrors = $uploadErrors;
     }
 
     private function setFilePath(string $filePath)
     {
-        $fileHash = sha1(sha1_file($filePath));
-        if(!$fileHash) throw new InvalidArgumentException("{$filePath} is not a valid file");
-        $this->fileHash = $fileHash;
-        $this->filePath = $filePath;
+        $fileHash = sha1_file($filePath);
+        if(!$fileHash) 
+        {
+            array_push($this->uploadErrors, "{$filePath} is not a valid file");
+        }
+        else
+        {
+            $this->fileHash = sha1($fileHash);
+            $this->filePath = $filePath;
+        }
     }
 
     public function getFilePath()
@@ -37,18 +45,13 @@ class FileUpload
     {
         $ext = Helpers::stripAllTags($ext);
         $isExtension = preg_match('/\A\.[a-zA-Z0-9]+\z/', $ext);
-        if(!$isExtension) throw new InvalidArgumentException("{$ext} is not a extension");
-        $this->fileExtension = $ext;
+        if(!$isExtension) array_push($this->uploadErrors, "{$ext} is not a extension");
+        else $this->fileExtension = $ext;
     }
 
     public function getFileExtension()
     {
         return $this->fileExtension;
-    }
-
-    private function setFileSize(int $fileSize)
-    {
-        $this->fileSize = $fileSize;
     }
 
     public function getFileSize()
@@ -59,6 +62,11 @@ class FileUpload
     public function getFileHash()
     {
         return $this->fileHash;
+    }
+
+    public function getUploadErrors()
+    {
+        return $this->uploadErrors();
     }
 }
 
