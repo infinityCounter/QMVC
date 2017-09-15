@@ -10,6 +10,7 @@ final class AppConfig
     private static $twigLoader = null;
     private static $twigLocations = [];
     private static $twigEnvironment = null;
+    private static $contentSecurityPolicy = "default-src 'self'; img-src *; media-src youtube+////////////////////////////.com media2.com; script-src userscripts.example.com";
 
     public static function useOnlyHTTPS(bool $https)
     {

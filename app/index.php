@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+require_once('../Base/TwigAutoloader.php');
 require_once('../Base/Routing/Middleware.php');
 require_once('../Base/Routing/Router.php');
 require_once('../Base/QMVC.php');
@@ -12,12 +13,21 @@ require_once('../Base/HTTPContext/Request.php');
 require_once('../Base/HTTPContext/FileResponse.php');
 require_once('../Base/HTTPContext/Response.php');
 
+use QMVC\Base\TwigAutoloader;
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\HTTPContext\Response;
 use QMVC\Base\HTTPContext\FileResponse;
 use QMVC\Base\Routing\Middleware;
 use QMVC\Base\Routing\Router;
 use QMVC\Base\QMVC;
+
+TwigAutoloader::register();
+
+$loader = new \Twig_Loader_Array(array(
+    'index' => 'Hello {{ name }}!',
+));
+$twig = new \Twig_Environment($loader);
+var_dump($twig);
 
 Router::get('/', function(Request $request) {
     return 'QMVC v2.0 ON!';
