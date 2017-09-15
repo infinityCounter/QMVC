@@ -150,10 +150,12 @@ class Request
 
     public function __get($memberName)
     {
-        $val = (array_key_exists($memberName, $this->requestRESTArgs)) ? $this->requestRESTArgs[$memberName] : null;
-        $val = (array_key_exists($memberName, $this->requestQueryStringArgs)) ? $this->requestQueryStringArgs[$memberName] : null;
-        $val = (array_key_exists($memberName, $this->requestBodyArgs)) ? $this->requestBodyArgs[$memberName] : null;
-        if(!is_null($val)) return $val;
+        if (array_key_exists($memberName, $this->requestRESTArgs)) 
+            return $this->requestRESTArgs[$memberName];
+        if (array_key_exists($memberName, $this->requestQueryStringArgs)) 
+            return $this->requestQueryStringArgs[$memberName];
+        if (array_key_exists($memberName, $this->requestBodyArgs)) 
+            return $this->requestBodyArgs[$memberName];
         throw new RuntimeException("{$memberName} property does not exist on Request object");
     }
 

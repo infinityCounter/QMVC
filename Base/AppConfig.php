@@ -4,8 +4,8 @@ namespace QMVC\Base;
 
 final class AppConfig
 {
-    private static $onlyHTTPS = true;
-    private static $onlyHTTPSSubdomains = true;
+    private static $onlyHTTPS = false;
+    private static $onlyHTTPSSubdomains = false;
     private static $STSTime = 0;
     private static $twigLoader = null;
     private static $twigLocations = [];
@@ -45,7 +45,7 @@ final class AppConfig
 
     public static function getSTSTime()
     {
-        return self::$STSTime;
+        return (self::$onlyHTTPS) ? self::$STSTime : 0;
     }
 
     public static function addTemplateDirs(array $templateDirs)
