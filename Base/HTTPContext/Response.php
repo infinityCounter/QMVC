@@ -12,7 +12,7 @@ use QMVC\Base\Templating\View;
 class Response
 {
     private $responseType;
-    private $responseHeaders;
+    private $responseHeaders = [];
     private $responseStatusCode;
     private $responseBody;
 
@@ -47,8 +47,8 @@ class Response
 
     function __construct($body = null, array $headers = [], $statusCode = 200)
     {
-        $this->setHeaders($headers);
         $this->setBody($body);
+        $this->setHeaders($headers);
         $this->setStatusCode($statusCode);
     }
 
@@ -153,7 +153,7 @@ class Response
         else if($this->responseType === Constants::JSON_RESP)
         {
             $typeHeaders = array_merge(self::DEF_GEN_HEADERS, self::DEF_JSON_HEADERS);
-            $typeHeaders['Content-Length'] = strlen($this->responseBody);
+            $typeHeaders['Content-Length'] = strlen(json_encode($this->responseBody));
             $typeHeaders['Content-Disposition'] = 'inline';
         }
         else if($this->responseType === Constants::TEXT_RESP)

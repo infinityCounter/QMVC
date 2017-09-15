@@ -43,7 +43,7 @@ class RouteTest extends TestCase
         $callback = function() use ($outputStr) { echo $outputStr; };
         $route = new Route('/', [], $callback);
         $request = new Request();
-        $route->callHandler($request);
+        $route->execPipeline($request);
     }
 
     public function testInvokeClassHandler()
@@ -51,7 +51,7 @@ class RouteTest extends TestCase
         $this->expectOutputString(mock::OUTPUT);
         $route = new Route('/', [], mock::class);
         $request = new Request();
-        $route->callHandler($request);
+        $route->execPipeline($request);
     }
 
     public function testHandlerOverride()

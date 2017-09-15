@@ -50,7 +50,7 @@ final class QMVC
         else if($response->getResponseType() === Constants::HTML_RESP)
             self::sendViewResponse($response->getBody());
         else
-            self::sendStringResponse($response->getBody());      
+            self::sendStringResponse(json_encode($response->getBody()));      
     }
 
     private static function sendStatusCode(int $statusCode)

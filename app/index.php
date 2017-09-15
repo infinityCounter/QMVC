@@ -34,6 +34,18 @@ Router::get('/doggo', function(Request $request) {
     return $fileResponse;
 });
 
+class PersonController
+{
+    public $key = 'value';
+
+    public function handleRequest(Request $request)
+    {
+        return new self;
+    }
+}
+
+Router::get('/person', PersonController::class);
+
 
 QMVC::run();
 

@@ -15,11 +15,17 @@ class ResponseWrapper extends Middleware
         if(Helpers::isMiddleware($this->next)) 
             $unwrapped = $this->next->invoke($request);
         // $this->next cannot be set to anything besides a middleware or a route handler
-        else if (is_callable($this->next)) {
-            $unwrapped = ($this->next)($request);
+        else {
+            if(Helpers::isValidRouteHandlerClass($this->next))
+            {
+                $controller = new $this->next;
+                $unwrapped = $controller->handleRequest($request);
+            }
+            else if (is_callable($this->next))
+            {
+                $unwrapped = ($this->next)($request);
+            }
         }
-        else
-            $unswrapped = $this->next->handleRequest($request);
         if(is_a($unwrapped, Response::class)) return $unwrapped;
         return new Response($unwrapped);
     }

@@ -20,9 +20,14 @@ final class Helpers
     public static function isValidRouteHandler($uncheckedHandler) 
     {
         if(is_callable($uncheckedHandler)) return true;
-        if((is_object($uncheckedHandler) || class_exists($uncheckedHandler)) && 
-            Self::objectHasPublicRequestHandler($uncheckedHandler)) return true;
-        return false;
+        return ((is_object($uncheckedHandler) || class_exists($uncheckedHandler)) && 
+            Self::objectHasPublicRequestHandler($uncheckedHandler));
+    }
+
+    public static function isValidRouteHandlerClass($uncheckedClass)
+    {
+        return ((is_object($uncheckedClass) || class_exists($uncheckedClass)) && 
+            Self::objectHasPublicRequestHandler($uncheckedClass));
     }
 
     public static function isValidHTTPRequestType($unsureType)
