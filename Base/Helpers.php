@@ -2,7 +2,10 @@
 
 namespace QMVC\Base;
 
-use QMVC\Base\Constants;
+require_once('Constants.php');
+require_once('./Security/Sanitizers.php');
+require_once('./Routing/Middleware');
+
 use QMVC\Base\Security\Sanitizers;
 use QMVC\Base\Routing\Middleware;
 

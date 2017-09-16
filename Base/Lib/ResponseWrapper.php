@@ -2,12 +2,17 @@
 
 namespace QMVC\Base\Lib;
 
+require_once(dirname(__DIR__) . '/Helpers.php');
+require_once(dirname(__DIR__) . '/Routing/Middleware.php');
+require_once(dirname(__DIR__) . '/HTTPContext/Request.php');
+require_once(dirname(__DIR__) . '/HTTPContext/Response.php');
+
 use QMVC\Base\Helpers;
 use QMVC\Base\Routing\Middleware;
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\HTTPContext\Response;
 
-class ResponseWrapper extends Middleware
+final class ResponseWrapper extends Middleware
 {
     public function invoke(Request $request)
     {

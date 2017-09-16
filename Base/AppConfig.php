@@ -3,6 +3,7 @@
 namespace QMVC\Base;
 
 require_once('TwigAutoloader.php');
+
 TwigAutoloader::register();
 
 final class AppConfig

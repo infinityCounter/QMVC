@@ -2,11 +2,11 @@
 
 namespace QMVC\Base\HTTPContext;
 
-use QMVC\Base\AppConfig;
-use QMVC\Base\Security\Sanitizers;
+require_once(dirname(__DIR__) . 'Helpers.php');
+
 use QMVC\Base\Helpers;
 
-class FileResponse
+final class FileResponse
 {
     private $filePath;
     private $downloadLimit;

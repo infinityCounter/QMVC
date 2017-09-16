@@ -2,18 +2,18 @@
 
 namespace QMVC\Base\HTTPContext;
 
-require_once('FileUpload.php');
 require_once(dirname(__DIR__) . '/Helpers.php');
 require_once(dirname(__DIR__) . '/Constants.php');
 require_once(dirname(__DIR__) . '/AppConfig.php');
 require_once(dirname(__DIR__) . '/Security/Sanitizers.php');
+require_once('FileUpload.php');
 
 use QMVC\Base\Helpers;
 use QMVC\Base\Constants;
 use QMVC\Base\AppConfig;
 use QMVC\Base\Security\Sanitizers;
 
-class Request
+final class Request
 {
     private $requestURI;
     private $requestHTTPType;

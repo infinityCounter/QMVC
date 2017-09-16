@@ -2,6 +2,10 @@
 
 namespace QMVC\Base\Routing;
 
+require_once(dirname(__DIR__) . '/Helpers.php');
+require_once(dirname(__DIR__) . '/Constants.php');
+require_once(dirname(__DIR__) . '/HTTPContext/Request.php');
+
 use QMVC\Base\Helpers;
 use QMVC\Base\Constants;
 use QMVC\Base\HTTPContext\Request;

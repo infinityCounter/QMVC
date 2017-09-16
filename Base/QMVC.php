@@ -2,19 +2,19 @@
 
 namespace QMVC\Base;
 
-require_once(__DIR__ . '/Constants.php');
-require_once(__DIR__ . '/Helpers.php');
-require_once(__DIR__ . '/Security/Sanitizers.php');
-require_once(__DIR__ . '/AppConfig.php');
-require_once(__DIR__ . '/Templating/View.php');
-require_once(__DIR__ . '/Routing/IRequestHandler.php');
-require_once(__DIR__ . '/Routing/Middleware.php');
-require_once(__DIR__ . '/Routing/Route.php');
-require_once(__DIR__ . '/Routing/Router.php');
-require_once(__DIR__ . '/HTTPContext/Request.php');
-require_once(__DIR__ . '/HTTPContext/Response.php');
-require_once(__DIR__ . '/HTTPContext/FileResponse.php');
-require_once(__DIR__ . '/Lib/ResponseWrapper.php');
+require_once('Constants.php');
+require_once('Helpers.php');
+require_once('./Security/Sanitizers.php');
+require_once('./AppConfig.php');
+require_once('./Templating/View.php');
+require_once('./Routing/IRequestHandler.php');
+require_once('./Routing/Middleware.php');
+require_once('./Routing/Route.php');
+require_once('./Routing/Router.php');
+require_once('./HTTPContext/Request.php');
+require_once('./HTTPContext/Response.php');
+require_once('./HTTPContext/FileResponse.php');
+require_once('./Lib/ResponseWrapper.php');
 
 use QMVC\Base\Constants;
 use QMVC\Base\Routing\Middleware;

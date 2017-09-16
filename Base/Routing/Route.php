@@ -2,12 +2,19 @@
 
 namespace QMVC\Base\Routing;
 
+require_once(dirname(__DIR__) . '/Constants.php');
+require_once(dirname(__DIR__) . '/Helpers.php');
+require_once(dirname(__DIR__) . '/Security/Sanitizers.php');
+require_once(dirname(__DIR__) . '/HTTPContext/Request.php');
+require_once(dirname(__DIR__) . '/HTTPContext/Response.php');
+require_once(dirname(__DIR__) . '/Routing/Middleware.php');
+require_once(dirname(__DIR__) . '/Lib/ResponseWrapper.php');
+
 use QMVC\Base\Constants;
 use QMVC\Base\Helpers;
 use QMVC\Base\Security\Sanitizers;
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\HTTPContext\Response;
-use QMVC\Base\Routing\Middleware;
 use QMVC\Base\Lib\ResponseWrapper;
 
 final class Route 

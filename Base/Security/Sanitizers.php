@@ -2,6 +2,8 @@
 
 namespace QMVC\Base\Security;
 
+require_once(dirname(__DIR__) . '/Constants.php');
+
 use QMVC\Base\Constants;
 
 class Sanitizers

@@ -6,7 +6,7 @@ require_once(dirname(__DIR__) . '/Security/Sanitizers.php');
 
 use QMVC\Base\Security\Sanitizers;
 
-class FileUpload 
+final class FileUpload 
 {
     private $filePath = null;
     private $fileExtension = null;
