@@ -2,7 +2,10 @@
 
 namespace QMVC\Base;
 
+require_once(__DIR__ . '/Security/Sanitizers.php');
 require_once('TwigAutoloader.php');
+
+use QMVC\Base\Security\Sanitizers;
 
 TwigAutoloader::register();
 
@@ -11,6 +14,7 @@ final class AppConfig
     private static $onlyHTTPS = false;
     private static $onlyHTTPSSubdomains = false;
     private static $STSTime = 0;
+    private static $contentSecurityPolicy = null;
     private static $twigLoader = null;
     private static $twigEnvironment = null;
     private static $uploadMIMEWhitelist = [];
@@ -53,6 +57,17 @@ final class AppConfig
         return (self::$onlyHTTPS) ? self::$STSTime : 0;
     }
 
+    public static function setContentSecurityPolicy(string $policy)
+    {
+        $cleanedPolicy = Sanitizers::stripAllTags($policy);
+        self::$contentSecurityPolicy = $cleanedPolicy;
+    }
+
+    public static function getContentSecurityPolicy()
+    {
+        return self::$contentSecurityPolicy;
+    }
+
     public static function setTwigLoader($loader)
     {
         if(!is_a($loader, \Twig_Loader_Array::class) && 
@@ -85,7 +100,7 @@ final class AppConfig
     {
         foreach($whitelist as $extension => $mimeType)
         {
-            array_push(self::$uploadMIMEWhitelist, $mimeType);
+            array_push(self::$uploadMIMEWhitelist, sanitizers::stripAllTags($mimeType));
         }
     }
 
@@ -96,7 +111,7 @@ final class AppConfig
 
     public static function setUploadDirectory(string $path)
     {
-        $cleanedPath = filter_var($path, FILTER_SANITIZE_STRING);
+        $cleanedPath = filter_var(sanitizers::stripAllTags($path), FILTER_SANITIZE_STRING);
         $realPath = realpath($cleanedPath);
         if(($realPath !== false && is_dir($realPath)) || 
            (!$realPath && !mkdir($cleanedPath, 0644))

@@ -175,6 +175,10 @@ final class Response
             if(AppConfig::isOnlyUsingHTTPSSubdomains()) 
                 $typeHeaders['Strict-Transport-Security'] .= '; includeSubDomains';
         }
+        if(AppConfig::getContentSecurityPolicy() !== null)
+        {
+            $this->responseHeaders['Content-Security-Policy'] = AppConfig::getContentSecurityPolicy();
+        }
         $this->responseHeaders = array_merge($this->responseHeaders, $typeHeaders);
     }
 
