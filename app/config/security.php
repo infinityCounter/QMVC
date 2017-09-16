@@ -11,7 +11,7 @@ use QMVC\Base\AppConfig;
 
 AppConfig::useOnlyHTTPS(true);
 AppConfig::UseOnlyHTTPSSubdomains(true);
-// AppConfig::setSTSTime(Constants::YEAR);
+AppConfig::setSTSTime(60);
 AppConfig::setContentSecurityPolicy("default-src 'self'");
 
 ?>
