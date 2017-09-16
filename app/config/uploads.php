@@ -2,7 +2,8 @@
 
 namespace App;
 
-require_once('../../Base/AppConfig.php');
+require_once('constants.php');
+require_once(QMVC_ROOT . 'AppConfig.php');
 
 use QMVC\Base\AppConfig;
 

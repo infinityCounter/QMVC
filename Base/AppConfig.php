@@ -82,9 +82,11 @@ final class AppConfig
 
     public static function whitelistUploadExtensions(array $whitelist)
     {
-        foreach($whitelist as $extension => $mimType)
+        echo 'in here';
+        foreach($whitelist as $extension => $mimeType)
         {
-            array_push(self::$uploadExtensionsWhitelist, $extension);
+            echo 'hereso';
+            array_push(self::$uploadExtensionsWhitelist, $mimeType);
         }
     }
 
