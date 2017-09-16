@@ -31,7 +31,7 @@ Router::get('/MyNameIs/{name}', function(Request $request) {
 });
 
 Router::get('/doggo', function(Request $request) {
-    $fileResponse = new FileResponse('../assets/images/dog.jpg');
+    $fileResponse = new FileResponse(APP_ROOT . '/assets/images/dog.jpg');
     return $fileResponse;
 });
 

@@ -1,8 +1,8 @@
 <?php
 
 require_once('constants.php');
-require_once(QMVC_ROOT . '/Base/TwigAutoloader.php');
-require_once(QMVC_ROOT . '/Base/AppConfig.php');
+require_once(QMVC_ROOT . 'TwigAutoloader.php');
+require_once(QMVC_ROOT . 'AppConfig.php');
 
 use QMVC\Base\TwigAutoloader;
 use QMVC\Base\AppConfig;

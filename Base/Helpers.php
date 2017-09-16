@@ -3,8 +3,8 @@
 namespace QMVC\Base;
 
 require_once('Constants.php');
-require_once('./Security/Sanitizers.php');
-require_once('./Routing/Middleware');
+require_once(__DIR__ . '/Security/Sanitizers.php');
+require_once(__DIR__ . '/Routing/Middleware.php');
 
 use QMVC\Base\Security\Sanitizers;
 use QMVC\Base\Routing\Middleware;

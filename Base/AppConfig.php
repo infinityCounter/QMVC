@@ -13,7 +13,7 @@ final class AppConfig
     private static $STSTime = 0;
     private static $twigLoader = null;
     private static $twigEnvironment = null;
-    private static $uploadExtensionsWhitelist = [];
+    private static $uploadMIMEWhitelist = [];
     private static $uploadDirectory = null;
 
     public static function useOnlyHTTPS(bool $https)
@@ -81,19 +81,17 @@ final class AppConfig
         return self::$twigEnvironment;
     }
 
-    public static function whitelistUploadExtensions(array $whitelist)
+    public static function whitelistUploadMIMEList(array $whitelist)
     {
-        echo 'in here';
         foreach($whitelist as $extension => $mimeType)
         {
-            echo 'hereso';
-            array_push(self::$uploadExtensionsWhitelist, $mimeType);
+            array_push(self::$uploadMIMEWhitelist, $mimeType);
         }
     }
 
-    public static function getUploadExtensionsWhitelist()
+    public static function getUploadMIMEWhitelist()
     {
-       return self::$uploadExtensionsWhitelist;
+       return self::$uploadMIMEWhitelist;
     }
 
     public static function setUploadDirectory(string $path)

@@ -55,7 +55,7 @@ final class Request
         // Therefore this property requires no setter, only a getter
         $request->requestDateTime = $_SERVER['REQUEST_TIME'];
         $request->setQueryStringArgs($_REQUEST);
-        if(isset($_FILES))
+        if(isset($_FILES) && !empty($_FILES))
         {
             $file = self::getUploadedFile();
             $request->setBodyArgs($file);
@@ -107,10 +107,8 @@ final class Request
         }
         // MIME type may be altered, checking self
         $finfo = new \finfo(FILEINFO_MIME_TYPE);
-        var_dump($finfo->file($_FILES[$fileKey]['tmp_name']));
-        var_dump(AppConfig::getUploadExtensionsWhitelist());
         if (false === ($ext = array_search($finfo->file($_FILES[$fileKey]['tmp_name']), 
-            AppConfig::getUploadExtensionsWhitelist() , true)))
+            AppConfig::getUploadMIMEWhitelist() , true)))
         {
             array_push($errs,'Uploaded invalid file format.');
         }
