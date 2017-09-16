@@ -216,7 +216,7 @@ class Request
             return $this->requestRESTArgs[$memberName];
         if (array_key_exists($memberName, $this->requestQueryStringArgs)) 
             return $this->requestQueryStringArgs[$memberName];
-        if (array_key_exists($memberName, $this->requestBodyArgs)) 
+        if (is_array($this->requestBodyArgs) && array_key_exists($memberName, $this->requestBodyArgs)) 
             return $this->requestBodyArgs[$memberName];
         throw new \RuntimeException("{$memberName} property does not exist on Request object");
     }
