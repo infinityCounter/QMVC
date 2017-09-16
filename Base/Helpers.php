@@ -110,7 +110,7 @@ final class Helpers
     public static function arrayTrueDiff($arr1, $arr2, $typeStrict = false)
     {
         if(!is_array($arr1) || !is_array($arr2))
-            throw new InvalidArgumentException("Invalid argument passed, array expected, argument supplied is not array.");
+            throw new \InvalidArgumentException("Invalid argument passed, array expected, argument supplied is not array.");
         $array1Len = count($arr1);
         $array2Len = count($arr2);
         $diffArr = [];
@@ -137,12 +137,12 @@ final class Helpers
     public static function convertValPairsToAssociate($valPairsArr)
     {
         if(!is_array($valPairsArr))
-            throw new InvalidArgumentException("Invalid argument passed, array expected, argument supplied is not array.");
+            throw new \InvalidArgumentException("Invalid argument passed, array expected, argument supplied is not array.");
         $associateArray = [];
         foreach($valPairsArr as $valPair)
         {
             if(!is_array($valPairsArr))
-                throw new InvalidArgumentException("Invalid argument passed. All array members must be an array of pair values.");
+                throw new \InvalidArgumentException("Invalid argument passed. All array members must be an array of pair values.");
             $associateArray[$valPair[0]] = $valPair[1];
         }
         return $associateArray;

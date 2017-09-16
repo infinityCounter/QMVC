@@ -43,7 +43,7 @@ final class AppConfig
     public static function setSTSTime(int $time)
     {
         if($time < 0)
-            throw new InvalidArgumentException("Time cannot be less than 0");
+            throw new \InvalidArgumentException("Time cannot be less than 0");
         self::$STSTime = $time;
     }
 
@@ -58,7 +58,7 @@ final class AppConfig
            !is_a($loader, \Twig_Loader_Filesystem::class))
         {
             $type = gettype($loader);
-            throw new InvalidArgumentException("Argument passed to AppConfig::setTwigLoader".
+            throw new \InvalidArgumentException("Argument passed to AppConfig::setTwigLoader".
             " must either be a Twig_Loader_Array or Twig_Loader_Filesystem, {$loader} given.");
         }
         self::$twigLoader = $loader;
@@ -103,7 +103,7 @@ final class AppConfig
            (!$realPath && !mkdir($cleanedPath, 0644))
         )
         {
-            throw new InvalidArgumentException("{$realPath} is not a directory and cannot create directory.");
+            throw new \InvalidArgumentException("{$realPath} is not a directory and cannot create directory.");
         }
         else 
         {

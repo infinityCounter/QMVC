@@ -89,7 +89,7 @@ final class Route
     public function pushMiddleware($handler)
     {
         if(!is_callable($handler) && !Helpers::isMiddleware($handler))
-            throw new InvalidArgumentException("Argument must either be callable or a descendant of the Middleware class.");
+            throw new \InvalidArgumentException("Argument must either be callable or a descendant of the Middleware class.");
         $newMidware = null;
         $numMidware = count($this->middlewareStack);
         if(is_callable($handler))

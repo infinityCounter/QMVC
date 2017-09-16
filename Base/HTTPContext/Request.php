@@ -28,7 +28,7 @@ class Request
     public static function cleanQueryStringArgs($queryStringArgs) 
     {
         if (!is_array($queryStringArgs)) 
-            throw new InvalidArgumentException('cleanQueryString Args only accepts arrays as argument. Argument was not array');
+            throw new \InvalidArgumentException('cleanQueryString Args only accepts arrays as argument. Argument was not array');
         return array_map(function($arg) {
             return Sanitizers::stripAllTags($arg);
         }, $queryStringArgs);
@@ -132,7 +132,7 @@ class Request
     public function setHTTPType($type)
     {
         if(!Helpers::isValidHTTPRequestType($type))
-            throw new InvalidArgumentException("{$type} is not a supported (GET, POST, PUT, DELETE) HTTP type.");
+            throw new \InvalidArgumentException("{$type} is not a supported (GET, POST, PUT, DELETE) HTTP type.");
         $this->requestHTTPType = $type;
     }
 
@@ -181,7 +181,7 @@ class Request
     public function setQueryStringArgs($queryStringArgs)
     {
         if(!is_array($queryStringArgs)) 
-            throw new InvalidArgumentException("The argument passed is not an array. An array must be passed to the setQueryStringArgs method.");
+            throw new \InvalidArgumentException("The argument passed is not an array. An array must be passed to the setQueryStringArgs method.");
         $this->requestQueryStringArgs = array_map(function($arg) {
             return Sanitizers::stripAllTags($arg);
         }, $queryStringArgs);

@@ -97,7 +97,7 @@ class Response
     public function setResponseType(int $respType)
     {
         if(!Helpers::isValidRespBodyType($respType))
-            throw new InvalidArgumentException("{$respType} is not a valid body type. Must be either FILESTREAM, VIEW, or JSON");
+            throw new \InvalidArgumentException("{$respType} is not a valid body type. Must be either FILESTREAM, VIEW, or JSON");
         $this->responseType = $respType;
     }
 
@@ -181,7 +181,7 @@ class Response
     public function setStatusCode(int $statusCode)
     {
         if(!Helpers::isValidStatusCode($statusCode))
-            throw new InvalidArgumentException("{$statusCode} is not a valid HTTP Response Status Code.");
+            throw new \InvalidArgumentException("{$statusCode} is not a valid HTTP Response Status Code.");
         $this->responseStatusCode = $statusCode;
     }
 

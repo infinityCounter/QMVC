@@ -72,7 +72,7 @@ final class QMVC
     {
         $filePath = realpath($fileResponse->getFilePath());
         if(!$filePath || !file_exists($filePath) || is_dir($filePath))
-            throw new InvalidArgumentException("Cannot find file {$filePath}.");
+            throw new \InvalidArgumentException("Cannot find file {$filePath}.");
         flush();
         $file = fopen($filePath, "r");
         $downloadRate = ($fileResponse->isLimited()) ? $fileResponse->getDownloadLimit() : 1024;

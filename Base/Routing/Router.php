@@ -2,6 +2,12 @@
 
 namespace QMVC\Base\Routing;
 
+
+require_once(dirname(__DIR__) . '/Constants.php');
+require_once(dirname(__DIR__) . '/Helpers.php');
+require_once(dirname(__DIR__) . '/Security/Sanitizers.php');
+require_once('Route.php');
+
 use QMVC\Base\Constants;
 use QMVC\Base\Helpers;
 use QMVC\Base\Security\Sanitizers;
@@ -51,7 +57,7 @@ class Router
         $cleanedURI = strtolower(Sanitizers::stripAllTags($URI));
         foreach ($reqTypes as $reqType => $allowed) {
             if(!Helpers::isValidHTTPRequestType($reqType)) 
-                throw new InvalidArgumentException("${reqType} is not a supported HTTP method.");    
+                throw new \InvalidArgumentException("${reqType} is not a supported HTTP method.");    
         }
         $route = ($routeHandler instanceof Route ) ? $routeHandler : new Route($cleanedURI, $reqTypes, $routeHandler);
         foreach($middlewares as $middleware) {
