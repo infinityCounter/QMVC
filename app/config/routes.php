@@ -3,12 +3,12 @@
 namespace App;
 
 require_once('constants.php');
-require_once(QMVC_ROOT . '/Base/HTTPContext/Request.php');
-require_once(QMVC_ROOT . '/Base/HTTPContext/FileResponse.php');
-require_once(QMVC_ROOT . '/Base/HTTPContext/Response.php');
-require_once(QMVC_ROOT . '/Base/Templating/View.php');
-require_once(QMVC_ROOT . '/Base/Routing/Middleware.php');
-require_once(QMVC_ROOT . '/Base/Routing/Router.php');
+require_once(QMVC_ROOT . 'HTTPContext/Request.php');
+require_once(QMVC_ROOT . 'HTTPContext/FileResponse.php');
+require_once(QMVC_ROOT . 'HTTPContext/Response.php');
+require_once(QMVC_ROOT . 'Templating/View.php');
+require_once(QMVC_ROOT . 'Routing/Middleware.php');
+require_once(QMVC_ROOT . 'Routing/Router.php');
 
 use QMVC\Base\HTTPContext\Request;
 use QMVC\Base\HTTPContext\Response;
