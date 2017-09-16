@@ -12,7 +12,8 @@ final class AppConfig
     private static $STSTime = 0;
     private static $twigLoader = null;
     private static $twigEnvironment = null;
-    private static $contentSecurityPolicy = "default-src 'self'; img-src *; media-src youtube+////////////////////////////.com media2.com; script-src userscripts.example.com";
+    private static $uploadExtensionsWhitelist = [];
+    private static $uploadDirectory = null;
 
     public static function useOnlyHTTPS(bool $https)
     {
@@ -77,5 +78,34 @@ final class AppConfig
     public static function getTwigEnvironment()
     {
         return self::$twigEnvironment;
+    }
+
+    public static function whitelistUploadExtensions(array $whitelist)
+    {
+        foreach($whitelist as $extension => $mimType)
+        {
+            array_push(self::$uploadExtensionsWhitelist, $extension);
+        }
+    }
+
+    public static function getUploadExtensionsWhitelist()
+    {
+       return self::$uploadExtensionsWhitelist;
+    }
+
+    public static function setUploadDirectory(string $path)
+    {
+        $cleanedPath = filter_var($path, FILTER_SANITIZE_STRING);
+        $realPath = realpath($cleanedPath);
+        if(($realPath !== false && is_dir($realPath)) || 
+           (!$realPath && !mkdir($cleanedPath, 0644))
+        )
+        {
+            throw new InvalidArgumentException("{$realPath} is not a directory and cannot create directory.");
+        }
+        else 
+        {
+            $this->uploadDirectory = $realPath;
+        }
     }
 }

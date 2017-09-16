@@ -2,13 +2,15 @@
 
 namespace QMVC\Base\HTTPContext;
 
-require_once('FileResponse.php');
+require_once('FileUpload.php');
 require_once(dirname(__DIR__) . '/Helpers.php');
 require_once(dirname(__DIR__) . '/Constants.php');
+require_once(dirname(__DIR__) . '/AppConfig.php');
 require_once(dirname(__DIR__) . '/Security/Sanitizers.php');
 
 use QMVC\Base\Helpers;
 use QMVC\Base\Constants;
+use QMVC\Base\AppConfig;
 use QMVC\Base\Security\Sanitizers;
 
 class Request
@@ -53,12 +55,12 @@ class Request
         // Therefore this property requires no setter, only a getter
         $request->requestDateTime = $_SERVER['REQUEST_TIME'];
         $request->setQueryStringArgs($_REQUEST);
-        if(isset($_FILES['upfile']))
+        if(isset($_FILES))
         {
             $file = self::getUploadedFile();
             $request->setBodyArgs($file);
         }
-        else if(isset($_POST))
+        if(isset($_POST))
         {
             $request->setBodyArgs($_POST);
         }
@@ -72,13 +74,14 @@ class Request
     private static function getUploadedFile()
     {
         $errs = [];
+        $fileKey = array_keys($_FILES)[0];
         // If errors (WHICH SHOULD BE DEFINED) is undefined, if there are multiple files
         // or a corruption
-        if (!isset($_FILES['upfile']['error']) || is_array($_FILES['upfile']['error']))
+        if (!isset($_FILES[$fileKey]['error']) || is_array($_FILES[$fileKey]['error']))
         {
             array_push($errs, 'Invalid parameters in file upload.');
         }
-        switch ($_FILES['upfile']['error'])
+        switch ($_FILES[$fileKey]['error'])
         {
             case UPLOAD_ERR_OK:
                 break;
@@ -98,18 +101,18 @@ class Request
         // Based on configurations of php.ini there can be multiple properties that may limit 
         // file size upload. These may not all fall under UPLOAD_ERR_INI_SIZE and 
         // UPLOAD_ERR_FORM_SIZE, thus double checking here
-        if ($_FILES['upfile']['size'] > Helpers::getMaxFileUploadInBytes())
+        if ($_FILES[$fileKey]['size'] > Helpers::getMaxFileUploadInBytes())
         {
             array_push($errs, 'Uploaded file exceeded filesize limit.');
         }
         // MIME type may be altered, checking self
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        if (false === ($ext = array_search($finfo->file($_FILES['upfile']['tmp_name']), 
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        if (false === ($ext = array_search($finfo->file($_FILES[$fileKey]['tmp_name']), 
             array(AppConfig::getUploadExtensionsWhitelist()) , true)))
         {
             array_push($errs,'Uploaded invalid file format.');
         }
-        $uploadedfile = new FileUpload($_FILES['upfile']['tmp_name'], $ext, $_FILES['upfile']['size'], $errs);
+        $uploadedfile = new FileUpload($_FILES[$fileKey]['tmp_name'], $ext, $_FILES[$fileKey]['size'], $errs);
         return $uploadedfile;
     }
 
@@ -152,19 +155,19 @@ class Request
     {
         if(is_array($bodyArgs))
         {
-            $this->requestBodyArgs = array_map(function($val)
+            $this->requestBodyArgs = array_merge($this->requestBodyArgs, array_map(function($val)
             {
                 return htmlentities($val, true);
-            },  $bodyArgs);
+            },  $bodyArgs));
         }
-        else if(Helpers::isJson($bodyArgs))
+        else if(is_string($bodyArgs) && Helpers::isJson($bodyArgs))
         {
-            $this->requestBodyArgs = json_decode($bodyArgs, true);
+            $this->requestBodyArgs = array_merge($this->requestBodyArgs, json_decode($bodyArgs, true));
         }
         else
         {
             if(is_string($bodyArgs)) $this->requestBodyArgs = htmlentities($bodyArgs);
-            else $this->requestBodyArgs = $bodyArgs;
+            else array_push($this->requestBodyArgs, $bodyArgs);
         }
     }
 

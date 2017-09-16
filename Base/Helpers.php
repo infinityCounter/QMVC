@@ -53,7 +53,7 @@ final class Helpers
         return in_array($unsureCode, Constants::HTTP_RESP_CODES);
     }
 
-    public static function isJson($string) {
+    public static function isJson(string $string) {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
     }
@@ -197,13 +197,24 @@ final class Helpers
 
     public static function getMaxFileUploadInBytes() {
         //select maximum upload size
-        $max_upload = return_bytes(ini_get('upload_max_filesize'));
+        $max_upload = self::returnBytes(ini_get('upload_max_filesize'));
         //select post limit
-        $max_post = return_bytes(ini_get('post_max_size'));
+        $max_post = self::returnBytes(ini_get('post_max_size'));
         //select memory limit
-        $memory_limit = return_bytes(ini_get('memory_limit'));
+        $memory_limit = self::returnBytes(ini_get('memory_limit'));
         // return the smallest of them, this defines the real limit
         return min($max_upload, $max_post, $memory_limit);
+    }
+
+    private static function returnBytes (string $sizeStr)
+    {
+        switch (substr ($sizeStr, -1))
+        {
+            case 'M': case 'm': return (int)$sizeStr * 1048576;
+            case 'K': case 'k': return (int)$sizeStr * 1024;
+            case 'G': case 'g': return (int)$sizeStr * 1073741824;
+            default: return $sizeStr;
+        }
     }
 }
 ?>

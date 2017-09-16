@@ -11,6 +11,7 @@ AppConfig::whitelistUploadExtensions([
     'jpg' => 'image/jpeg',
     'png' => 'image/png',
     'gif' => 'image/gif',
+    'pdf' => 'application/pdf',
 ]);
 
 // All uploaded files will be moved to this directory

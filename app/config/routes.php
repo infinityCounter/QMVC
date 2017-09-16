@@ -80,7 +80,7 @@ Router::any('/view', function(Request $request)
 });
 
 Router::post('/upload', function(Request $request){
-    return $request->getBodyArgs();
+    return var_dump($request->getBodyArgs());
 });
 
 

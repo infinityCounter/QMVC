@@ -2,9 +2,9 @@
 
 namespace QMVC\Base\HTTPContext;
 
-require_once(dirname(__DIR__) . '/Helpers.php');
+require_once(dirname(__DIR__) . '/Security/Sanitizers.php');
 
-use QMVC\Base\Helpers;
+use QMVC\Base\Security\Sanitizers;
 
 class FileUpload 
 {
@@ -43,7 +43,7 @@ class FileUpload
 
     private function setFileExtension(string $ext)
     {
-        $ext = Helpers::stripAllTags($ext);
+        $ext = Sanitizers::stripAllTags($ext);
         $isExtension = preg_match('/\A\.[a-zA-Z0-9]+\z/', $ext);
         if(!$isExtension) array_push($this->uploadErrors, "{$ext} is not a extension");
         else $this->fileExtension = $ext;

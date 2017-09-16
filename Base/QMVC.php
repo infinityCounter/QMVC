@@ -70,7 +70,7 @@ final class QMVC
 
     private static function sendFileResponse(FileResponse $fileResponse)
     {
-        $filePath = realPath($fileResponse->getFilePath());
+        $filePath = realpath($fileResponse->getFilePath());
         if(!$filePath || !file_exists($filePath) || is_dir($filePath))
             throw new InvalidArgumentException("Cannot find file {$filePath}.");
         flush();
