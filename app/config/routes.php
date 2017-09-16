@@ -79,5 +79,9 @@ Router::any('/view', function(Request $request)
     return $view;
 });
 
+Router::post('/upload', function(Request $request){
+    return $request->getBodyArgs();
+});
+
 
 ?>

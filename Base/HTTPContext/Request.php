@@ -53,7 +53,7 @@ class Request
         // Therefore this property requires no setter, only a getter
         $request->requestDateTime = $_SERVER['REQUEST_TIME'];
         $request->setQueryStringArgs($_REQUEST);
-        if(isset($_FILES))
+        if(isset($_FILES['upfile']))
         {
             $file = self::getUploadedFile();
             $request->setBodyArgs($file);

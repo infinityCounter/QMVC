@@ -32,7 +32,7 @@ final class QMVC
         $request = Request::BuildRequest();
         $route = Router::getRoute($request->getURI());
         $response = null;
-        if (!isset($route)) 
+        if (!isset($route) || !$route->getAllowableActions()[$request->getHTTPType()]) 
         {
             $response = Response::NotFound();
         }
