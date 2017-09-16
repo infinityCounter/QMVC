@@ -2,7 +2,7 @@
 
 namespace QMVC\Base\HTTPContext;
 
-require_once('../Helpers.php');
+require_once(dirname(__DIR__) . '/Helpers.php');
 
 use QMVC\Base\Helpers;
 
