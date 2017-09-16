@@ -2,6 +2,13 @@
 
 namespace QMVC\Base\HTTPContext;
 
+require_once('FileResponse.php');
+require_once(dirname(__DIR__) . '/Helpers.php');
+require_once(dirname(__DIR__) . '/Constants.php');
+require_once(dirname(__DIR__) . '/AppConfig.php');
+require_once(dirname(__DIR__) . '/Security/Sanitizers.php');
+require_once(dirname(__DIR__) . '/Templating/View.php');
+
 use QMVC\Base\AppConfig;
 use QMVC\Base\Constants;
 use QMVC\Base\Helpers;
