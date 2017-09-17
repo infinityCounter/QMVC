@@ -25,7 +25,10 @@ class Sanitizers
 
     public static function stripAllTags(string $unstrippedString)
     {
-        return $unstrippedString;
+        $noScript = self::stripScriptTags($unstrippedString);
+        $noXML = self::stripClosingTags($noXML);
+        $noPHP = self::stripPHPTags($noPHP);
+        return $noPHP;
     }
 
     public static function cleanURI(string $dirtyURI)
