@@ -194,9 +194,19 @@ final class Response
         return $this->responseStatusCode;
     }
 
-    public static function NotFound()
+    public static function Unauthorized($body = null, $headers = [])
     {
-        return new self(null, [], 404);
+        return new self($body, $headers, 400);
+    }
+
+    public static function NotFound($body = null, $headers = [])
+    {
+        return new self($body, $headers, 404);
+    }
+
+    public static function InternalServerError($body = null, $headers = [])
+    {
+        return new self($body, $headers, 500);
     }
 }
 ?>
