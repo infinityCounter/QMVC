@@ -16,11 +16,11 @@ localhost {
   }
 
   # Following rewrite blocks does an internal
-  # URL rewrite for all resources (NOT PHP FILES) to ./app/assets folder
+  # URL rewrite for all resources (NOT PHP FILES) to ./App/Assets folder
   rewrite / {
  	  regexp /.*\..+
       ext    !.php
-      to     /assets/{path}
+      to     /Assets/{path}
   }
 
   # Rewrite all requests for anything else to root

@@ -45,9 +45,10 @@ final class QMVC
                 if(!is_a($response, Response::class))
                     $response = new Response($response);
             } 
-            catch(Exception $e)
+            catch(\Exception $e)
             {
-                $response = Response::internalServerError();
+                if(!AppConfig::isDevMode()) $response = Response::internalServerError();
+                else $response = Response::internalServerError(get_class($e) . ':' .$e->getMessage());
             }
         }
         self::sendStatusCode($response->getStatusCode());

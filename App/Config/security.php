@@ -9,6 +9,8 @@ require_once(QMVC_ROOT . 'AppConfig.php');
 use QMVC\Base\Constants;
 use QMVC\Base\AppConfig;
 
+// In dev mode exception and errors will be output to client
+AppConfig::setDevMode(true);
 // Set to use Secure-Transport-Security
 AppConfig::useOnlyHTTPS(true);
 AppConfig::UseOnlyHTTPSSubdomains(true);
