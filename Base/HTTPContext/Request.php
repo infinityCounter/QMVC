@@ -107,12 +107,12 @@ final class Request
         }
         // MIME type may be altered, checking self
         $finfo = new \finfo(FILEINFO_MIME_TYPE);
-        if (false === ($ext = array_search($finfo->file($_FILES[$fileKey]['tmp_name']), 
-            AppConfig::getUploadMIMEWhitelist() , true)))
+        $fileMimeType = $finfo->file($_FILES[$fileKey]['tmp_name']);
+        if (false === ($ext = array_search($fileMimeType, AppConfig::getUploadMIMEWhitelist() , true)))
         {
             array_push($errs,'Uploaded invalid file format.');
         }
-        $uploadedfile = new FileUpload($_FILES[$fileKey]['tmp_name'], $ext, $_FILES[$fileKey]['size'], $errs);
+        $uploadedfile = new FileUpload($_FILES[$fileKey]['tmp_name'], $fileMimeType, $_FILES[$fileKey]['size'], $errs);
         return $uploadedfile;
     }
 

@@ -9,29 +9,28 @@ use QMVC\Base\Security\Sanitizers;
 final class FileUpload 
 {
     private $filePath = null;
-    private $fileExtension = null;
+    private $fileMimeType = null;
     private $fileSize = 0;
     private $fileHash = null;
     private $uploadErrors = [];
 
-    function __construct(string $filePath, string $fileExtension, int $fileSize, array $uploadErrors)
+    function __construct(string $filePath, string $fileMimeType, int $fileSize, array $uploadErrors)
     {
         $this->setFilePath($filePath);
-        $this->setFileExtension($fileExtension);
+        $this->setMimeType($fileMimeType);
         $this->fileSize = $fileSize;
         $this->uploadErrors = $uploadErrors;
     }
 
     private function setFilePath(string $filePath)
     {
-        $fileHash = sha1_file($filePath);
-        if(!$fileHash) 
+        if(!file_exists($filePath)) 
         {
             array_push($this->uploadErrors, "{$filePath} is not a valid file");
         }
         else
         {
-            $this->fileHash = sha1($fileHash);
+            $this->fileHash = hash('sha256', $filePath);
             $this->filePath = $filePath;
         }
     }
@@ -41,17 +40,14 @@ final class FileUpload
         return $this->filePath;
     }
 
-    private function setFileExtension(string $ext)
+    private function setMimeType(string $mimeType)
     {
-        $ext = Sanitizers::stripAllTags($ext);
-        $isExtension = preg_match('/\A\.[a-zA-Z0-9]+\z/', $ext);
-        if(!$isExtension) array_push($this->uploadErrors, "{$ext} is not a extension");
-        else $this->fileExtension = $ext;
+        $this->fileMimeType = $mimeType;
     }
 
-    public function getFileExtension()
+    public function getMimeType()
     {
-        return $this->fileExtension;
+        return $this->fileMimeType;
     }
 
     public function getFileSize()
