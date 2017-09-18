@@ -194,17 +194,22 @@ final class Response
         return $this->responseStatusCode;
     }
 
-    public static function Unauthorized($body = null, $headers = [])
+    public static function unauthorized($body = null, $headers = [])
     {
-        return new self($body, $headers, 400);
+        return new self($body, $headers, 401);
     }
 
-    public static function NotFound($body = null, $headers = [])
+    public static function forbidden($body = null, $headers = [])
+    {
+        return new self($body, $headers, 403);
+    }
+
+    public static function notFound($body = null, $headers = [])
     {
         return new self($body, $headers, 404);
     }
 
-    public static function InternalServerError($body = null, $headers = [])
+    public static function internalServerError($body = null, $headers = [])
     {
         return new self($body, $headers, 500);
     }

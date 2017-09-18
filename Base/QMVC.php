@@ -34,7 +34,7 @@ final class QMVC
         $response = null;
         if (!isset($route) || !$route->getAllowableActions()[$request->getHTTPType()]) 
         {
-            $response = Response::NotFound();
+            $response = Response::notFound();
         }
         else
         {
@@ -47,7 +47,7 @@ final class QMVC
             } 
             catch(Exception $e)
             {
-                $response = Response::InternalServerError();
+                $response = Response::internalServerError();
             }
         }
         self::sendStatusCode($response->getStatusCode());
