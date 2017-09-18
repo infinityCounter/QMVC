@@ -19,6 +19,7 @@ final class AppConfig
     private static $twigEnvironment = null;
     private static $uploadMIMEWhitelist = [];
     private static $uploadDirectory = null;
+    private static $devMode = false;
 
     public static function useOnlyHTTPS(bool $https)
     {
@@ -123,5 +124,15 @@ final class AppConfig
         {
             $this->uploadDirectory = $realPath;
         }
+    }
+
+    public static function setDevMode(bool $mode)
+    {
+        self::$devMode = $mode;
+    }
+
+    public static function isDevMode()
+    {
+        return self::$devMode;
     }
 }
