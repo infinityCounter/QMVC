@@ -24,7 +24,7 @@ final class FileUpload
 
     private function setFilePath(string $filePath)
     {
-        if(!file_exists($filePath)) 
+        if(!file_exists($filePath) && is_uploaded_file($filePath)) 
         {
             array_push($this->uploadErrors, "{$filePath} is not a valid file");
         }
