@@ -12,5 +12,4 @@ require_once(QMVC_ROOT . 'QMVC.php');
 use QMVC\Base\QMVC;
 
 QMVC::run();
-
 ?>

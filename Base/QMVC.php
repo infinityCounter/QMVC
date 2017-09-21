@@ -39,17 +39,9 @@ final class QMVC
         else
         {
             $request->setRESTArgs($route->getURI());
-            try
-            {
-                $response = $route->execPipeline($request);
-                if(!is_a($response, Response::class))
-                    $response = new Response($response);
-            } 
-            catch(\Exception $e)
-            {
-                if(!AppConfig::isDevMode()) $response = Response::internalServerError();
-                else $response = Response::internalServerError(get_class($e) . ':' .$e->getMessage());
-            }
+            $response = $route->execPipeline($request);
+            if(!is_a($response, Response::class))
+                $response = new Response($response);
         }
         self::sendStatusCode($response->getStatusCode());
         self::sendHeaders($response->getHeaders());
