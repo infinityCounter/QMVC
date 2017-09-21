@@ -39,17 +39,12 @@ final class FileResponse
     public function setDownloadLimit(float $limit)
     {
         $this->downloadLimit = $limit;
-        $this->setIsLimited(($limit > 0));
+        $this->hasDownloadLimit = ($limit > 0);
     }
 
     public function getDownloadLimit()
     {
         return $this->downloadLimit;
-    }
-
-    private function setIsLimited(bool $hasLimit)
-    {
-        $this->hasDownloadLimit = $hasLimit;
     }
 
     public function isLimited()
