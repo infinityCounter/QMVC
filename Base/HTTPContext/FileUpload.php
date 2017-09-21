@@ -14,7 +14,7 @@ final class FileUpload
     private $fileHash = null;
     private $uploadErrors = [];
 
-    function __construct(string $filePath, string $fileMimeType, int $fileSize, array $uploadErrors)
+    function __construct(string $filePath, string $fileMimeType, int $fileSize, array $uploadErrors = [])
     {
         $this->setFilePath($filePath);
         $this->setMimeType($fileMimeType);

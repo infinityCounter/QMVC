@@ -1,0 +1,34 @@
+<?php
+
+namespace QMVC\Base\Tests\HTTPContext;
+
+use PHPUnit\Framework\TestCase;
+
+use QMVC\Base\HTTPContext\FileUpload;
+
+class FileUploadTest extends TestCase
+{
+    protected $dummyFileName = 'dummy.dat';
+
+    protected function setUp()
+    {
+        $fp = fopen($this->dummyFileName, 'w');
+        fseek($fp,  1024 - 2,SEEK_CUR);
+        fwrite($fp,'\0');
+        fclose($fp);
+        $_POST['filename'] = $this->dummyFileName;
+    }
+
+    protected function tearDown()
+    {
+        unlink($this->dummyFileName);
+    }
+
+    public function testConstructor()
+    {
+        // $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        // $fileMimeType = $finfo->file($this->dummyFileName);
+        $upload = new FileUpload($this->dummyFileName, '', 1024);
+        $this->assertTrue(is_a($upload, FileUpload::class));
+    }
+}
