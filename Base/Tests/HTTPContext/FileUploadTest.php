@@ -26,9 +26,15 @@ class FileUploadTest extends TestCase
 
     public function testConstructor()
     {
-        // $finfo = new \finfo(FILEINFO_MIME_TYPE);
-        // $fileMimeType = $finfo->file($this->dummyFileName);
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $fileMimeType = $finfo->file($this->dummyFileName);
         $upload = new FileUpload($this->dummyFileName, '', 1024);
         $this->assertTrue(is_a($upload, FileUpload::class));
+    }
+
+    public function testGetUploadErrors()
+    {
+        $upload = new FileUpload('randomefilename.dat', '', 0);
+        $this->assertTrue(count($upload->getUploadErrors()) > 0);
     }
 }

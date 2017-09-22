@@ -16,15 +16,15 @@ final class FileUpload
 
     function __construct(string $filePath, string $fileMimeType, int $fileSize, array $uploadErrors = [])
     {
+        $this->uploadErrors = $uploadErrors;
         $this->setFilePath($filePath);
         $this->setMimeType($fileMimeType);
         $this->fileSize = $fileSize;
-        $this->uploadErrors = $uploadErrors;
     }
 
     private function setFilePath(string $filePath)
     {
-        if(!file_exists($filePath) && is_uploaded_file($filePath)) 
+        if(!file_exists($filePath) || !is_uploaded_file($filePath)) 
         {
             array_push($this->uploadErrors, "{$filePath} is not a valid file");
         }
@@ -62,7 +62,7 @@ final class FileUpload
 
     public function getUploadErrors()
     {
-        return $this->uploadErrors();
+        return $this->uploadErrors;
     }
 }
 
