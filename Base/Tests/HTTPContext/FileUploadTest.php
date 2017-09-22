@@ -6,6 +6,10 @@ use PHPUnit\Framework\TestCase;
 
 use QMVC\Base\HTTPContext\FileUpload;
 
+/**
+* TODO: NEED TO MOCK FILE UPLOAD TO TEST
+*/
+
 class FileUploadTest extends TestCase
 {
     protected $dummyFileName = 'dummy.dat';
@@ -16,7 +20,7 @@ class FileUploadTest extends TestCase
         fseek($fp,  1024 - 2,SEEK_CUR);
         fwrite($fp,'\0');
         fclose($fp);
-        $_POST['filename'] = $this->dummyFileName;
+        $_POST[$this->dummyFileName] = $this->dummyFileName;
     }
 
     protected function tearDown()
