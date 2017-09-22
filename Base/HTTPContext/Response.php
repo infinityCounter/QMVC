@@ -76,8 +76,6 @@ final class Response
         {
             // Anything other than Files and Views will be json encoded
             $this->setResponseType(Constants::JSON_RESP);
-            $cleanedBody = Sanitizers::stripAllTags(json_encode($body));
-            //echo $cleanedBody;
             $this->responseBody = $body;
         } 
         else
