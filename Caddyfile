@@ -8,12 +8,15 @@ localhost {
   	  rotate_keep 20  # Keep at most 20 log files
   	  rotate_compress # Compress rotated log files in gzip format
   }
+  # Errors not sent to client by default
   errors ./App/Logs/caddyerrors.log {
 	  rotate_size 50 
 	  rotate_age  90 
 	  rotate_keep 20
 	  rotate_compress 
   }
+  # Uncomment the following line (NOT IN PRODUCTION) to get error logs sent back to client
+  # errors visible
 
   # Following rewrite blocks does an internal
   # URL rewrite for all resources (NOT PHP FILES) to ./App/Assets folder
@@ -35,6 +38,3 @@ localhost {
       connect_timeout "120s"
   }
 }
-
-
-
